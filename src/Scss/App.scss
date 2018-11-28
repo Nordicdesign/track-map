@@ -1,0 +1,20 @@
+@import "reset";
+@import "variables";
+@import "spacing";
+@import "typography";
+@import "layout";
+
+
+.listCircuits {
+  li {
+    background: $colour-gray-300;
+    margin-bottom: $baseline/2;
+    padding: $baseline/2;
+
+    &:hover {
+      color: #fff;
+      background: $colour-accent;
+      cursor: pointer;
+    }
+  }
+}
