@@ -73,7 +73,7 @@ input[type="submit"],
   margin-bottom: 48px; }
 
 body, html {
-  font-family: helvetica, arial, sans-serif;
+  font-family: "Roboto", helvetica, arial, sans-serif;
   font-size: 62.5%; }
 
 p, li, td {
@@ -94,6 +94,10 @@ h2 {
   font-size: 3.2rem;
   margin: 1em 0 .3em; }
 
+h3 {
+  font-size: 2.2rem;
+  margin: 1em 0 .3em; }
+
 .wrapper {
   width: 96%;
   max-width: 700px;
@@ -109,5 +113,40 @@ h2 {
     color: #fff;
     background: tomato;
     cursor: pointer; }
+
+img {
+  max-width: 100vw;
+  max-height: 90vh; }
+  @media all and (orientation: landscape) and (max-width: 700px) {
+    img {
+      max-height: 85vh; } }
+
+.drawer {
+  padding: 16px; }
+  .drawer ul {
+    display: flex;
+    flex-direction: row; }
+    .drawer ul button {
+      width: 150px;
+      padding: 16px 0;
+      margin-right: 16px;
+      background: #c9c9c9;
+      border-radius: 5px;
+      border: 1px solid #D6D6D6;
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+      transition: all ease 0.3s; }
+      @media all and (orientation: landscape) and (max-width: 700px) {
+        .drawer ul button {
+          font-size: 1.4rem;
+          padding: 8px 0; } }
+      .drawer ul button strong {
+        font-weight: bold; }
+      .drawer ul button:active {
+        margin-bottom: -3px;
+        background: #d6d6d6; }
+    .drawer ul .selected button {
+      background: #00BD5D;
+      border: 1px solid #00B057;
+      color: #fff; }
 
 /*# sourceMappingURL=App.css.map */

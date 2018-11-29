@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Router, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
 import './App.css';
 
-import Homepage from './Pages/Homepage.jsx'
-import Spa from './Pages/Spa.jsx'
+import Homepage from './Pages/Homepage'
+import Spa from './Pages/Spa'
 
 class App extends Component {
   render() {

@@ -23,10 +23,9 @@ class Spa extends Component {
     right: false,
   };
 
-  toggleDrawer = (side, open, corner) => () => {
+  toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
-      corner: corner,
     });
   };
 
@@ -36,43 +35,17 @@ class Spa extends Component {
 
     const sideList = (
       <div className={classes.list}>
-        <div className="drawer">
-        <h2>Turn {this.state.corner}</h2>
-
-          <p>Entry</p>
-          <ul data-area="entry">
-            <li id="entry-under"><button type="button" value="under"><strong>UNDER</strong>steer</button> </li>
-            <li id="entry-over"><button type="button" value="over"><strong>OVER</strong>steer</button> </li>
-          </ul>
-
-          <p>Mid corner</p>
-          <ul data-area="mid">
-            <li id="mid-under"><button type="button" value="under"><strong>UNDER</strong>steer</button> </li>
-            <li id="mid-over"><button type="button" value="over"><strong>OVER</strong>steer</button> </li>
-          </ul>
-
-          <p>Exit</p>
-          <ul data-area="exit">
-            <li id="exit-under"><button type="button" value="under"><strong>UNDER</strong>steer</button> </li>
-            <li id="exit-over"><button type="button" value="over"><strong>OVER</strong>steer</button> </li>
-          </ul>
-
-          <Divider />
-
-        <h3>Breaking reference point</h3>
-        <input type="textarea" value="" name="breakingPoint" id="breakingPoint" />
-        <p>Upload image</p>
-        </div>
+        <p>Content</p>
+        <Divider />
       </div>
     );
     return (
-      <div>
-        <h1>Spa Franchorchamps</h1>
-        <Button onClick={this.toggleDrawer('right', true, 1)}>Open turn 1</Button>
-
-          <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-              <div
+        <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+            <div
                 tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('right', false)}
+                onKeyDown={this.toggleDrawer('right', false)}
                 className="drawer"
               >
                 {sideList}
