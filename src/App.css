@@ -144,7 +144,7 @@ img {
       .drawer ul button:active {
         margin-bottom: -3px;
         background: #d6d6d6; }
-    .drawer ul .selected button {
+    .drawer ul button.selected {
       background: #00BD5D;
       border: 1px solid #00B057;
       color: #fff; }
