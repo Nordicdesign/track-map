@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
 import Drawer from '../Components/Drawer';
-// import PropTypes from 'prop-types';
-
-// const styles = {
-//   list: {
-//     width: 550
-//   }
-// };
 
 class Spa extends Component {
 
@@ -14,19 +7,19 @@ class Spa extends Component {
     super(props,context);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
+      corner: null
     };
-
+    
     this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
-  toggleDrawer(corner) {
+  toggleDrawer = (corner) => () => {
     this.setState({
       isOpen: !this.state.isOpen,
       corner: corner,
     });
   };
-
 
   // setSelected = (corner, type, behaviour) => () => {
   //   // corner: numeric
@@ -46,7 +39,7 @@ class Spa extends Component {
   render() {
     return (<div>
       <h1>Spa Franchorchamps</h1>
-      <button onClick={this.toggleDrawer}>Open turn 1</button>
+      <button onClick={this.toggleDrawer(1)}>Open turn 1</button>
 
       <div className="track">
         <img src="/images/Spa-Francorchamps_of_Belgium.svg" useMap="#image-map" alt="Map of Spa Francorchamps circuit"/>
@@ -75,16 +68,12 @@ class Spa extends Component {
       </div>
       <Drawer
         isOpen={this.state.isOpen}
-        onClick={this.toggleDrawer}
+        onClick={this.toggleDrawer(this.state.corner)}
+        corner={this.state.corner}
       />
     </div>)
 
   }
 }
 
-// Spa.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
-
-// export default withStyles(styles)(Spa);
 export default Spa;
