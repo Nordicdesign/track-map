@@ -1,111 +1,55 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-// import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-// import ListItem from '@material-ui/core/ListItem';
+import Drawer from '../Components/Drawer';
+// import PropTypes from 'prop-types';
 
-const styles = {
-  list: {
-    width: 550
-  }
-};
+// const styles = {
+//   list: {
+//     width: 550
+//   }
+// };
 
 class Spa extends Component {
 
-  state = {
-    // top: false,
-    // left: false,
-    // bottom: false,
-    right: false
-  };
+  constructor(props,context) {
+    super(props,context);
 
-  toggleDrawer = (side, open, corner) => () => {
-    this.setState({[side]: open, corner: corner});
-  };
+    this.state = {
+      isOpen: false
+    };
 
-  setSelected = (corner, type, behaviour) => () => {
-    // corner: numeric
-    // type: entry, mid, exit
-    // behaviour: oversteer, understeer
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+  }
+
+  toggleDrawer(corner) {
     this.setState({
-      behaviour: {
-        [corner]: {
-          [type]: behaviour
-        }
-      }
-
+      isOpen: !this.state.isOpen,
+      corner: corner,
     });
-    console.log(this.state.behaviour);
   };
+
+
+  // setSelected = (corner, type, behaviour) => () => {
+  //   // corner: numeric
+  //   // type: entry, mid, exit
+  //   // behaviour: oversteer, understeer
+  //   this.setState({
+  //     behaviour: {
+  //       [corner]: {
+  //         [type]: behaviour
+  //       }
+  //     }
+  //
+  //   });
+  //   console.log(this.state.behaviour);
+  // };
 
   render() {
-    const {classes} = this.props;
-
-    const sideList = (<div className={classes.list}>
-      <div className="drawer">
-        <h2>Turn {this.state.corner}</h2>
-
-        <p>Entry</p>
-        <ul data-area="entry">
-          <li id="entry-under">
-            <button type="button" value="under"
-              className={(this.state.corner === 'understeer') ? "selected" : null} onClick={this.setSelected(this.state.corner, 'entry', 'under')}
-            >
-              <strong>UNDER</strong>steer
-            </button>
-          </li>
-          <li id="entry-over">
-            <button type="button" value="over" className={this.state.selected
-                ? "selected"
-                : null} onClick={this.setSelected(this.state.corner, 'entry', 'over')}>
-              <strong>OVER</strong>steer
-            </button>
-          </li>
-        </ul>
-
-        <p>Mid corner</p>
-
-        <p>Exit</p>
-        <ul data-area="exit">
-          <li id="exit-under">
-            <button
-              type="button"
-              value="under"
-              onClick={this.setSelected(this.state.corner, 'mid', 'under')}
-            >
-              <strong>UNDER</strong>steer</button>
-          </li>
-          <li id="exit-over">
-            <button
-              type="button"
-              value="over"
-              onClick={this.setSelected(this.state.corner, 'mid', 'over')}
-            >
-              <strong>OVER</strong>steer</button>
-          </li>
-        </ul>
-
-        <Divider/>
-
-        <h3>Breaking reference point</h3>
-        <input type="textarea" value="" name="breakingPoint" id="breakingPoint"/>
-        <p>Upload image</p>
-      </div>
-    </div>);
     return (<div>
       <h1>Spa Franchorchamps</h1>
-      <Button onClick={this.toggleDrawer('right', true, 1)}>Open turn 1</Button>
+      <button onClick={this.toggleDrawer}>Open turn 1</button>
 
-      <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-        <div tabIndex={0} className="drawer">
-          {sideList}
-        </div>
-      </Drawer>
       <div className="track">
-        <img src="/images/Spa-Francorchamps_of_Belgium.svg" usemap="#image-map" alt="Map of Spa Francorchamps circuit"/>
+        <img src="/images/Spa-Francorchamps_of_Belgium.svg" useMap="#image-map" alt="Map of Spa Francorchamps circuit"/>
         <map name="image-map">
           <area target="" alt="2" title="2" href="" coords="65,571,40" shape="circle"/>
           <area target="" alt="1" title="1" href="" coords="292,803,36" shape="circle"/>
@@ -128,16 +72,19 @@ class Spa extends Component {
           <area target="" alt="19" title="19" href="" coords="346,678,38" shape="circle"/>
           <area target="" alt="20" title="20" href="" coords="385,538,40" shape="circle"/>
         </map>
-
       </div>
-
+      <Drawer
+        isOpen={this.state.isOpen}
+        onClick={this.toggleDrawer}
+      />
     </div>)
 
   }
 }
 
-Spa.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// Spa.propTypes = {
+//   classes: PropTypes.object.isRequired
+// };
 
-export default withStyles(styles)(Spa);
+// export default withStyles(styles)(Spa);
+export default Spa;

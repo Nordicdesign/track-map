@@ -121,8 +121,26 @@ img {
     img {
       max-height: 85vh; } }
 
-.drawer {
-  padding: 16px; }
+#drawer {
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 70vw;
+  background: #fff;
+  height: 100vh;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.3 ease;
+}
+
+#drawer.hide {
+  transform: translate3d(-100vw, 0, 0);
+}
+
+#drawer.show {
+  transform: translate3d(0vw,0,0);
+}
+
   .drawer ul {
     display: flex;
     flex-direction: row; }
