@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import './App.css';
+import './Scss/App.scss';
 
 import Homepage from './Pages/Homepage'
 import Spa from './Pages/Spa'
