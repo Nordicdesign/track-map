@@ -5748,6 +5748,11 @@ joi@^11.1.1:
     isemail "3.x.x"
     topo "2.x.x"
 
+jquery-imagemapster@^1.2.10:
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/jquery-imagemapster/-/jquery-imagemapster-1.2.10.tgz#4f8e4722d85864fd4a9f458b0a75e6b6e0dc8e24"
+  integrity sha1-T45HIthYZP1Kn0WLCnXmtuDcjiQ=
+
 js-base64@^2.1.8:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.5.1.tgz#1efa39ef2c5f7980bb1784ade4a8af2de3291121"
