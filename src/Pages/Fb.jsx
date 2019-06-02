@@ -6,17 +6,14 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 
-
-const API_KEY = process.env.FIREBASE_API_KEY
-
 var firebaseConfig = {
-    apiKey: API_KEY,
-    authDomain: "trackmap-f1119.firebaseapp.com",
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
     databaseURL: "https://trackmap-f1119.firebaseio.com",
-    projectId: "trackmap-f1119",
+    projectId: process.env.REACT_APP_PROJECTID,
     storageBucket: "",
-    messagingSenderId: "488157650119",
-    appId: "1:488157650119:web:c4d401fdd7dcdc87"
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_APPID
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
