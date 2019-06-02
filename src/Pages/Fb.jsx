@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import '../App.css';
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from "firebase/app";
@@ -33,7 +33,7 @@ class Fb extends Component {
 
   loadData() {
     let that = this; //🤯
-    firebase.database().ref('/users/0/tracks/0/turn/1').once('value').then(function(snapshot) {
+    firebase.database().ref('/users/0/tracks/0/turn/1').on('value', function(snapshot) {
       let turn = (snapshot.val() ) || 'Neutral';
       that.setState({
         turn: turn
@@ -54,14 +54,14 @@ handleUndersteer() {
   // console.log('hola' + e);
   // console.log("hola!");
   this.updateTurn('understeer')
-  this.loadData();
+  // this.loadData();
 }
 
 handleOversteer() {
   // console.log('hola' + e);
   // console.log("hola!");
   this.updateTurn('oversteer')
-  this.loadData();
+  // this.loadData();
 }
 
   componentDidMount() {
