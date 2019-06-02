@@ -6,8 +6,11 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 
+
+const API_KEY = process.env.FIREBASE_API_KEY
+
 var firebaseConfig = {
-    apiKey: "AIzaSyD2-YAZ1Spbo1dltQItBTcUqcq_ues930k",
+    apiKey: API_KEY,
     authDomain: "trackmap-f1119.firebaseapp.com",
     databaseURL: "https://trackmap-f1119.firebaseio.com",
     projectId: "trackmap-f1119",
