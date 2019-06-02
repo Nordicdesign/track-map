@@ -24,10 +24,11 @@ class Fb extends Component {
     super(props,context);
 
     this.state = {
-      turn: null
+      turn: null,
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleUndersteer = this.handleUndersteer.bind(this);
+    this.handleOversteer = this.handleOversteer.bind(this);
   }
 
   loadData() {
@@ -40,9 +41,28 @@ class Fb extends Component {
     });
   }
 
-  handleClick(e) {
-    console.log("hola!");
+  updateTurn(turn) {
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/users/0/tracks/0/turn/1'] = turn;
+
+    return firebase.database().ref().update(updates);
   }
+
+handleUndersteer() {
+  // console.log('hola' + e);
+  // console.log("hola!");
+  this.updateTurn('understeer')
+  this.loadData();
+}
+
+handleOversteer() {
+  // console.log('hola' + e);
+  // console.log("hola!");
+  this.updateTurn('oversteer')
+  this.loadData();
+}
 
   componentDidMount() {
     this.loadData();
@@ -58,9 +78,14 @@ class Fb extends Component {
             <li>
               Turn 1: {this.state.turn}
               <button
-                onClick={this.handleClick}
+                onClick={this.handleUndersteer}
                 >
                 Understeer
+              </button>
+              <button
+                onClick={this.handleOversteer}
+                >
+                Oversteer
               </button>
             </li>
           </ul>
