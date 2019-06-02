@@ -17,9 +17,9 @@ class Drawer extends Component {
         <button onClick={this.props.onClick}>Close</button>
         <h2>Turn {this.props.corner}</h2>
 
-        <CornerArea area="Entry" />
-        <CornerArea area="Mid-corner" />
-        <CornerArea area="Exit" />
+        <CornerArea area="Entry" corner={this.props.corner} />
+        <CornerArea area="Mid-corner" corner={this.props.corner} />
+        <CornerArea area="Exit" corner={this.props.corner} />
 
 
 
