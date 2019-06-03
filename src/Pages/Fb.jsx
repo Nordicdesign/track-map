@@ -5,6 +5,7 @@ import '../App.css';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import update from 'immutability-helper';
 
 var firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -24,13 +25,13 @@ class Fb extends Component {
     super(props,context);
 
     this.state = {
-      // turn: {
-      //   entry: "neutral",
-      //   mid: "neutral",
-      //   exit: "neutral",
-      // },
-      // turn: {},
-      // turn2: null,
+      turns: [
+        ,
+        {},
+        {},
+        {},
+        {}
+      ]
     };
 
     this.updateTurn = this.updateTurn.bind(this);
@@ -38,17 +39,19 @@ class Fb extends Component {
 
   loadData() {
     let that = this; //🤯
-    firebase.database().ref('/users/0/tracks/0/turn/1').on('value', function(snapshot) {
-      let turn = snapshot.val()
-      console.log(turn);
+    firebase.database().ref('/users/0/tracks/0/turn').on('value', function(snapshot) {
+      let turns = snapshot.val()
+      console.log(turns);
 
       that.setState({
-        turn: turn
+        turns: update(that.state.turns, {$merge: turns})
       })
     });
   }
 
   updateTurn(turnID, section, behaviour) {
+
+    console.log(turnID);
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
@@ -63,68 +66,46 @@ class Fb extends Component {
 
   render() {
 
+    // let list = ["1", "2", "3"] ;
+    // let section;
+    // let that = this;
+    console.log(this.state.turns);
+
     return (
       <div>
         <div className="wrapper">
           <h1>TrackMap</h1>
           <h2>Track name</h2>
-          <p>Turn 1</p>
-          <ul>
-            <li>
-              Entry: {this.state.turn && this.state.turn["entry"] ? this.state.turn["entry"] : 'neutral'}
-              <button
-                onClick={() => this.updateTurn("1","entry","understeer")}
-                >
-                Understeer
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","entry","neutral")}
-                >
-                Neutral
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","entry","oversteer")}
-                >
-                Oversteer
-              </button>
-            </li>
-            <li>
-              Mid: {this.state.turn && this.state.turn["mid"] ? this.state.turn["mid"] : 'neutral'}
-              <button
-                onClick={() => this.updateTurn("1","mid","understeer")}
-                >
-                Understeer
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","mid","neutral")}
-                >
-                Neutral
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","mid","oversteer")}
-                >
-                Oversteer
-              </button>
-            </li>
-            <li>
-              Exit: {this.state.turn && this.state.turn["exit"] ? this.state.turn["exit"] : 'neutral'}
-              <button
-                onClick={() => this.updateTurn("1","exit","understeer")}
-                >
-                Understeer
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","exit","neutral")}
-                >
-                Neutral
-              </button>
-              <button
-                onClick={() => this.updateTurn("1","exit","oversteer")}
-                >
-                Oversteer
-              </button>
-            </li>
-          </ul>
+
+            {this.state.turns.map((turn,i) =>
+
+              <ul key={i}>
+                {console.log(turn)}
+
+                <li>Turn {i}</li>
+              {/*
+                <li id={'entry' + i}>
+                  Entry: {this.state.turns[i].entry ? this.state.turns[i].entry : 'neutral'}
+                  <button
+                    onClick={() => this.updateTurn(i,"entry","understeer")}
+                    >
+                    Understeer
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"entry","neutral")}
+                    >
+                    Neutral
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"entry","oversteer")}
+                    >
+                    Oversteer
+                  </button>
+                </li>
+                  */}
+              </ul>
+            )};
+
 
         </div>
       </div>
