@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^6.1.0",
+    "immutability-helper": "^3.0.0",
     "jquery-imagemapster": "^1.2.10",
     "node-sass": "^4.11.0",
     "prop-types": "^15.6.2",
