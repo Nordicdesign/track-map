@@ -78,14 +78,11 @@ class Fb extends Component {
           <h2>Track name</h2>
 
             {this.state.turns.map((turn,i) =>
-
-              <ul key={i}>
-                {console.log(turn)}
-
-                <li>Turn {i}</li>
-              {/*
-                <li id={'entry' + i}>
-                  Entry: {this.state.turns[i].entry ? this.state.turns[i].entry : 'neutral'}
+              <div>
+              <h3>Turn {i}</h3>
+              <ul>
+                <li key={'entry' + i}>
+                  Entry: {turn.entry ? turn.entry : 'neutral'}
                   <button
                     onClick={() => this.updateTurn(i,"entry","understeer")}
                     >
@@ -102,8 +99,45 @@ class Fb extends Component {
                     Oversteer
                   </button>
                 </li>
-                  */}
+                <li key={'mid' + i}>
+                  Mid: {turn.mid ? turn.mid : 'neutral'}
+                  <button
+                    onClick={() => this.updateTurn(i,"mid","understeer")}
+                    >
+                    Understeer
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"mid","neutral")}
+                    >
+                    Neutral
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"mid","oversteer")}
+                    >
+                    Oversteer
+                  </button>
+                </li>
+                <li key={'exit' + i}>
+                  Entry: {turn.exit ? turn.exit : 'neutral'}
+                  <button
+                    onClick={() => this.updateTurn(i,"exit","understeer")}
+                    >
+                    Understeer
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"exit","neutral")}
+                    >
+                    Neutral
+                  </button>
+                  <button
+                    onClick={() => this.updateTurn(i,"exit","oversteer")}
+                    >
+                    Oversteer
+                  </button>
+                </li>
+
               </ul>
+              </div>
             )};
 
 
