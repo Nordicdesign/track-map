@@ -15,6 +15,7 @@ class Homepage extends Component {
             <li><Link to="/spa">Spa Franchorchamps</Link></li>
             <li>Catalunya</li>
           </ul>
+          <p><Link to="/fb">Firebase test</Link></p>
           <h2>About this tool</h2>
           <p>Blah</p>
         </div>
