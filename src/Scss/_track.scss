@@ -1,0 +1,53 @@
+
+.track {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.track-turn {
+  padding-right: $baseline*2;
+  textarea {
+    display: block;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+
+  li {
+    display: flex;
+
+    span {
+      width: 30%;
+      display: block;
+    }
+    button {
+      width: 20%;
+      margin-left: $baseline;
+      line-height: 33px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: 0.3s all ease;
+
+      &:hover {
+        background: tomato;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.track-map {
+  margin: $baseline*2 0 0 $baseline;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+
+.track-turn {
+  border-bottom: 1px solid tomato;
+}
