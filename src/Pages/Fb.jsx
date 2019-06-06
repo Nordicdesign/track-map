@@ -35,6 +35,7 @@ class Fb extends Component {
     };
 
     this.updateTurn = this.updateTurn.bind(this);
+    this.registerNotes = this.registerNotes.bind(this);
   }
 
   loadData() {
@@ -47,6 +48,15 @@ class Fb extends Component {
         turns: update(that.state.turns, {$merge: turns})
       })
     });
+  }
+
+  registerNotes(event, turnID) {
+    console.log(event.target.value);
+    var updates = {};
+    updates['/users/0/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
+
+    return firebase.database().ref().update(updates);
+
   }
 
   updateTurn(turnID, section, behaviour) {
@@ -72,75 +82,89 @@ class Fb extends Component {
     console.log(this.state.turns);
 
     return (
-      <div>
         <div className="wrapper">
-          <h1>TrackMap</h1>
-          <h2>Track name</h2>
+          <div className="track">
+            <div className="track-logs">
+              <h1>Spa Francorchamps</h1>
 
-            {this.state.turns.map((turn,i) =>
-              <div>
-              <h3>Turn {i}</h3>
-              <ul>
-                <li key={'entry' + i}>
-                  Entry: {turn.entry ? turn.entry : 'neutral'}
-                  <button
-                    onClick={() => this.updateTurn(i,"entry","understeer")}
-                    >
-                    Understeer
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"entry","neutral")}
-                    >
-                    Neutral
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"entry","oversteer")}
-                    >
-                    Oversteer
-                  </button>
-                </li>
-                <li key={'mid' + i}>
-                  Mid: {turn.mid ? turn.mid : 'neutral'}
-                  <button
-                    onClick={() => this.updateTurn(i,"mid","understeer")}
-                    >
-                    Understeer
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"mid","neutral")}
-                    >
-                    Neutral
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"mid","oversteer")}
-                    >
-                    Oversteer
-                  </button>
-                </li>
-                <li key={'exit' + i}>
-                  Entry: {turn.exit ? turn.exit : 'neutral'}
-                  <button
-                    onClick={() => this.updateTurn(i,"exit","understeer")}
-                    >
-                    Understeer
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"exit","neutral")}
-                    >
-                    Neutral
-                  </button>
-                  <button
-                    onClick={() => this.updateTurn(i,"exit","oversteer")}
-                    >
-                    Oversteer
-                  </button>
-                </li>
+              {this.state.turns.map((turn,i) =>
+                  <div className="track-turn">
+                    <h3>Turn {i}</h3>
+                    <p>
+                      <label>
+                        Notes
+                        <textarea
+                          name=""
+                          id=""
+                          value={turn.notes ? turn.notes : ""}
+                          onChange={(e) => this.registerNotes(e, i)}
+                         />
+                      </label>
+                    </p>
+                    <ul>
+                    <li key={'entry' + i}>
+                      <span>Entry: {turn.entry ? turn.entry : 'neutral'}</span>
+                      <button
+                        onClick={() => this.updateTurn(i,"entry","understeer")}
+                        >
+                        Understeer
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"entry","neutral")}
+                        >
+                        Neutral
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"entry","oversteer")}
+                        >
+                        Oversteer
+                      </button>
+                    </li>
+                    <li key={'mid' + i}>
+                      <span>Mid: {turn.mid ? turn.mid : 'neutral'}</span>
+                      <button
+                        onClick={() => this.updateTurn(i,"mid","understeer")}
+                        >
+                        Understeer
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"mid","neutral")}
+                        >
+                        Neutral
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"mid","oversteer")}
+                        >
+                        Oversteer
+                      </button>
+                    </li>
+                    <li key={'exit' + i}>
+                      <span>Entry: {turn.exit ? turn.exit : 'neutral'}</span>
+                      <button
+                        onClick={() => this.updateTurn(i,"exit","understeer")}
+                        >
+                        Understeer
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"exit","neutral")}
+                        >
+                        Neutral
+                      </button>
+                      <button
+                        onClick={() => this.updateTurn(i,"exit","oversteer")}
+                        >
+                        Oversteer
+                      </button>
+                    </li>
 
-              </ul>
-              </div>
-            )};
+                  </ul>
+                </div>
+              )};
+          </div>
 
-
+          <div className="track-map">
+            <img src="/images/Spa-Francorchamps_of_Belgium.svg" alt="Map of Spa Francorchamps circuit"/>
+          </div>
         </div>
       </div>
     );
