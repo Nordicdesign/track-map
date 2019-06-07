@@ -1,14 +1,11 @@
-@import "reset";
-@import "variables";
-@import "spacing";
-@import "typography";
-@import "track";
+@import "styles/reset";
+@import "styles/variables";
+@import "styles/spacing";
+@import "styles/typography";
+@import "styles/track";
 
 .wrapper {
-  width: 96%;
   padding: $baseline;
-  margin: $baseline*2 auto;
-  // background: #f2f3f4;
 }
 
 .listCircuits {

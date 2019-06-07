@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
-import '../App.css';
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from "firebase/app";
 import "firebase/auth";
