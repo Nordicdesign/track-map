@@ -25,6 +25,7 @@ class Fb extends Component {
     super(props,context);
 
     this.state = {
+      trackName: "Spa Francorchamps",
       turns: [
         ,
         {},
@@ -71,6 +72,10 @@ class Fb extends Component {
   }
 
   componentDidMount() {
+    var updates = {};
+    updates['/users/0/tracks/0/name'] = "Spa Francorchamps";
+
+    firebase.database().ref().update(updates);
     this.loadData();
   }
 
@@ -85,7 +90,7 @@ class Fb extends Component {
         <div className="wrapper">
           <div className="track">
             <div className="track-logs">
-              <h1>Spa Francorchamps</h1>
+              <h1>{this.state.trackName}</h1>
 
               {this.state.turns.map((turn,i) =>
                   <div className="track-turn">
