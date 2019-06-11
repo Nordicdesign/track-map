@@ -8,34 +8,77 @@
   }
 }
 
-.track-turn {
-  padding-right: $baseline*2;
+.corner-areas {
+  display: flex;
+  flex-direction: row;
+  padding-left: 58px;
+
+  li {
+    width: 146px;
+    margin-right: $baseline;
+    font-size: 1.2rem;
+    border-bottom: 1px solid tomato;
+    padding-bottom: 4px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.track-turn-individual {
+  div {
+    display: flex;
+    flex-direction: row;
+
+    p {
+      background: #333;
+      color: white;
+      font-size: 2rem;
+      line-height: 44px;
+      height: 44px;
+      width: 44px;
+      text-align: center;
+      display: inline-block;
+      margin-right: $baseline;
+    }
+    ul {
+      display: flex;
+      flex-direction: row;
+
+      li {
+
+        margin-right: $baseline;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        span {
+          width: 100%;
+        }
+
+        button {
+          width: 20%;
+          margin-left: $baseline;
+          line-height: 33px;
+          font-size: 1.6rem;
+          cursor: pointer;
+          transition: 0.3s all ease;
+
+          &:hover {
+            background: tomato;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
   textarea {
     display: block;
     border: 1px solid #ccc;
     width: 100%;
-  }
-
-  li {
-    display: flex;
-
-    span {
-      width: 30%;
-      display: block;
-    }
-    button {
-      width: 20%;
-      margin-left: $baseline;
-      line-height: 33px;
-      font-size: 1.6rem;
-      cursor: pointer;
-      transition: 0.3s all ease;
-
-      &:hover {
-        background: tomato;
-        color: #fff;
-      }
-    }
   }
 }
 
@@ -45,9 +88,4 @@
   img {
     max-width: 100%;
   }
-}
-
-
-.track-turn {
-  border-bottom: 1px solid tomato;
 }
