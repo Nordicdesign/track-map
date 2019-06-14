@@ -101,55 +101,61 @@ class Spa extends Component {
 
                         <ul>
                           <li key={'entry' + i}>
-                            <span>Entry: {turn.entry ? turn.entry : 'neutral'}</span>
                             <button
                               onClick={() => this.updateTurn(i,"entry","understeer")}
+                              className={turn.entry === "understeer" ? "selected" : ""}
                               >
                               U
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"entry","neutral")}
+                              className={turn.entry === "neutral" ? "selected" : ""}
                               >
                               N
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"entry","oversteer")}
+                              className={turn.entry === "oversteer" ? "selected" : ""}
                               >
                               O
                             </button>
                           </li>
                           <li key={'mid' + i}>
-                            <span>Mid: {turn.mid ? turn.mid : 'neutral'}</span>
                             <button
                               onClick={() => this.updateTurn(i,"mid","understeer")}
+                              className={turn.mid === "understeer" ? "selected" : ""}
                               >
                               U
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"mid","neutral")}
+                              className={turn.mid === "neutral" ? "selected" : ""}
                               >
                               N
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"mid","oversteer")}
+                              className={turn.mid === "oversteer" ? "selected" : ""}
                               >
                               O
                             </button>
                           </li>
                           <li key={'exit' + i}>
-                            <span>Entry: {turn.exit ? turn.exit : 'neutral'}</span>
                             <button
                               onClick={() => this.updateTurn(i,"exit","understeer")}
+                              className={turn.exit === "understeer" ? "selected" : ""}
                               >
                               U
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"exit","neutral")}
+                              className={turn.exit === "neutral" ? "selected" : ""}
                               >
                               N
                             </button>
                             <button
                               onClick={() => this.updateTurn(i,"exit","oversteer")}
+                              className={turn.exit === "oversteer" ? "selected" : ""}
                               >
                               O
                             </button>
