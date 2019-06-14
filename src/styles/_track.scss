@@ -1,24 +1,33 @@
 
 .track {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 0.9fr 1.1fr;
 
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
+  }
+
+  h1 {
+    margin-left: 55px;
   }
 }
 
 .corner-areas {
   display: flex;
   flex-direction: row;
-  padding-left: 58px;
+  padding-left: 55px;
+  margin: $baseline*2 0 $baseline;
 
   li {
     width: 146px;
-    margin-right: $baseline;
+    margin-right: $baseline*2;
     font-size: 1.2rem;
-    border-bottom: 1px solid tomato;
-    padding-bottom: 4px;
+    background: #ddd;
+    line-height: 24px;
+    padding: 4px 0 4px $baseline/2;
+    border-bottom: 1px solid #333;
+    text-align: center;
+    font-weight: 700;
 
     &:last-child {
       margin-right: 0;
@@ -41,14 +50,14 @@
       text-align: center;
       display: inline-block;
       margin-right: $baseline;
+      margin-left: -$baseline;
     }
     ul {
       display: flex;
       flex-direction: row;
 
       li {
-
-        margin-right: $baseline;
+        margin-right: $baseline*1.5;
 
         &:last-child {
           margin-right: 0;
@@ -59,14 +68,20 @@
         }
 
         button {
-          width: 20%;
-          margin-left: $baseline;
+          width: 44px;
+          margin-left: $baseline/2;
           line-height: 33px;
           font-size: 1.6rem;
           cursor: pointer;
           transition: 0.3s all ease;
+          border-radius: 2px;
 
           &:hover {
+            background: tomato;
+            color: #fff;
+          }
+
+          &.selected {
             background: tomato;
             color: #fff;
           }
@@ -75,15 +90,29 @@
     }
   }
 
-  textarea {
-    display: block;
-    border: 1px solid #ccc;
-    width: 100%;
+  .track-turn-notes {
+    margin: 0 0 $baseline*2 55px;
+
+    label {
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    textarea {
+      display: block;
+      border: none;
+      border-bottom: 1px solid #333;
+      font-size: 1.4rem;
+      width: 100%;
+    }
   }
+
+
 }
 
 .track-map {
   margin: $baseline*2 0 0 $baseline;
+  padding-left: $baseline*4;
 
   img {
     max-width: 100%;
