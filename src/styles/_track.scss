@@ -15,7 +15,7 @@
 .corner-areas {
   display: flex;
   flex-direction: row;
-  padding-left: 55px;
+  padding-left: 94px;
   margin: $baseline*2 0 $baseline;
 
   li {
@@ -44,13 +44,18 @@
       background: #333;
       color: white;
       font-size: 2rem;
-      line-height: 44px;
-      height: 44px;
-      width: 44px;
+      line-height: 26px;
+      width: 84px;
       text-align: center;
       display: inline-block;
       margin-right: $baseline;
       margin-left: -$baseline;
+
+      span {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2;
+      }
     }
     ul {
       display: flex;
@@ -91,7 +96,7 @@
   }
 
   .track-turn-notes {
-    margin: 0 0 $baseline*2 55px;
+    margin: 0 0 $baseline*2 94px;
 
     label {
       font-weight: bold;
@@ -103,7 +108,7 @@
       border: none;
       border-bottom: 1px solid #333;
       font-size: 1.4rem;
-      width: 100%;
+      width: 97%;
     }
   }
 

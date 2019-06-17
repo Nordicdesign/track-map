@@ -27,7 +27,7 @@
 
 img {
   max-width: 100%;
-  max-height: 90vh;
+  // max-height: 90vh;
   @media all and (orientation: landscape) and (max-width: 700px) {
     max-height: 85vh;
   }
