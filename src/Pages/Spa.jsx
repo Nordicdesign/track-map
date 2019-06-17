@@ -5,6 +5,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import update from 'immutability-helper';
+import TrackLogs from '../Components/TrackLogs'
 
 var firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -81,106 +82,16 @@ class Spa extends Component {
   }
 
   render() {
-    console.log(this.state.turns);
 
     return (
-        <div className="wrapper">
-          <div className="track">
-            <div className="track-logs">
-              <h1>{this.state.trackName}</h1>
-
-              <ul className="corner-areas">
-                <li>Entry</li>
-                <li>Mid</li>
-                <li>Exit</li>
-              </ul>
-
-              {this.state.turns.map((turn,i) =>
-                  <ul className="track-turn">
-                    <li className="track-turn-individual">
-                      <div>
-                        <p>{i}</p>
-
-                        <ul>
-                          <li key={'entry' + i}>
-                            <button
-                              onClick={() => this.updateTurn(i,"entry","understeer")}
-                              className={turn.entry === "understeer" ? "selected" : ""}
-                              >
-                              U
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"entry","neutral")}
-                              className={turn.entry === "neutral" ? "selected" : ""}
-                              >
-                              N
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"entry","oversteer")}
-                              className={turn.entry === "oversteer" ? "selected" : ""}
-                              >
-                              O
-                            </button>
-                          </li>
-                          <li key={'mid' + i}>
-                            <button
-                              onClick={() => this.updateTurn(i,"mid","understeer")}
-                              className={turn.mid === "understeer" ? "selected" : ""}
-                              >
-                              U
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"mid","neutral")}
-                              className={turn.mid === "neutral" ? "selected" : ""}
-                              >
-                              N
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"mid","oversteer")}
-                              className={turn.mid === "oversteer" ? "selected" : ""}
-                              >
-                              O
-                            </button>
-                          </li>
-                          <li key={'exit' + i}>
-                            <button
-                              onClick={() => this.updateTurn(i,"exit","understeer")}
-                              className={turn.exit === "understeer" ? "selected" : ""}
-                              >
-                              U
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"exit","neutral")}
-                              className={turn.exit === "neutral" ? "selected" : ""}
-                              >
-                              N
-                            </button>
-                            <button
-                              onClick={() => this.updateTurn(i,"exit","oversteer")}
-                              className={turn.exit === "oversteer" ? "selected" : ""}
-                              >
-                              O
-                            </button>
-                          </li>
-
-                        </ul>
-                      </div>
-
-                      <p className="track-turn-notes">
-                        <label>
-                          Notes
-                          <textarea
-                            name=""
-                            id=""
-                            value={turn.notes ? turn.notes : ""}
-                            onChange={(e) => this.registerNotes(e, i)}
-                           />
-                        </label>
-                      </p>
-                    </li>
-                </ul>
-              )};
-          </div>
+      <div className="wrapper">
+        <div className="track">
+          <TrackLogs
+            turns={this.state.turns}
+            trackNam={this.state.trackName}
+            updateTurn={this.updateTurn}
+            registerNotes={this.registerNotes}
+          />
 
           <div className="track-map">
             <img src="/images/Spa-Francorchamps_of_Belgium.svg" alt="Map of Spa Francorchamps circuit"/>
