@@ -8,7 +8,7 @@
   }
 
   h1 {
-    margin-left: 55px;
+    margin-left: 94px;
   }
 }
 
@@ -50,6 +50,7 @@
       display: inline-block;
       margin-right: $baseline;
       margin-left: -$baseline;
+      margin-bottom: 0;
 
       span {
         display: block;

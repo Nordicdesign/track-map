@@ -34,6 +34,28 @@ class LaSarthe extends Component {
         {},
         {},
         {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
         {}
       ]
     };
@@ -76,7 +98,7 @@ class LaSarthe extends Component {
 
   componentDidMount() {
     var updates = {};
-    updates['/users/0/tracks/1/name'] = "Circuit de La Sarthe";
+    updates['/users/0/tracks/1/name'] = "Circuit de la Sarthe";
 
     firebase.database().ref().update(updates);
     this.loadData();
@@ -85,18 +107,48 @@ class LaSarthe extends Component {
   render() {
     console.log(this.state.turns);
 
+    const trackTurns = [
+      "",
+      "Dunlop curve",
+      "Dunlop chicane 1",
+      "Dunlop chicane 2",
+      "Esses",
+      "",
+      "",
+      "",
+      "Tertre Rougue",
+      "1st chicane",
+      "",
+      "",
+      "2nd chicane",
+      "",
+      "",
+      "",
+      "Mulsanne",
+      "",
+      "Indianapolis",
+      "Arnage",
+      "Porsche curve 1",
+      "Porsche curve 2",
+      "Porsche curve 2",
+      "Esses du Karting",
+      "Corvette curve",
+      "Ford curves"
+    ]
+
     return (
       <div className="wrapper">
         <div className="track">
           <TrackLogs
             turns={this.state.turns}
-            trackNam={this.state.trackName}
+            trackName={this.state.trackName}
             updateTurn={this.updateTurn}
             registerNotes={this.registerNotes}
+            turnNames={trackTurns}
           />
 
           <div className="track-map">
-            <img src="/images/LeMans24BlankMapSmall.jpg" alt="Map of La Sarthe circuit"/>
+            <img src="/images/la-sarthe.png" alt="Map of la Sarthe circuit"/>
           </div>
         </div>
       </div>
