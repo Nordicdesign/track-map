@@ -16,7 +16,9 @@ var firebaseConfig = {
     appId: process.env.REACT_APP_APPID
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
 
 class Spa extends Component {
 
