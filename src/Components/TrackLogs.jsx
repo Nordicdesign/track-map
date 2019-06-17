@@ -18,7 +18,11 @@ class TrackLogs extends Component {
             <ul className="track-turn">
               <li className="track-turn-individual">
                 <div>
-                  <p>{i}</p>
+                  <p>
+                    {i}
+                    <span>{this.props.turnNames[i]}</span>
+                  </p>
+
 
                   <ul>
                     <li key={'entry' + i}>
