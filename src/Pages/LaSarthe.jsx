@@ -21,13 +21,14 @@ var firebaseConfig = {
     firebase.initializeApp(firebaseConfig);
   }
 
-class Spa extends Component {
+
+class LaSarthe extends Component {
 
   constructor(props,context) {
     super(props,context);
 
     this.state = {
-      trackName: "Spa Francorchamps",
+      trackName: "Circuit de La Sarthe",
       turns: [
         ,
         {},
@@ -43,7 +44,7 @@ class Spa extends Component {
 
   loadData() {
     let that = this; //🤯
-    firebase.database().ref('/users/0/tracks/0/turn').on('value', function(snapshot) {
+    firebase.database().ref('/users/0/tracks/1/turn').on('value', function(snapshot) {
       let turns = snapshot.val()
       console.log(turns);
 
@@ -56,7 +57,7 @@ class Spa extends Component {
   registerNotes(event, turnID) {
     console.log(event.target.value);
     var updates = {};
-    updates['/users/0/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
+    updates['/users/0/tracks/1/turn/' + turnID + '/notes'] = event.target.value;
 
     return firebase.database().ref().update(updates);
 
@@ -68,20 +69,21 @@ class Spa extends Component {
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
-    updates['/users/0/tracks/0/turn/' + turnID + '/' + section] = behaviour;
+    updates['/users/0/tracks/1/turn/' + turnID + '/' + section] = behaviour;
 
     return firebase.database().ref().update(updates);
   }
 
   componentDidMount() {
     var updates = {};
-    updates['/users/0/tracks/0/name'] = "Spa Francorchamps";
+    updates['/users/0/tracks/1/name'] = "Circuit de La Sarthe";
 
     firebase.database().ref().update(updates);
     this.loadData();
   }
 
   render() {
+    console.log(this.state.turns);
 
     return (
       <div className="wrapper">
@@ -94,7 +96,7 @@ class Spa extends Component {
           />
 
           <div className="track-map">
-            <img src="/images/Spa-Francorchamps_of_Belgium.svg" alt="Map of Spa Francorchamps circuit"/>
+            <img src="/images/LeMans24BlankMapSmall.jpg" alt="Map of La Sarthe circuit"/>
           </div>
         </div>
       </div>
@@ -102,4 +104,4 @@ class Spa extends Component {
   }
 }
 
-export default Spa;
+export default LaSarthe;
