@@ -8,6 +8,7 @@ import './App.scss';
 import Header from './Components/Header'
 import Homepage from './Pages/Homepage'
 import Spa from './Pages/Spa'
+import LaSarthe from './Pages/LaSarthe'
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
 
              <Route exact path="/" component={Homepage}/>
              <Route path="/spa" component={Spa}/>
+             <Route path="/le-mans" component={LaSarthe}/>
 
           </div>
       </Router>
