@@ -31,7 +31,6 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE }
-    console.log(this.state);
   }
 
   onSubmit = event => {
@@ -43,14 +42,25 @@ class Header extends Component {
       //   this.setState({ ...INITIAL_STATE });
       //   // this.props.history.push(ROUTES.SPA);
       // })
-      .then(something => {
-        console.log('yeah!');
-        // this.setState
-
-      })
       .catch(error => {
         this.setState({ error });
       });
+  }
+
+  logout = () => {
+    firebase.auth().signOut().then(function() {
+      console.log("logged out!");
+    })
+    .then(authUser => {
+      this.setState({
+        authUser: null,
+        userEmail: null,
+        error: null
+      })
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
   }
 
   onChange = event => {
@@ -58,16 +68,13 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    console.log(this.state);
     let that = this;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         var userEmail = user.email;
-        var isAnonymous = user.isAnonymous;
         var uid = user.uid;
 
-        console.log(isAnonymous);
         console.log(uid);
         console.log(userEmail);
         // ...
@@ -80,42 +87,7 @@ class Header extends Component {
         console.log("user signed out");
       }
     });
-    // var user = firebase.auth().currentUser;
-    // var name, email, photoUrl, uid, emailVerified;
-    // if (user != null) {
-    //   name = user.displayName;
-    //   email = user.email;
-    //   photoUrl = user.photoURL;
-    //   emailVerified = user.emailVerified;
-    //   uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-    //                    // this value to authenticate with your backend server, if
-    //                    // you have one. Use User.getToken() instead.
-    // }
-    // console.log(user);
-
   }
-
-  componentDidUpdate() {
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     // User is signed in.
-    //     var useremail = user.email;
-    //     var isAnonymous = user.isAnonymous;
-    //     var uid = user.uid;
-    //
-    //     console.log(isAnonymous);
-    //     console.log(uid);
-    //     console.log(useremail);
-    //     // ...
-    //   } else {
-    //     // User is signed out.
-    //     console.log("user signed out");
-    //   }
-    // });
-
-  }
-
-
 
   render() {
 
@@ -126,11 +98,8 @@ class Header extends Component {
     } = this.state;
 
     const isInvalid =
-      // passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '';
-
-      console.log(this.state);
 
     return (
       <header>
@@ -157,12 +126,10 @@ class Header extends Component {
           {error && <p>{error.message}</p>}
         </form>
 
-        : <p>{this.state.userEmail}. <a>Sign out</a></p> }
+        : <p>{this.state.userEmail}. <button onClick={this.logout}>Sign out</button></p> }
       </header>
     )
   }
 }
 
 export default Header;
-
-// export {SignIn};

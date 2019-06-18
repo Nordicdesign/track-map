@@ -1,6 +1,6 @@
 header {
   background: #333;
-  padding-left: $baseline;
+  padding: 0 $baseline;
 
   display: flex;
   flex-direction: row;
@@ -8,6 +8,7 @@ header {
 
   p {
     line-height: 33px;
+    margin-bottom: 0;
     color: white;
     a {
       color: #fff;
