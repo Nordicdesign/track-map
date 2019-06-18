@@ -4,22 +4,9 @@ import React, { Component } from 'react';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import Firebase from "../Components/Firebase"
 import update from 'immutability-helper';
 import TrackLogs from '../Components/TrackLogs'
-
-var firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_AUTHDOMAIN,
-    databaseURL: "https://trackmap-f1119.firebaseio.com",
-    projectId: process.env.REACT_APP_PROJECTID,
-    storageBucket: "",
-    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID
-  };
-  // Initialize Firebase
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
 
 class Spa extends Component {
 
@@ -83,14 +70,17 @@ class Spa extends Component {
 
   render() {
 
+    const trackTurns = [ ];
+
     return (
       <div className="wrapper">
         <div className="track">
           <TrackLogs
             turns={this.state.turns}
-            trackNam={this.state.trackName}
+            trackName={this.state.trackName}
             updateTurn={this.updateTurn}
             registerNotes={this.registerNotes}
+            turnNames={trackTurns}
           />
 
           <div className="track-map">

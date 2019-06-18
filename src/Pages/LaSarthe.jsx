@@ -2,25 +2,11 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from "firebase/app";
-import "firebase/auth";
+// import "firebase/auth";
 import "firebase/database";
+import Firebase from "../Components/Firebase"
 import update from 'immutability-helper';
 import TrackLogs from '../Components/TrackLogs'
-
-var firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_AUTHDOMAIN,
-    databaseURL: "https://trackmap-f1119.firebaseio.com",
-    projectId: process.env.REACT_APP_PROJECTID,
-    storageBucket: "",
-    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID
-  };
-  // Initialize Firebase
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-
 
 class LaSarthe extends Component {
 
@@ -105,7 +91,7 @@ class LaSarthe extends Component {
   }
 
   render() {
-    console.log(this.state.turns);
+    // console.log(this.state.turns);
 
     const trackTurns = [
       "",
