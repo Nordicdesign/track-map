@@ -2,8 +2,13 @@ header {
   background: #333;
   padding-left: $baseline;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
   p {
     line-height: 33px;
+    color: white;
     a {
       color: #fff;
       text-decoration: none;
