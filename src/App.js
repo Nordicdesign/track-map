@@ -7,7 +7,7 @@ import './App.scss'
 import * as ROUTES from './constants/routes';
 
 import Header from './Components/Header'
-import Homepage from './Pages/Homepage'
+import {Homepage} from './Pages/Homepage'
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
 
