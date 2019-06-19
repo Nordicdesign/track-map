@@ -43,11 +43,15 @@ class Spa extends Component {
     this.registerNotes = this.registerNotes.bind(this);
   }
 
-  loadData() {
+  loadData(uid) {
+    console.log(uid);
     let that = this; //🤯
-    firebase.database().ref('/users/0/tracks/0/turn').on('value', function(snapshot) {
-      let turns = snapshot.val()
-      console.log(turns);
+    firebase.database().ref('/users/' + uid + '/tracks/0/turn').on('value', function(snapshot) {
+
+      // if no data exists have an empty object, rather than null
+      let turns;
+      !snapshot.val() ? turns = {} : turns = snapshot.val();
+
       that.setState({
         turns: update(that.state.turns, {$merge: turns})
       })
@@ -57,15 +61,15 @@ class Spa extends Component {
   registerNotes(event, turnID) {
     console.log(event.target.value);
     var updates = {};
-    updates['/users/0/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
+    updates['/users/'+ this.state.authUser +'/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
     return firebase.database().ref().update(updates);
   }
 
   updateTurn(turnID, section, behaviour) {
-    console.log(turnID);
+    // console.log(this.state.authUser);
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
-    updates['/users/0/tracks/0/turn/' + turnID + '/' + section] = behaviour;
+    updates['/users/' + this.state.authUser + '/tracks/0/turn/' + turnID + '/' + section] = behaviour;
     return firebase.database().ref().update(updates);
   }
 
@@ -79,8 +83,16 @@ class Spa extends Component {
         that.setState({
           authUser: uid,
           userEmail: userEmail
+        }, function() {
+          console.log("waiting for the state to finish");
+          // get the data
+          var updates = {};
+          updates['/users/'+ this.state.authUser +'/tracks/0/name'] = "Spa Francorchamps";
+          firebase.database().ref().update(updates);
+          this.loadData(this.state.authUser);
         })
       } else {
+
         that.setState({
           authUser: null,
           userEmail: null,
@@ -88,10 +100,8 @@ class Spa extends Component {
         })
       }
     });
-    var updates = {};
-    updates['/users/0/tracks/0/name'] = "Spa Francorchamps";
-    firebase.database().ref().update(updates);
-    this.loadData();
+
+
   }
 
   render() {
@@ -104,8 +114,8 @@ class Spa extends Component {
           <TrackLogs
             turns={this.state.turns}
             trackName={this.state.trackName}
-            updateTurn={this.state.updateTurn}
-            registerNotes={this.state.registerNotes}
+            updateTurn={this.updateTurn}
+            registerNotes={this.registerNotes}
             turnNames={trackTurns}
           />
 
