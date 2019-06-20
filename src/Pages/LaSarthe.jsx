@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import * as firebase from "firebase/app";
 import "firebase/database";
 import Firebase from "../Components/Firebase"
@@ -52,9 +51,11 @@ class LaSarthe extends Component {
 
   loadData() {
     let that = this; //🤯
-    firebase.database().ref('/users/0/tracks/1/turn').on('value', function(snapshot) {
-      let turns = snapshot.val()
-      console.log(turns);
+    firebase.database().ref('/users/' + this.state.authUser + '/tracks/1/turn').on('value', function(snapshot) {
+
+      // if no data exists have an empty object, rather than null
+      let turns;
+      !snapshot.val() ? turns = {} : turns = snapshot.val();
 
       that.setState({
         turns: update(that.state.turns, {$merge: turns})
@@ -63,21 +64,19 @@ class LaSarthe extends Component {
   }
 
   registerNotes(event, turnID) {
-    console.log(event.target.value);
     var updates = {};
-    updates['/users/0/tracks/1/turn/' + turnID + '/notes'] = event.target.value;
+    updates['/users/'+ this.state.authUser +'/tracks/1/turn/' + turnID + '/notes'] = event.target.value;
     return firebase.database().ref().update(updates);
   }
 
   updateTurn(turnID, section, behaviour) {
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
-    updates['/users/0/tracks/1/turn/' + turnID + '/' + section] = behaviour;
+    updates['/users/' + this.state.authUser + '/tracks/1/turn/' + turnID + '/' + section] = behaviour;
     return firebase.database().ref().update(updates);
   }
 
   componentDidMount() {
-    // check the user
     let that = this;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -87,6 +86,14 @@ class LaSarthe extends Component {
         that.setState({
           authUser: uid,
           userEmail: userEmail
+        }, function() {
+          console.log("waiting for the state to finish");
+          // get the data
+          var updates = {};
+          updates['/users/'+ this.state.authUser +'/tracks/1/name'] = "Circuit de La Sarthe";
+          firebase.database().ref().update(updates);
+          this.loadData();
+          console.log("data loaded");
         })
       } else {
         that.setState({
@@ -96,11 +103,6 @@ class LaSarthe extends Component {
         })
       }
     });
-    // do something about the track
-    var updates = {};
-    updates['/users/0/tracks/1/name'] = "Circuit de la Sarthe";
-    firebase.database().ref().update(updates);
-    this.loadData();
   }
 
   render() {
@@ -135,7 +137,7 @@ class LaSarthe extends Component {
 
     return (
       <div className="wrapper">
-        {!this.state.authUser ? <NotLoggedIn/> : 
+        {!this.state.authUser ? <NotLoggedIn/> :
           <div className="track">
             <TrackLogs
               turns={this.state.turns}

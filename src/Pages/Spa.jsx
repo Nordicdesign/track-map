@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import Firebase from "../Components/Firebase"
 import * as firebase from 'firebase/app'
 import "firebase/database"
@@ -43,10 +42,9 @@ class Spa extends Component {
     this.registerNotes = this.registerNotes.bind(this);
   }
 
-  loadData(uid) {
-    console.log(uid);
+  loadData() {
     let that = this; //🤯
-    firebase.database().ref('/users/' + uid + '/tracks/0/turn').on('value', function(snapshot) {
+    firebase.database().ref('/users/' + this.state.authUser + '/tracks/0/turn').on('value', function(snapshot) {
 
       // if no data exists have an empty object, rather than null
       let turns;
@@ -59,14 +57,12 @@ class Spa extends Component {
   }
 
   registerNotes(event, turnID) {
-    console.log(event.target.value);
     var updates = {};
     updates['/users/'+ this.state.authUser +'/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
     return firebase.database().ref().update(updates);
   }
 
   updateTurn(turnID, section, behaviour) {
-    // console.log(this.state.authUser);
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
     updates['/users/' + this.state.authUser + '/tracks/0/turn/' + turnID + '/' + section] = behaviour;
@@ -89,7 +85,8 @@ class Spa extends Component {
           var updates = {};
           updates['/users/'+ this.state.authUser +'/tracks/0/name'] = "Spa Francorchamps";
           firebase.database().ref().update(updates);
-          this.loadData(this.state.authUser);
+          this.loadData();
+          console.log("data loaded");
         })
       } else {
 
