@@ -3,6 +3,7 @@ import * as ROUTES from '../constants/routes'
 // import Firebase from './Firebase'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
+import * as renderIf from 'render-if';
 
 var firebaseConfig = {
     apiKey: "AIzaSyD2-YAZ1Spbo1dltQItBTcUqcq_ues930k",
@@ -26,11 +27,41 @@ const INITIAL_STATE = {
   authUser: null,
 };
 
+function SignInForm(props) {
+  return (
+    <form onSubmit={props.onSubmit}>
+      <input
+        name="email"
+        value={props.email}
+        onChange={props.onChange}
+        type="text"
+        placeholder="Email Address"
+      />
+      <input
+        name="passwordOne"
+        value={props.passwordOne}
+        onChange={props.onChange}
+        type="password"
+        placeholder="Password"
+      />
+    <button disabled={props.isInvalid} type="submit">Sign In</button>
+
+      {props.error && <p>{props.error.message}</p>}
+    </form>
+  )
+}
+
+function User(props) {
+  return (
+    <span>{props.userEmail} - <a onClick={props.logout}>log out</a></span>
+  )
+}
+
 class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { ...INITIAL_STATE }
+    this.state = { loading: true, ...INITIAL_STATE }
   }
 
   onSubmit = event => {
@@ -101,32 +132,24 @@ class Header extends Component {
       passwordOne === '' ||
       email === '';
 
+
     return (
       <header>
         <p><a href={ROUTES.LANDING}>TrackMap</a></p>
-
-        {!this.state.authUser ?
-          <form onSubmit={this.onSubmit}>
-          <input
-            name="email"
-            value={email}
+        <p>{renderIf(1+1 === 2)(`this actually works`)}</p>
+        <p>
+        {
+          !this.state.authUser ?
+          <SignInForm
+            onSubmit={this.onSubmit}
             onChange={this.onChange}
-            type="text"
-            placeholder="Email Address"
+          /> :
+          <User
+            userEmail={this.state.userEmail}
+            logout={this.logout}
           />
-          <input
-            name="passwordOne"
-            value={passwordOne}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-          <button disabled={isInvalid} type="submit">Sign In</button>
-
-          {error && <p>{error.message}</p>}
-        </form>
-
-        : <p>{this.state.userEmail}. <button onClick={this.logout}>Sign out</button></p> }
+        }
+      </p>
       </header>
     )
   }
