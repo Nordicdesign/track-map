@@ -1,0 +1,24 @@
+label {
+  display: block;
+  font-size: 1.6rem;
+  margin-bottom: $baseline*2;
+
+}
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 40px;
+  width: 250px;
+  padding-left: $baseline/2;
+  margin-top: $baseline/2;
+  display: block;
+  font-size: 1.6rem;
+}
+
+button {
+  min-width: 150px;
+  height: 40px;
+  font-size: 1.6rem;
+}

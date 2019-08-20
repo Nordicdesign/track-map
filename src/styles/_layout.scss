@@ -1,1 +1,10 @@
 // LAYOUT
+
+.not-loggged-in {
+  display: flex;
+  flex-direction: row;
+
+  div {
+    width: 50%;
+  }
+}
