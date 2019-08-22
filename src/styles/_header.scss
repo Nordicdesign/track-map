@@ -1,12 +1,19 @@
 header {
   background: #333;
-  padding-left: $baseline;
+  padding: 0 $baseline;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   p {
     line-height: 33px;
+    margin-bottom: 0;
+    color: white;
     a {
       color: #fff;
       text-decoration: none;
+      cursor: pointer;
     }
   }
 }
