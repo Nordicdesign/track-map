@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import * as ROUTES from '../constants/routes'
-// import Firebase from './Firebase'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
-import * as renderIf from 'render-if';
 
 const INITIAL_STATE = {
   username: '',
@@ -67,13 +66,17 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <p><a href={ROUTES.LANDING}>TrackMap</a></p>
+        <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
         <p>
-        { this.state.authUser ?
-          <User
-            userEmail={this.state.userEmail}
-            logout={this.logout}
-          /> : `` }
+        { this.state.authUser
+          ?
+            <User
+              userEmail={this.state.userEmail}
+              logout={this.logout}
+            />
+          :
+            <Link to={ROUTES.SIGN_IN}>Log in</Link>
+        }
       </p>
       </header>
     )

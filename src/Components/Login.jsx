@@ -1,8 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
+import { withRouter } from 'react-router-dom'
 
 var firebaseConfig = {
     apiKey: "AIzaSyD2-YAZ1Spbo1dltQItBTcUqcq_ues930k",
@@ -43,9 +44,9 @@ class Login extends Component {
   onSubmit = event => {
     event.preventDefault();
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(authUser => {
+      .then(() => {
         // this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        this.props.history.push(ROUTES.LANDING);
       })
     .catch(error => {
       this.setState({ error });
@@ -104,5 +105,5 @@ const LoginLink = (props) => (
   </p>
 );
 
-export default Login;
+export default withRouter(Login);
 export {LoginLink};
