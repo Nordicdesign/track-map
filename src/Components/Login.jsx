@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
@@ -90,7 +90,8 @@ class Login extends Component {
           </label>
         <button type="submit" onClick={this.onSubmit}>Log In</button>
 
-          {error && <p>{error.message}</p>}
+          {error && <p className="error-handling">{error.message}</p>}
+          <p>Forgot your password? <Link to={ROUTES.PASSWORD_FORGET}>Get a new one</Link></p>
         </form>
       </div>
     );
