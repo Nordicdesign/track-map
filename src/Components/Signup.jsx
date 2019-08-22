@@ -85,7 +85,7 @@ class SignUpForm extends Component {
         />
         <button disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign Up</button>
 
-        {error && <p>{error.message}</p>}
+        {error && <p className="error-handling">{error.message}</p>}
       </form>
     );
   }

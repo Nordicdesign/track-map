@@ -6,7 +6,8 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 40px;
@@ -21,4 +22,10 @@ button {
   min-width: 150px;
   height: 40px;
   font-size: 1.6rem;
+}
+
+
+.error-handling {
+  margin-top: $baseline;
+  color: tomato;
 }
