@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import * as firebase from "firebase/app";
-import "firebase/auth";
+// import { Link } from 'react-router-dom'
+import * as firebase from "firebase/app"
+import "firebase/auth"
 import * as ROUTES from '../constants/routes'
 
 var firebaseConfig = {
@@ -63,34 +64,46 @@ class Login extends Component {
     //   email === '';
 
     return (
-      <form>
-        <label>
-          Email address
-          <input
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            type="text"
-            placeholder="Email Address"
-          />
-        </label>
+      <div>
+        <h1>Log in</h1>
+        <form>
+          <label>
+            Email address
+            <input
+              name="email"
+              value={email}
+              onChange={this.handleChange}
+              type="text"
+              placeholder="Email Address"
+            />
+          </label>
 
-        <label>
-          Password
-          <input
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            type="password"
-            placeholder="Password"
-          />
-        </label>
-      <button type="submit" onClick={this.onSubmit}>Sign In</button>
+          <label>
+            Password
+            <input
+              name="password"
+              value={password}
+              onChange={this.handleChange}
+              type="password"
+              placeholder="Password"
+            />
+          </label>
+        <button type="submit" onClick={this.onSubmit}>Log In</button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+          {error && <p>{error.message}</p>}
+        </form>
+      </div>
     );
   }
 }
 
+const LoginLink = (props) => (
+  <div className="login-link">
+  <p>
+    Already a user? <a onClick={props.toggle}>Log in</a>
+  </p>
+  </div>
+);
+
 export default Login;
+export {LoginLink};

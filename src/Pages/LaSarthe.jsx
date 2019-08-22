@@ -4,7 +4,7 @@ import "firebase/database";
 import Firebase from "../Components/Firebase"
 import update from 'immutability-helper';
 import TrackLogs from '../Components/TrackLogs'
-import {NotLoggedIn} from '../Components/NotLoggedIn'
+import NotLoggedIn from '../Components/NotLoggedIn'
 
 class LaSarthe extends Component {
 

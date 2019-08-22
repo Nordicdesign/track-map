@@ -1,17 +1,39 @@
-import React from 'react'
-import Login from './Login'
+import React, {Component} from 'react'
+import Login, {LoginLink} from './Login'
+import SignUpForm, {SignUpLink} from './Signup'
 
-export const NotLoggedIn = () => {
-  return (
-    <div className="not-loggged-in">
-      <div>
-        <h1>Create an account</h1>
-      </div>
-      <div>
-        <h1>Log in</h1>
+class NotLoggedIn extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      SignUpOn: 'signup',
+    }
+  }
+
+  toggle = event => {
+    event.preventDefault();
+    (this.state.SignUpOn === 'signup') ? this.setState({SignUpOn: 'login'}) : this.setState({SignUpOn: 'signup'})
+  }
+
+  render() {
+    return (
+      <div className="not-loggged-in">
+      {(this.state.SignUpOn === 'signup') ?
+        <>
+        <SignUpForm />
+        <LoginLink toggle={this.toggle} />
+        </>
+      :
+        <>
         <Login />
+        <SignUpLink toggle={this.toggle} />
+        </>
+     }
       </div>
-
-    </div>
-  )
+    )
+  }
 }
+
+export default NotLoggedIn;

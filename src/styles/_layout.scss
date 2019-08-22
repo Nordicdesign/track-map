@@ -1,10 +1,19 @@
 // LAYOUT
 
 .not-loggged-in {
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
 
   div {
-    width: 50%;
+    margin-bottom: $baseline*3;
+  }
+
+  .login-link {
+    border-top: 1px solid #ccc;
+    padding-top: $baseline;
+  }
+
+  a {
+    cursor: pointer;
   }
 }

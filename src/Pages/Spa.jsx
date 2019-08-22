@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app'
 import "firebase/database"
 import update from 'immutability-helper'
 import TrackLogs from '../Components/TrackLogs'
-import {NotLoggedIn} from '../Components/NotLoggedIn'
+import NotLoggedIn from '../Components/NotLoggedIn'
 
 class Spa extends Component {
   constructor(props,context) {
