@@ -8,7 +8,7 @@ class NotLoggedIn extends Component {
     super(props);
 
     this.state = {
-      SignUpOn: 'signup',
+      SignUpOn: 'login',
     }
   }
 

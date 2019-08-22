@@ -99,11 +99,9 @@ class Login extends Component {
 }
 
 const LoginLink = (props) => (
-  <div className="login-link">
-  <p>
+  <p className="login-link">
     Already a user? <a onClick={props.toggle}>Log in</a>
   </p>
-  </div>
 );
 
 export default Login;

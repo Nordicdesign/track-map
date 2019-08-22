@@ -69,20 +69,27 @@ class SignUpForm extends Component {
 
     return (
       <form>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
+        <label>
+          Email address
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+          />
+        </label>
+
+        <label>
+          Choose a password
+          <input
+            name="passwordOne"
+            value={passwordOne}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </label>
         <button disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign Up</button>
 
         {error && <p className="error-handling">{error.message}</p>}
@@ -92,7 +99,7 @@ class SignUpForm extends Component {
 }
 
 const SignUpLink = (props) => (
-  <p>
+  <p className="login-link">
     Don't have an account? <a onClick={props.toggle}>Sign up</a>
   </p>
 );

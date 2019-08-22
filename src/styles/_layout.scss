@@ -7,14 +7,21 @@
 .not-loggged-in {
   // display: flex;
   // flex-direction: row;
+  width: 96%;
+  max-width: 450px;
+  margin: $baseline*3 auto;
+  border: 1px solid $colour-gray-300;
+  padding: $baseline*2;
 
   div {
     margin-bottom: $baseline*3;
   }
 
   .login-link {
-    border-top: 1px solid #ccc;
-    padding-top: $baseline;
+    background: $colour-gray-100;
+    border-top: 1px solid $colour-base;
+    padding: $baseline;
+    text-align: center;
   }
 
   a {
