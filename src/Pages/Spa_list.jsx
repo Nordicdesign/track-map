@@ -82,14 +82,6 @@ class Spa extends Component {
   //   this.toggleDrawer = this.toggleDrawer.bind(this);
   // }
 
-  toggleDrawer = (corner) => () => {
-    console.log("clicked!");
-    this.setState({
-      isOpen: !this.state.isOpen,
-      corner: corner,
-    });
-  };
-
   loadData() {
     let that = this; //🤯
     firebase.database().ref('/users/' + this.state.authUser + '/tracks/0/turn').on('value', function(snapshot) {
