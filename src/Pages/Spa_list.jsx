@@ -165,12 +165,20 @@ class Spa extends Component {
         <>
         <div className="track">
           <ImageMapper
-            className="container"
             src={URL}
             map={MAP}
             width={canvasWidth-150}
             imgWidth={950}
             onClick={area => this.clicked(area)}
+          />
+        </div>
+        <div className="track-summary">
+          <TrackLogs
+            turns={this.state.turns}
+            trackName={this.state.trackName}
+            updateTurn={this.updateTurn}
+            registerNotes={this.registerNotes}
+            turnNames={trackTurns}
           />
         </div>
         </>
