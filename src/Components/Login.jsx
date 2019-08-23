@@ -4,16 +4,7 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
 import { withRouter } from 'react-router-dom'
-
-var firebaseConfig = {
-    apiKey: "AIzaSyD2-YAZ1Spbo1dltQItBTcUqcq_ues930k",
-    authDomain: "trackmap-f1119.firebaseapp.com",
-    databaseURL: "https://trackmap-f1119.firebaseio.com",
-    projectId: "trackmap-f1119",
-    storageBucket: "trackmap-f1119.appspot.com",
-    messagingSenderId: "488157650119",
-    appId: "1:488157650119:web:c4d401fdd7dcdc87"
-  };
+import {firebaseConfig} from '../constants/firebase'
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

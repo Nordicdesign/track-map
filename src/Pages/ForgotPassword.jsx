@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
@@ -83,6 +83,7 @@ class ForgotPassword extends Component {
           <>
           <p>Done.</p>
           <p>If the email matches one in our database we'll send you an email containing a link to reset it.</p>
+          <p><Link to={ROUTES.LANDING}>Back to the homepage</Link></p>
           </>
         }
 
