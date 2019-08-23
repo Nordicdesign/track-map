@@ -49,9 +49,6 @@ class Header extends Component {
         var userEmail = user.email;
         var uid = user.uid;
 
-        console.log(uid);
-        console.log(userEmail);
-        // ...
         that.setState({
           authUser: uid,
           userEmail: userEmail
