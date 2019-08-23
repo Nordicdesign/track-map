@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import Firebase from "../Components/Firebase"
+// import Firebase from "../Components/Firebase"
 import * as firebase from 'firebase/app'
 import "firebase/database"
 import update from 'immutability-helper'
-import TrackLogs from '../Components/TrackLogs'
+// import TrackLogs from '../Components/TrackLogs'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
-import Drawer from '../Components/Drawer';
+import Drawer from '../Components/Drawer'
+import renderIf from 'render-if'
 
-
+let dataIsReady = false;
+let trackName= "Spa Francorchamps";
+let trackID= "0";
 let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
 let MAP = {
   name: "my-map",
@@ -40,12 +43,11 @@ class Spa extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
-      trackName: "Spa Francorchamps",
       authUser: null,
       userEmail: null,
       error: null,
       isOpen: false,
-      corner: null,
+      turn: null,
       turns: [
         ,
         {},
@@ -68,16 +70,15 @@ class Spa extends Component {
         {},
         {},
         {}
-      ]
+      ],
     };
-    this.updateTurn = this.updateTurn.bind(this);
-    this.registerNotes = this.registerNotes.bind(this);
+
     this.clicked = this.clicked.bind(this);
   }
 
-  loadData() {
+  loadData = () => {
     let that = this; //🤯
-    firebase.database().ref('/users/' + this.state.authUser + '/tracks/0/turn').on('value', function(snapshot) {
+    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
 
       // if no data exists have an empty object, rather than null
       let turns;
@@ -85,21 +86,12 @@ class Spa extends Component {
 
       that.setState({
         turns: update(that.state.turns, {$merge: turns})
+      },() => {
+        dataIsReady = true;
+        console.log("data loaded");
+        console.log(that.state.turns);
       })
     });
-  }
-
-  registerNotes(event, turnID) {
-    var updates = {};
-    updates['/users/'+ this.state.authUser +'/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
-    return firebase.database().ref().update(updates);
-  }
-
-  updateTurn(turnID, section, behaviour) {
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['/users/' + this.state.authUser + '/tracks/0/turn/' + turnID + '/' + section] = behaviour;
-    return firebase.database().ref().update(updates);
   }
 
   componentDidMount() {
@@ -116,10 +108,9 @@ class Spa extends Component {
           console.log("waiting for the state to finish");
           // get the data
           var updates = {};
-          updates['/users/'+ this.state.authUser +'/tracks/0/name'] = "Spa Francorchamps";
+          updates['/users/'+ this.state.authUser +'/tracks/'+ trackID +'/name'] = trackName;
           firebase.database().ref().update(updates);
           this.loadData();
-          console.log("data loaded");
         })
       } else {
 
@@ -135,10 +126,10 @@ class Spa extends Component {
   }
 
   clicked(area) {
-		console.log('You\'ve clicked corner '+area.name);
+		console.log('You\'ve clicked turn '+area.name);
     this.setState({
       isOpen: !this.state.isOpen,
-      corner: area.name,
+      turn: area.name,
     });
 	}
 
@@ -162,11 +153,18 @@ class Spa extends Component {
             onClick={area => this.clicked(area)}
           />
         </div>
+        {renderIf(dataIsReady)(
           <Drawer
             isOpen={this.state.isOpen}
-            onClick={this.clicked}
-            corner={this.state.corner}
+            onClick={area => this.clicked(this.state.turn)}
+            turnsData={this.state.turns}
+            turn={this.state.turn}
+            trackName={trackName}
+            trackID={trackID}
+            authUser={this.state.authUser}
           />
+        )}
+
         </>
 
       }
