@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 import TrackLogs from '../Components/TrackLogs'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
+import Drawer from '../Components/Drawer';
 
 
 let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
@@ -43,6 +44,8 @@ class Spa extends Component {
       authUser: null,
       userEmail: null,
       error: null,
+      isOpen: false,
+      corner: null,
       turns: [
         ,
         {},
@@ -69,26 +72,8 @@ class Spa extends Component {
     };
     this.updateTurn = this.updateTurn.bind(this);
     this.registerNotes = this.registerNotes.bind(this);
+    this.clicked = this.clicked.bind(this);
   }
-
-  // constructor(props,context) {
-  //   super(props,context);
-  //
-  //   this.state = {
-  //     isOpen: false,
-  //     corner: null
-  //   };
-
-  //   this.toggleDrawer = this.toggleDrawer.bind(this);
-  // }
-
-  toggleDrawer = (corner) => () => {
-    console.log("clicked!");
-    this.setState({
-      isOpen: !this.state.isOpen,
-      corner: corner,
-    });
-  };
 
   loadData() {
     let that = this; //🤯
@@ -151,6 +136,10 @@ class Spa extends Component {
 
   clicked(area) {
 		console.log('You\'ve clicked corner '+area.name);
+    this.setState({
+      isOpen: !this.state.isOpen,
+      corner: area.name,
+    });
 	}
 
   render() {
@@ -173,6 +162,11 @@ class Spa extends Component {
             onClick={area => this.clicked(area)}
           />
         </div>
+          <Drawer
+            isOpen={this.state.isOpen}
+            onClick={this.clicked}
+            corner={this.state.corner}
+          />
         </>
 
       }
