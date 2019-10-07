@@ -4,17 +4,12 @@ import "firebase/database"
 import update from 'immutability-helper'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
-<<<<<<< HEAD
-
-
-=======
 import Drawer from '../Components/Drawer'
 import renderIf from 'render-if'
 
 let dataIsReady = false;
 let trackName= "Spa Francorchamps";
 let trackID= "0";
->>>>>>> eccaac82c0448c106151f8e72b9f201c9a6483d3
 let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
 let MAP = {
   name: "my-map",

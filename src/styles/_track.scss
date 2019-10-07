@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-.track {
-  .container {
-    margin: 0 auto;
-  }
-}
-
-.track-summary {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 1fr;
-  }
-
-  h1 {
-    margin-left: 94px;
-  }
-}
-=======
+//
 // .track {
 //   max-height: 90vh;
 //
@@ -41,7 +22,6 @@
 //     // margin-left: 94px;
 //   }
 // }
->>>>>>> eccaac82c0448c106151f8e72b9f201c9a6483d3
 
 .corner-areas {
   display: flex;
