@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import Firebase from "../Components/Firebase"
 import * as firebase from 'firebase/app'
 import "firebase/database"
 import update from 'immutability-helper'
-import TrackLogs from '../Components/TrackLogs'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
+<<<<<<< HEAD
 
 
+=======
+import Drawer from '../Components/Drawer'
+import renderIf from 'render-if'
+
+let dataIsReady = false;
+let trackName= "Spa Francorchamps";
+let trackID= "0";
+>>>>>>> eccaac82c0448c106151f8e72b9f201c9a6483d3
 let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
 let MAP = {
   name: "my-map",
@@ -39,10 +46,12 @@ class Spa extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
-      trackName: "Spa Francorchamps",
+      // trackName: "Spa Francorchamps",
       authUser: null,
       userEmail: null,
       error: null,
+      isOpen: false,
+      turn: null,
       turns: [
         ,
         {},
@@ -67,54 +76,26 @@ class Spa extends Component {
         {}
       ]
     };
-    this.updateTurn = this.updateTurn.bind(this);
-    this.registerNotes = this.registerNotes.bind(this);
+    this.clicked = this.clicked.bind(this);
+    // this.updateTurn = this.updateTurn.bind(this);
+    // this.registerNotes = this.registerNotes.bind(this);
   }
 
-  // constructor(props,context) {
-  //   super(props,context);
-  //
-  //   this.state = {
-  //     isOpen: false,
-  //     corner: null
-  //   };
-
-  //   this.toggleDrawer = this.toggleDrawer.bind(this);
-  // }
-
-  toggleDrawer = (corner) => () => {
-    console.log("clicked!");
-    this.setState({
-      isOpen: !this.state.isOpen,
-      corner: corner,
-    });
-  };
-
-  loadData() {
+  loadData = () => {
     let that = this; //🤯
-    firebase.database().ref('/users/' + this.state.authUser + '/tracks/0/turn').on('value', function(snapshot) {
-
+    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
       // if no data exists have an empty object, rather than null
       let turns;
       !snapshot.val() ? turns = {} : turns = snapshot.val();
 
       that.setState({
         turns: update(that.state.turns, {$merge: turns})
+      },() => {
+        dataIsReady = true;
+        console.log("data loaded");
+        console.log(that.state.turns);
       })
     });
-  }
-
-  registerNotes(event, turnID) {
-    var updates = {};
-    updates['/users/'+ this.state.authUser +'/tracks/0/turn/' + turnID + '/notes'] = event.target.value;
-    return firebase.database().ref().update(updates);
-  }
-
-  updateTurn(turnID, section, behaviour) {
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['/users/' + this.state.authUser + '/tracks/0/turn/' + turnID + '/' + section] = behaviour;
-    return firebase.database().ref().update(updates);
   }
 
   componentDidMount() {
@@ -131,10 +112,9 @@ class Spa extends Component {
           console.log("waiting for the state to finish");
           // get the data
           var updates = {};
-          updates['/users/'+ this.state.authUser +'/tracks/0/name'] = "Spa Francorchamps";
+          updates['/users/'+ this.state.authUser +'/tracks/'+ trackID +'/name'] = trackName;
           firebase.database().ref().update(updates);
           this.loadData();
-          console.log("data loaded");
         })
       } else {
 
@@ -150,14 +130,18 @@ class Spa extends Component {
   }
 
   clicked(area) {
-		console.log('You\'ve clicked corner '+area.name);
+		console.log('You\'ve clicked turn '+area.name);
+    this.setState({
+      isOpen: !this.state.isOpen,
+      turn: area.name,
+    });
 	}
 
   render() {
 
     let canvasWidth = window.innerWidth;
 
-    const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
+    // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
 
     return (
       <div className="wrapper">
@@ -165,14 +149,24 @@ class Spa extends Component {
         <>
         <div className="track">
           <ImageMapper
-            className="container"
             src={URL}
             map={MAP}
-            width={canvasWidth-150}
-            imgWidth={950}
+            width={canvasWidth-300}
+            imgWidth={940}
             onClick={area => this.clicked(area)}
           />
         </div>
+        {renderIf(dataIsReady)(
+          <Drawer
+            isOpen={this.state.isOpen}
+            onClick={area => this.clicked(this.state.turn)}
+            turnsData={this.state.turns}
+            turn={this.state.turn}
+            trackName={trackName}
+            trackID={trackID}
+            authUser={this.state.authUser}
+          />
+        )}
         </>
 
       }
