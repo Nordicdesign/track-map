@@ -13,6 +13,7 @@ import NotLoggedIn from './Components/NotLoggedIn'
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
 import Shanghai from './Pages/Shanghai'
+import Watkins from './Pages/Watkins-glen'
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
              <Route path={ROUTES.SPA} component={Spa}/>
              <Route path={ROUTES.LEMANS} component={LaSarthe}/>
              <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
+             <Route path={ROUTES.WATKINS} component={Watkins}/>
           </div>
           </>
       </Router>
