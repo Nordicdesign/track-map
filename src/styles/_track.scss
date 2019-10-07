@@ -1,21 +1,31 @@
+// .track {
+//   max-height: 90vh;
+//
+//   & > div {
+//     position: inherit !important;
+//   }
+//   .container {
+//     margin: 0 auto;
+//   }
+// }
 
-.track {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 1fr;
-  }
-
-  h1 {
-    margin-left: 94px;
-  }
-}
+// .track-summary {
+//   display: grid;
+//   grid-template-columns: 0.9fr 1.1fr;
+//
+//   @media screen and (max-width: 800px) {
+//     grid-template-columns: 1fr;
+//   }
+//
+//   h1 {
+//     // margin-left: 94px;
+//   }
+// }
 
 .corner-areas {
   display: flex;
   flex-direction: row;
-  padding-left: 94px;
+  padding-left: $baseline/2;
   margin: $baseline*2 0 $baseline;
 
   li {
@@ -75,6 +85,7 @@
 
         button {
           width: 44px;
+          min-width: auto;
           margin-left: $baseline/2;
           line-height: 33px;
           font-size: 1.6rem;
@@ -97,7 +108,7 @@
   }
 
   .track-turn-notes {
-    margin: 0 0 $baseline*2 94px;
+    margin: 0 0 $baseline*2 $baseline/2;
 
     label {
       font-weight: bold;

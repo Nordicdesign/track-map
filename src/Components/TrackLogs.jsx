@@ -3,10 +3,16 @@ import React, { Component } from 'react';
 class TrackLogs extends Component {
 
   render() {
+    console.log(this.props.turnsData);
+    console.log(this.props.turn);
+
+    let turnID = this.props.turn;
+    turnID = turnID++;
+    console.log(this.props.turnsData[turnID]);
+    let turn = this.props.turnsData[turnID];
+
     return (
       <div className="track-logs">
-
-        <h1>{this.props.trackName}</h1>
 
         <ul className="corner-areas">
           <li>Entry</li>
@@ -14,72 +20,65 @@ class TrackLogs extends Component {
           <li>Exit</li>
         </ul>
 
-        {this.props.turns.map((turn,i) =>
             <ul className="track-turn">
               <li className="track-turn-individual">
                 <div>
-                  <p>
-                    {i}
-                    <span>{this.props.turnNames[i]}</span>
-                  </p>
-
-
                   <ul>
-                    <li key={'entry' + i}>
+                    <li key={'entry' + turnID}>
                       <button
-                        onClick={() => this.props.updateTurn(i,"entry","understeer")}
+                        onClick={() => this.props.updateTurn(turnID,"entry","understeer")}
                         className={turn.entry === "understeer" ? "selected" : ""}
                         >
                         U
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"entry","neutral")}
+                        onClick={() => this.props.updateTurn(turnID,"entry","neutral")}
                         className={turn.entry === "neutral" ? "selected" : ""}
                         >
                         N
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"entry","oversteer")}
+                        onClick={() => this.props.updateTurn(turnID,"entry","oversteer")}
                         className={turn.entry === "oversteer" ? "selected" : ""}
                         >
                         O
                       </button>
                     </li>
-                    <li key={'mid' + i}>
+                    <li key={'mid' + turnID}>
                       <button
-                        onClick={() => this.props.updateTurn(i,"mid","understeer")}
+                        onClick={() => this.props.updateTurn(turnID,"mid","understeer")}
                         className={turn.mid === "understeer" ? "selected" : ""}
                         >
                         U
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"mid","neutral")}
+                        onClick={() => this.props.updateTurn(turnID,"mid","neutral")}
                         className={turn.mid === "neutral" ? "selected" : ""}
                         >
                         N
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"mid","oversteer")}
+                        onClick={() => this.props.updateTurn(turnID,"mid","oversteer")}
                         className={turn.mid === "oversteer" ? "selected" : ""}
                         >
                         O
                       </button>
                     </li>
-                    <li key={'exit' + i}>
+                    <li key={'exit' + turnID}>
                       <button
-                        onClick={() => this.props.updateTurn(i,"exit","understeer")}
+                        onClick={() => this.props.updateTurn(turnID,"exit","understeer")}
                         className={turn.exit === "understeer" ? "selected" : ""}
                         >
                         U
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"exit","neutral")}
+                        onClick={() => this.props.updateTurn(turnID,"exit","neutral")}
                         className={turn.exit === "neutral" ? "selected" : ""}
                         >
                         N
                       </button>
                       <button
-                        onClick={() => this.props.updateTurn(i,"exit","oversteer")}
+                        onClick={() => this.props.updateTurn(turnID,"exit","oversteer")}
                         className={turn.exit === "oversteer" ? "selected" : ""}
                         >
                         O
@@ -96,13 +95,12 @@ class TrackLogs extends Component {
                       name=""
                       id=""
                       value={turn.notes ? turn.notes : ""}
-                      onChange={(e) => this.props.registerNotes(e, i)}
+                      onChange={(e) => this.props.registerNotes(e, turnID)}
                      />
                   </label>
                 </p>
               </li>
           </ul>
-        )};
 
       </div>
     )
