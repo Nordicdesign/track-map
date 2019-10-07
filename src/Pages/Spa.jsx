@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import Firebase from "../Components/Firebase"
 import * as firebase from 'firebase/app'
 import "firebase/database"
 import update from 'immutability-helper'
-// import TrackLogs from '../Components/TrackLogs'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
@@ -43,6 +41,7 @@ class Spa extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
+      // trackName: "Spa Francorchamps",
       authUser: null,
       userEmail: null,
       error: null,
@@ -70,16 +69,16 @@ class Spa extends Component {
         {},
         {},
         {}
-      ],
+      ]
     };
-
     this.clicked = this.clicked.bind(this);
+    // this.updateTurn = this.updateTurn.bind(this);
+    // this.registerNotes = this.registerNotes.bind(this);
   }
 
   loadData = () => {
     let that = this; //🤯
     firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
-
       // if no data exists have an empty object, rather than null
       let turns;
       !snapshot.val() ? turns = {} : turns = snapshot.val();
@@ -137,7 +136,7 @@ class Spa extends Component {
 
     let canvasWidth = window.innerWidth;
 
-    const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
+    // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
 
     return (
       <div className="wrapper">
@@ -145,11 +144,10 @@ class Spa extends Component {
         <>
         <div className="track">
           <ImageMapper
-            className="container"
             src={URL}
             map={MAP}
-            width={canvasWidth-150}
-            imgWidth={950}
+            width={canvasWidth-300}
+            imgWidth={940}
             onClick={area => this.clicked(area)}
           />
         </div>
@@ -164,7 +162,6 @@ class Spa extends Component {
             authUser={this.state.authUser}
           />
         )}
-
         </>
 
       }

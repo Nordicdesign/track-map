@@ -1,21 +1,26 @@
-.track {
-  .container {
-    margin: 0 auto;
-  }
-}
+// .track {
+//   max-height: 90vh;
+//
+//   & > div {
+//     position: inherit !important;
+//   }
+//   .container {
+//     margin: 0 auto;
+//   }
+// }
 
-.track-summary {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 1fr;
-  }
-
-  h1 {
-    // margin-left: 94px;
-  }
-}
+// .track-summary {
+//   display: grid;
+//   grid-template-columns: 0.9fr 1.1fr;
+//
+//   @media screen and (max-width: 800px) {
+//     grid-template-columns: 1fr;
+//   }
+//
+//   h1 {
+//     // margin-left: 94px;
+//   }
+// }
 
 .corner-areas {
   display: flex;

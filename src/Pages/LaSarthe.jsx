@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import Firebase from "../Components/Firebase"
 import * as firebase from 'firebase/app'
 import "firebase/database"
 import update from 'immutability-helper'
-// import TrackLogs from '../Components/TrackLogs'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
@@ -84,14 +82,12 @@ class LaSarthe extends Component {
         {}
       ]
     };
-
     this.clicked = this.clicked.bind(this);
   }
 
   loadData = () => {
     let that = this; //🤯
     firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
-
       // if no data exists have an empty object, rather than null
       let turns;
       !snapshot.val() ? turns = {} : turns = snapshot.val();
@@ -125,7 +121,6 @@ class LaSarthe extends Component {
           this.loadData();
         })
       } else {
-
         that.setState({
           authUser: null,
           userEmail: null,
@@ -133,8 +128,6 @@ class LaSarthe extends Component {
         })
       }
     });
-
-
   }
 
   clicked(area) {
@@ -146,7 +139,6 @@ class LaSarthe extends Component {
 	}
 
   render() {
-
     let canvasWidth = window.innerWidth;
 
     // const trackTurns = [
@@ -203,9 +195,7 @@ class LaSarthe extends Component {
             authUser={this.state.authUser}
           />
         )}
-
         </>
-
       }
       </div>
     );
