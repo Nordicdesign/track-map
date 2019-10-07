@@ -9,3 +9,4 @@ export const PASSWORD_FORGET = '/forgot-password';
 // tracks
 export const SPA = '/spa';
 export const LEMANS = '/le-mans'
+export const SHANGHAI = '/shanghai'
