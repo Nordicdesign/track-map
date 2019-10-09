@@ -8,40 +8,38 @@ import Drawer from '../Components/Drawer'
 import renderIf from 'render-if'
 
 let dataIsReady = false;
-let trackName= "Spa Francorchamps";
-let trackID= "0";
-let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
+let trackName= "Watkins Glen";
+let trackID= "3";
+let URL = "/images/Watkins_Glen_International_Track_Map.svg";
 let MAP = {
   name: "my-map",
   areas: [
-    { name: "1", shape: "circle", coords: [194,533,24], fillColor: "rgba(0, 0, 0, 0.25)"  },
-    { name: "2", shape: "circle", coords: [43,379,27], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "3", shape: "circle", coords: [120,243,21], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "4", shape: "circle", coords: [145,197,23], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "5", shape: "circle", coords: [208,175,23], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "6", shape: "circle", coords: [362,115,24], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "7", shape: "circle", coords: [714,45,22], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "8", shape: "circle", coords: [757,67,23], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "9", shape: "circle", coords: [813,50,24], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "10", shape: "circle", coords: [922,77,25], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "11", shape: "circle", coords: [828,133,26], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "12", shape: "circle", coords: [566,231,24], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "13", shape: "circle", coords: [826,342,25], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "14", shape: "circle", coords: [771,415,26], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "15", shape: "circle", coords: [898,449,23], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "16", shape: "circle", coords: [834,544,25], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "17", shape: "circle", coords: [635,372,25], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "18", shape: "circle", coords: [471,314,24], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "19", shape: "circle", coords: [230,450,25], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "20", shape: "circle", coords: [256,357,27], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "1", shape: "circle", coords: [113,342,35], fillColor: "rgba(0, 0, 0, 0.25)"  },
+    { name: "2", shape: "circle", coords: [56,180,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "3", shape: "circle", coords: [182,147,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "4", shape: "circle", coords: [304,35,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "5", shape: "circle", coords: [911,71,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "6", shape: "circle", coords: [823,285,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "7", shape: "circle", coords: [963,362,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "8", shape: "circle", coords: [557,440,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "9", shape: "circle", coords: [594,274,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "10", shape: "circle", coords: [493,297,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "11", shape: "circle", coords: [434,466,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    // { name: "Bus entry", shape: "rect", coords: [655,59,724,104], fillColor: "rgba(0, 0, 0, 0.25)" },
+    // { name: "Bus exit", shape: "rect", coords: [737,49,807,106], fillColor: "rgba(0, 0, 0, 0.25)" },
   ]
 }
 
-class Spa extends Component {
+// const Summary = ({turns}) => {
+//   turns.map(function(turn, index) {
+//     return (<p>T{index} - {turn.notes}</p>)
+//   })
+// }
+
+class Watkins extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
-      // trackName: "Spa Francorchamps",
       authUser: null,
       userEmail: null,
       error: null,
@@ -65,10 +63,6 @@ class Spa extends Component {
         {},
         {},
         {},
-        {},
-        {},
-        {},
-        {}
       ]
     };
     this.clicked = this.clicked.bind(this);
@@ -88,7 +82,7 @@ class Spa extends Component {
       },() => {
         dataIsReady = true;
         console.log("data loaded");
-        console.log(that.state.turns);
+        // console.log(that.state.turns);
       })
     });
   }
@@ -138,19 +132,38 @@ class Spa extends Component {
 
     // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
 
+
+    // This just doesn't work at all 😟😟😟😟😟😟
+    // let summary = []
+    //   let turns = this.state.turns;
+    //   console.log(turns);
+    //   for (const [index, turn] of turns.entries()) {
+    //     turn.notes ?
+    //     summary.push(<li key={index}>{turn.notes}</li>) :
+    //     false
+    //   }
+
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
-        <>
-        <div className="track">
-          <ImageMapper
-            src={URL}
-            map={MAP}
-            width={canvasWidth-300}
-            imgWidth={940}
-            onClick={area => this.clicked(area)}
-          />
-        </div>
+        <div className="track-wrapper">
+          <div className="track">
+            <ImageMapper
+              src={URL}
+              map={MAP}
+              width={canvasWidth-500}
+              imgWidth={999}
+              onClick={area => this.clicked(area)}
+            />
+          </div>
+          <div className="summary">
+            <h2>Summary</h2>
+            <ul>
+              {this.state.turns.map((turn, index) => {
+                return <li key={index}>T{index} - {turn.notes}</li>
+              })}
+            </ul>
+          </div>
         {renderIf(dataIsReady)(
           <Drawer
             isOpen={this.state.isOpen}
@@ -162,7 +175,7 @@ class Spa extends Component {
             authUser={this.state.authUser}
           />
         )}
-        </>
+      </div>
 
       }
       </div>
@@ -170,4 +183,4 @@ class Spa extends Component {
   }
 }
 
-export default Spa;
+export default Watkins;

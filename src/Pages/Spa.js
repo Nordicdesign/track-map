@@ -8,35 +8,40 @@ import Drawer from '../Components/Drawer'
 import renderIf from 'render-if'
 
 let dataIsReady = false;
-let trackName= "Shanghai";
-let trackID= "2";
-let URL = "/images/Circuit_Shanghai_2004.svg";
+let trackName= "Spa Francorchamps";
+let trackID= "0";
+let URL = "/images/Spa-Francorchamps_of_Belgium.svg";
 let MAP = {
   name: "my-map",
   areas: [
-    { name: "1", shape: "circle", coords: [551,20,15], fillColor: "rgba(0, 0, 0, 0.25)"  },
-    { name: "2", shape: "circle", coords: [607,119,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "3", shape: "circle", coords: [560,74,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "4", shape: "circle", coords: [492,129,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "5", shape: "circle", coords: [676,174,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "6", shape: "circle", coords: [767,285,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "7", shape: "circle", coords: [558,239,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "8", shape: "circle", coords: [500,370,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "9", shape: "circle", coords: [382,292,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "10", shape: "circle", coords: [345,368,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "11", shape: "circle", coords: [557,477,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "12", shape: "circle", coords: [606,457,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "13", shape: "circle", coords: [633,575,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "14", shape: "circle", coords: [23,250,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "15", shape: "circle", coords: [68,182,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "16", shape: "circle", coords: [196,261,15], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "1", shape: "circle", coords: [194,533,24], fillColor: "rgba(0, 0, 0, 0.25)"  },
+    { name: "2", shape: "circle", coords: [43,379,27], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "3", shape: "circle", coords: [120,243,21], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "4", shape: "circle", coords: [145,197,23], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "5", shape: "circle", coords: [208,175,23], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "6", shape: "circle", coords: [362,115,24], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "7", shape: "circle", coords: [714,45,22], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "8", shape: "circle", coords: [757,67,23], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "9", shape: "circle", coords: [813,50,24], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "10", shape: "circle", coords: [922,77,25], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "11", shape: "circle", coords: [828,133,26], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "12", shape: "circle", coords: [566,231,24], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "13", shape: "circle", coords: [826,342,25], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "14", shape: "circle", coords: [771,415,26], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "15", shape: "circle", coords: [898,449,23], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "16", shape: "circle", coords: [834,544,25], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "17", shape: "circle", coords: [635,372,25], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "18", shape: "circle", coords: [471,314,24], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "19", shape: "circle", coords: [230,450,25], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "20", shape: "circle", coords: [256,357,27], fillColor: "rgba(0, 0, 0, 0.25)" },
   ]
 }
 
-class Shanghai extends Component {
+class Spa extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
+      // trackName: "Spa Francorchamps",
       authUser: null,
       userEmail: null,
       error: null,
@@ -60,6 +65,10 @@ class Shanghai extends Component {
         {},
         {},
         {},
+        {},
+        {},
+        {},
+        {}
       ]
     };
     this.clicked = this.clicked.bind(this);
@@ -132,15 +141,23 @@ class Shanghai extends Component {
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
-        <>
+        <div className="track-wrapper">
         <div className="track">
           <ImageMapper
             src={URL}
             map={MAP}
             width={canvasWidth-500}
-            imgWidth={800}
+            imgWidth={940}
             onClick={area => this.clicked(area)}
           />
+        </div>
+        <div className="summary">
+          <h2>Summary</h2>
+          <ul>
+            {this.state.turns.map((turn, index) => {
+              return <li key={index}>T{index} - {turn.notes}</li>
+            })}
+          </ul>
         </div>
         {renderIf(dataIsReady)(
           <Drawer
@@ -153,7 +170,7 @@ class Shanghai extends Component {
             authUser={this.state.authUser}
           />
         )}
-        </>
+      </div>
 
       }
       </div>
@@ -161,4 +178,4 @@ class Shanghai extends Component {
   }
 }
 
-export default Shanghai;
+export default Spa;

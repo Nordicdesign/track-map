@@ -1,28 +1,30 @@
-//
-// .track {
-//   max-height: 90vh;
-//
-//   & > div {
-//     position: inherit !important;
-//   }
-//   .container {
-//     margin: 0 auto;
-//   }
-// }
+.track-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-// .track-summary {
-//   display: grid;
-//   grid-template-columns: 0.9fr 1.1fr;
-//
-//   @media screen and (max-width: 800px) {
-//     grid-template-columns: 1fr;
-//   }
-//
-//   h1 {
-//     // margin-left: 94px;
-//   }
-// }
+  .summary {
+    padding: 0 $baseline;
+    background: #f1f1f2;
+  }
 
+  @media all and (max-width: 1050px) {
+    flex-direction: column;
+  }
+
+
+  @media all and (min-width: 1050px) {
+    .track {
+      width: 70%;
+    }
+    .summary {
+      flex-basis: 30%;
+      width: 30%;
+    }
+  }
+}
+
+// TRACK LOGS
 .corner-areas {
   display: flex;
   flex-direction: row;
@@ -45,6 +47,7 @@
     }
   }
 }
+
 
 .track-turn-individual {
   div {
@@ -126,13 +129,4 @@
   }
 
 
-}
-
-.track-map {
-  margin: $baseline*2 0 0 $baseline;
-  padding-left: $baseline*4;
-
-  img {
-    max-width: 100%;
-  }
 }

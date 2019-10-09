@@ -173,16 +173,24 @@ class LaSarthe extends Component {
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
-        <>
+        <div className="track-wrapper">
         <div className="track">
           <ImageMapper
             className="container"
             src={URL}
             map={MAP}
-            width={canvasWidth-80}
+            width={canvasWidth-460}
             imgWidth={1580}
             onClick={area => this.clicked(area)}
           />
+        </div>
+        <div className="summary">
+          <h2>Summary</h2>
+          <ul>
+            {this.state.turns.map((turn, index) => {
+              return <li key={index}>T{index} - {turn.notes}</li>
+            })}
+          </ul>
         </div>
         {renderIf(dataIsReady)(
           <Drawer
@@ -195,7 +203,7 @@ class LaSarthe extends Component {
             authUser={this.state.authUser}
           />
         )}
-        </>
+        </div>
       }
       </div>
     );
