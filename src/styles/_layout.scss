@@ -2,6 +2,11 @@
 
 .wrapper {
   padding: $baseline;
+
+  &.homepage {
+    max-width: 600px;
+    margin: $baseline auto;
+  }
 }
 
 .not-loggged-in {
