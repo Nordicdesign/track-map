@@ -11,3 +11,4 @@ export const SPA = '/spa';
 export const LEMANS = '/le-mans'
 export const SHANGHAI = '/shanghai'
 export const WATKINS = '/watkins-glen'
+export const SEBRING = '/sebring'

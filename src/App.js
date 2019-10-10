@@ -12,6 +12,7 @@ import ForgotPassword from './Pages/ForgotPassword'
 import NotLoggedIn from './Components/NotLoggedIn'
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
+import Sebring from './Pages/Sebring'
 import Shanghai from './Pages/Shanghai'
 import Watkins from './Pages/Watkins-glen'
 
@@ -30,6 +31,7 @@ class App extends Component {
              <Route path={ROUTES.LEMANS} component={LaSarthe}/>
              <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
              <Route path={ROUTES.WATKINS} component={Watkins}/>
+             <Route path={ROUTES.SEBRING} component={Sebring}/>
           </div>
           </>
       </Router>
