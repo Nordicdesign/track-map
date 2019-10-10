@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import * as firebase from 'firebase/app'
-import "firebase/database"
-import update from 'immutability-helper'
-import NotLoggedIn from '../Components/NotLoggedIn'
-import ImageMapper from 'react-image-mapper'
-import Drawer from '../Components/Drawer'
-import Summary from '../Components/Summary'
-import renderIf from 'render-if'
+import React from 'react'
+import Track from '../Components/Track'
 
-let dataIsReady = false;
-let trackName= "Circuit de La Sarthe";
-let trackID= "1";
-let URL = "/images/la-sarthe-horizontal.svg";
-let MAP = {
+const numberTurns = 26 + 1; // Add the number of actual turns, but we need an extra one for the zero
+const imgWidth = 1580;
+const canvasMargin = 460;
+const trackName = "Circuit de La Sarthe";
+const trackID = "1";
+const URL = "/images/la-sarthe-horizontal.svg";
+const MAP = {
   name: "my-map",
   areas: [
     { name: "1", shape: "circle", coords: [142,450,20], fillColor: "rgba(0, 0, 0, 0.25)"  },
@@ -44,164 +39,44 @@ let MAP = {
   ]
 }
 
-class LaSarthe extends Component {
-  constructor(props,context) {
-    super(props,context);
-    this.state = {
-      authUser: null,
-      userEmail: null,
-      error: null,
-      isOpen: false,
-      turn: null,
-      turns: [
-        ,
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {}
-      ]
-    };
-    this.clicked = this.clicked.bind(this);
-  }
-
-  loadData = () => {
-    let that = this; //🤯
-    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
-      // if no data exists have an empty object, rather than null
-      let turns;
-      !snapshot.val() ? turns = {} : turns = snapshot.val();
-
-      that.setState({
-        turns: update(that.state.turns, {$merge: turns})
-      },() => {
-        dataIsReady = true;
-        console.log("data loaded");
-        console.log(that.state.turns);
-      })
-    });
-  }
-
-  componentDidMount() {
-    let that = this;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        var userEmail = user.email;
-        var uid = user.uid;
-        that.setState({
-          authUser: uid,
-          userEmail: userEmail
-        }, function() {
-          console.log("waiting for the state to finish");
-          // get the data
-          var updates = {};
-          updates['/users/'+ this.state.authUser +'/tracks/'+ trackID +'/name'] = trackName;
-          firebase.database().ref().update(updates);
-          this.loadData();
-        })
-      } else {
-        that.setState({
-          authUser: null,
-          userEmail: null,
-          error: null
-        })
-      }
-    });
-  }
-
-  clicked(area) {
-		console.log('You\'ve clicked turn '+area.name);
-    this.setState({
-      isOpen: !this.state.isOpen,
-      turn: area.name,
-    });
-	}
-
-  render() {
-    let canvasWidth = window.innerWidth;
-
-    // const trackTurns = [
-    //   "",
-    //   "Dunlop curve",
-    //   "Dunlop chicane 1",
-    //   "Dunlop chicane 2",
-    //   "Esses",
-    //   "",
-    //   "",
-    //   "",
-    //   "Tertre Rougue",
-    //   "1st chicane",
-    //   "",
-    //   "",
-    //   "2nd chicane",
-    //   "",
-    //   "",
-    //   "",
-    //   "Mulsanne",
-    //   "",
-    //   "Indianapolis",
-    //   "Arnage",
-    //   "Porsche curve 1",
-    //   "Porsche curve 2",
-    //   "Porsche curve 2",
-    //   "Esses du Karting",
-    //   "Corvette curve",
-    //   "Ford curves"
-    // ]
-
-    return (
-      <div className="wrapper">
-      {!this.state.authUser ? <NotLoggedIn/> :
-        <div className="track-wrapper">
-        <div className="track">
-          <ImageMapper
-            className="container"
-            src={URL}
-            map={MAP}
-            width={canvasWidth-460}
-            imgWidth={1580}
-            onClick={area => this.clicked(area)}
-          />
-        </div>
-        <Summary notes={this.state.turns} />
-        {renderIf(dataIsReady)(
-          <Drawer
-            isOpen={this.state.isOpen}
-            onClick={area => this.clicked(this.state.turn)}
-            turnsData={this.state.turns}
-            turn={this.state.turn}
-            trackName={trackName}
-            trackID={trackID}
-            authUser={this.state.authUser}
-          />
-        )}
-        </div>
-      }
-      </div>
-    );
-  }
-}
-
-export default LaSarthe;
+export default function LaSarthe() {
+  // const trackTurns = [
+  //   "",
+  //   "Dunlop curve",
+  //   "Dunlop chicane 1",
+  //   "Dunlop chicane 2",
+  //   "Esses",
+  //   "",
+  //   "",
+  //   "",
+  //   "Tertre Rougue",
+  //   "1st chicane",
+  //   "",
+  //   "",
+  //   "2nd chicane",
+  //   "",
+  //   "",
+  //   "",
+  //   "Mulsanne",
+  //   "",
+  //   "Indianapolis",
+  //   "Arnage",
+  //   "Porsche curve 1",
+  //   "Porsche curve 2",
+  //   "Porsche curve 2",
+  //   "Esses du Karting",
+  //   "Corvette curve",
+  //   "Ford curves"
+  // ]
+  return (
+    <Track
+      trackName={trackName}
+      trackID={trackID}
+      URL={URL}
+      MAP={MAP}
+      numberTurns={numberTurns}
+      canvasMargin={canvasMargin}
+      imgWidth={imgWidth}
+    />
+  )
+};

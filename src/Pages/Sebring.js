@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import Track from '../Components/Track'
 
-const numberTurns = 16 + 1; // Add the number of actual turns, but we need an extra one for the zero
-const imgWidth = 800;
+const numberTurns = 17 + 1; // Add the number of actual turns, but we need an extra one for the zero
+const imgWidth = 1580;
 const canvasMargin = 500;
-const trackName= "Shanghai";
-const trackID= "2";
-const URL = "/images/Circuit_Shanghai_2004.svg";
+const trackName= "Sebring";
+const trackID= "4";
+const URL = "/images/Sebring_International_Raceway.svg";
 const MAP = {
   name: "my-map",
   areas: [
@@ -29,7 +29,7 @@ const MAP = {
   ]
 }
 
-export default function Shanghai() {
+export default function Sebring() {
   return (
     <Track
       trackName={trackName}
