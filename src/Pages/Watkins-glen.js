@@ -5,35 +5,39 @@ import update from 'immutability-helper'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
+import Summary from '../Components/Summary'
 import renderIf from 'render-if'
 
 let dataIsReady = false;
-let trackName= "Shanghai";
-let trackID= "2";
-let URL = "/images/Circuit_Shanghai_2004.svg";
+let trackName= "Watkins Glen";
+let trackID= "3";
+let URL = "/images/Watkins_Glen_International_Track_Map.svg";
 let MAP = {
   name: "my-map",
   areas: [
-    { name: "1", shape: "circle", coords: [551,20,15], fillColor: "rgba(0, 0, 0, 0.25)"  },
-    { name: "2", shape: "circle", coords: [607,119,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "3", shape: "circle", coords: [560,74,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "4", shape: "circle", coords: [492,129,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "5", shape: "circle", coords: [676,174,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "6", shape: "circle", coords: [767,285,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "7", shape: "circle", coords: [558,239,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "8", shape: "circle", coords: [500,370,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "9", shape: "circle", coords: [382,292,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "10", shape: "circle", coords: [345,368,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "11", shape: "circle", coords: [557,477,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "12", shape: "circle", coords: [606,457,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "13", shape: "circle", coords: [633,575,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "14", shape: "circle", coords: [23,250,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "15", shape: "circle", coords: [68,182,15], fillColor: "rgba(0, 0, 0, 0.25)" },
-    { name: "16", shape: "circle", coords: [196,261,15], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "1", shape: "circle", coords: [113,342,35], fillColor: "rgba(0, 0, 0, 0.25)"  },
+    { name: "2", shape: "circle", coords: [56,180,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "3", shape: "circle", coords: [182,147,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "4", shape: "circle", coords: [304,35,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "5", shape: "circle", coords: [911,71,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "6", shape: "circle", coords: [823,285,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "7", shape: "circle", coords: [963,362,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "8", shape: "circle", coords: [557,440,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "9", shape: "circle", coords: [594,274,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "10", shape: "circle", coords: [493,297,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    { name: "11", shape: "circle", coords: [434,466,35], fillColor: "rgba(0, 0, 0, 0.25)" },
+    // { name: "Bus entry", shape: "rect", coords: [655,59,724,104], fillColor: "rgba(0, 0, 0, 0.25)" },
+    // { name: "Bus exit", shape: "rect", coords: [737,49,807,106], fillColor: "rgba(0, 0, 0, 0.25)" },
   ]
 }
 
-class Shanghai extends Component {
+// const Summary = ({turns}) => {
+//   turns.map(function(turn, index) {
+//     return (<p>T{index} - {turn.notes}</p>)
+//   })
+// }
+
+class Watkins extends Component {
   constructor(props,context) {
     super(props,context);
     this.state = {
@@ -79,7 +83,7 @@ class Shanghai extends Component {
       },() => {
         dataIsReady = true;
         console.log("data loaded");
-        console.log(that.state.turns);
+        // console.log(that.state.turns);
       })
     });
   }
@@ -129,19 +133,31 @@ class Shanghai extends Component {
 
     // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
 
+
+    // This just doesn't work at all 😟😟😟😟😟😟
+    // let summary = []
+    //   let turns = this.state.turns;
+    //   console.log(turns);
+    //   for (const [index, turn] of turns.entries()) {
+    //     turn.notes ?
+    //     summary.push(<li key={index}>{turn.notes}</li>) :
+    //     false
+    //   }
+
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
-        <>
-        <div className="track">
-          <ImageMapper
-            src={URL}
-            map={MAP}
-            width={canvasWidth-500}
-            imgWidth={800}
-            onClick={area => this.clicked(area)}
-          />
-        </div>
+        <div className="track-wrapper">
+          <div className="track">
+            <ImageMapper
+              src={URL}
+              map={MAP}
+              width={canvasWidth-500}
+              imgWidth={999}
+              onClick={area => this.clicked(area)}
+            />
+          </div>
+          <Summary notes={this.state.turns} />
         {renderIf(dataIsReady)(
           <Drawer
             isOpen={this.state.isOpen}
@@ -153,7 +169,7 @@ class Shanghai extends Component {
             authUser={this.state.authUser}
           />
         )}
-        </>
+      </div>
 
       }
       </div>
@@ -161,4 +177,4 @@ class Shanghai extends Component {
   }
 }
 
-export default Shanghai;
+export default Watkins;
