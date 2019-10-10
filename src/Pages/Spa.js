@@ -5,6 +5,7 @@ import update from 'immutability-helper'
 import NotLoggedIn from '../Components/NotLoggedIn'
 import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
+import Summary from '../Components/Summary'
 import renderIf from 'render-if'
 
 let dataIsReady = false;
@@ -151,14 +152,7 @@ class Spa extends Component {
             onClick={area => this.clicked(area)}
           />
         </div>
-        <div className="summary">
-          <h2>Summary</h2>
-          <ul>
-            {this.state.turns.map((turn, index) => {
-              return <li key={index}>T{index} - {turn.notes}</li>
-            })}
-          </ul>
-        </div>
+        <Summary notes={this.state.turns} />
         {renderIf(dataIsReady)(
           <Drawer
             isOpen={this.state.isOpen}
