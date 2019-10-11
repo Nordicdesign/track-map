@@ -6,7 +6,7 @@ function Summary(props) {
       <h2>Summary</h2>
       <ul>
         {props.notes.map((turn, index) => {
-          return <li key={index}>T{index} - {turn.notes}</li>
+          return turn.notes && <li key={index}>T{index} - {turn.notes}</li>
         })}
       </ul>
     </div>
