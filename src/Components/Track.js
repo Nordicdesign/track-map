@@ -24,6 +24,7 @@ class Track extends Component {
       turn: null,
       turns: Array(this.props.numberTurns).fill({},1),
       sessions: [],
+      currentSession: null,
     };
     this.clicked = this.clicked.bind(this);
   }
@@ -54,6 +55,7 @@ class Track extends Component {
 
       that.setState({
         sessions: newState,
+        currentSession: currentState[0].id,
         turns: update(that.state.turns, {$merge: turns})
       },() => {
         dataIsReady = true;
@@ -156,6 +158,7 @@ class Track extends Component {
             trackName={trackName}
             trackID={trackID}
             authUser={this.state.authUser}
+            currentSession={this.state.currentSession}
           />
         )}
         </div>
