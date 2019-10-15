@@ -53,6 +53,10 @@ class Track extends Component {
         return session.turns
       }).pop();
 
+      if(!turns) {
+        turns = []
+      }
+
       that.setState({
         sessions: newState,
         currentSession: currentState[0].id,
@@ -136,7 +140,11 @@ class Track extends Component {
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
         <>
-        <SessionCreator />
+        <SessionCreator
+          trackID={this.props.trackID}
+          numberTurns={this.props.numberTurns}
+          authUser={this.state.authUser}
+         />
         <SessionSelection sessions={this.state.sessions} />
         <div className="track-wrapper">
         <div className="track">
