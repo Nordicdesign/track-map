@@ -7,6 +7,8 @@ import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
 import Summary from '../Components/Summary'
 import renderIf from 'render-if'
+import SessionCreator from '../Components/SessionCreator'
+import SessionSelection from '../Components/SessionSelection'
 
 let dataIsReady = false;
 
@@ -20,9 +22,52 @@ class Track extends Component {
       error: null,
       isOpen: false,
       turn: null,
-      turns: Array(this.props.numberTurns).fill({},1)
+      turns: Array(this.props.numberTurns).fill({},1),
+      sessions: [],
     };
     this.clicked = this.clicked.bind(this);
+  }
+
+  migrateToSession = (props) => {
+    const trackID = this.props.trackID;
+    console.log("let's migrate stuff!", trackID);
+
+    // get the existing turns
+    let that = this; //🤯
+    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
+
+      // if no data exists have an empty object, rather than null
+      let turns;
+      !snapshot.val() ? turns = [] : turns = snapshot.val();
+      console.log('the data we are migrating > ', turns);
+
+      // add them to a new session
+      let newSession = firebase.database().ref('/users/' + that.state.authUser + '/tracks/' + trackID + '/sessions/').push();
+      newSession.set({
+          name: 'my session',
+          turn: turns
+      });
+
+      console.log('session created ✅');
+
+    });
+
+
+
+      // registerNotes(event, turnID) {
+      //   var updates = {};
+      //   updates['/users/'+ this.props.authUser +'/tracks/'+ trackID +'/sessions/' + turnID + '/notes'] = event.target.value;
+      //   return firebase.database().ref().update(updates);
+      // }
+
+    //   sessions === [] ? that.migrateToSession(): sessions = [] ;
+    //   that.setState({
+    //     sessions: update(that.state.sessions, {$merge: sessions})
+    //   },() => {
+    //     dataIsReady = true;
+    //     console.log("data loaded",that.state.sessions);
+    //   })
+
   }
 
   loadData = (props) => {
@@ -30,22 +75,58 @@ class Track extends Component {
     const trackID = this.props.trackID;
 
     let that = this; //🤯
-    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
+    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+
+      // check if there are any sessions yet
+      if (!snapshot.val()) {
+        console.log("there are no sessions!!! 😱");
+        that.migrateToSession();
+      }
+
       // if no data exists have an empty object, rather than null
-      let turns;
-      !snapshot.val() ? turns = {} : turns = snapshot.val();
+      let newState = [];
+      let sessions = snapshot.val();
+      // !snapshot.val() ? sessions = [] : sessions = snapshot.val();
+      // console.log("sessions loaded", sessions);
+
+      for (let session in sessions) {
+      newState.push({
+        id: session,
+        name: sessions[session].name,
+        turns: sessions[session].turn
+      });
+    }
 
       that.setState({
-        turns: update(that.state.turns, {$merge: turns})
+        sessions: newState
       },() => {
         dataIsReady = true;
-        console.log("data loaded");
-        console.log(that.state.turns);
+        console.log("data loaded",that.state.sessions);
       })
     });
   }
+  // loadData = (props) => {
+  //   // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
+  //   const trackID = this.props.trackID;
+  //
+  //   let that = this; //🤯
+  //   firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
+  //     // if no data exists have an empty object, rather than null
+  //     let turns;
+  //     !snapshot.val() ? turns = [] : turns = snapshot.val();
+  //
+  //     console.log("turns loaded", turns);
+  //
+  //     that.setState({
+  //       turns: update(that.state.turns, {$merge: turns})
+  //     },() => {
+  //       dataIsReady = true;
+  //       console.log("data loaded",that.state.turns);
+  //     })
+  //   });
+  // }
 
-  componentDidMount(props) {
+  componentWillMount(props) {
     let that = this;
     const trackID = this.props.trackID;
     const trackName = this.props.trackName;
@@ -96,6 +177,9 @@ class Track extends Component {
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
+        <>
+        <SessionCreator />
+        <SessionSelection sessions={this.state.sessions} />
         <div className="track-wrapper">
         <div className="track">
           <ImageMapper
@@ -119,6 +203,7 @@ class Track extends Component {
           />
         )}
         </div>
+        </>
 
       }
       </div>
