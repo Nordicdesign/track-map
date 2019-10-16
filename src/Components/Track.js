@@ -29,42 +29,67 @@ class Track extends Component {
     this.clicked = this.clicked.bind(this);
   }
 
+  saveDataInState = (snapshot) => {
+    // if no data exists have an empty object, rather than null
+    let newState = [];
+    let sessions = snapshot.val();
+
+    for (let session in sessions) {
+      newState.push({
+        id: session,
+        name: sessions[session].name,
+        turns: sessions[session].turn
+      });
+    }
+
+    // current state
+    let currentState = newState.slice(-1);
+    let turns = currentState.map((session) => {
+      return session.turns
+    }).pop();
+
+    if(!turns) {
+      turns = []
+    }
+
+    this.setState({
+      sessions: newState,
+      currentSession: currentState[0].id,
+      turns: update(this.state.turns, {$merge: turns})
+    },() => {
+      dataIsReady = true;
+      console.log("turns loaded",this.state.turns);
+    })
+  }
+
+
+  initiateSession = (props) => {
+    const trackID = this.props.trackID;
+    const authUser = this.state.authUser;
+    let newSession = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/').push();
+    newSession.set({
+        name: 'default',
+    });
+    console.log('session created ✅');
+
+    let that = this;
+    firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+      that.saveDataInState(snapshot)
+    })
+  }
+
   loadData = (props) => {
     // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
     const trackID = this.props.trackID;
-
     let that = this; //🤯
     firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-      // if no data exists have an empty object, rather than null
-      let newState = [];
-      let sessions = snapshot.val();
-
-      for (let session in sessions) {
-        newState.push({
-          id: session,
-          name: sessions[session].name,
-          turns: sessions[session].turn
-        });
+      // check if there are any sessions yet
+      if (!snapshot.val()) {
+        console.log("there are no sessions!!! 😱");
+        that.initiateSession();
+      } else { // the session actually exists
+        that.saveDataInState(snapshot)
       }
-
-      // current state
-      let currentState = newState.slice(-1);
-      let turns = currentState.map((session) => {
-        return session.turns
-      }).pop();
-
-      if(!turns) {
-        turns = []
-      }
-
-      that.setState({
-        sessions: newState,
-        currentSession: currentState[0].id,
-        turns: update(that.state.turns, {$merge: turns})
-      },() => {
-        dataIsReady = true;
-        console.log("turns loaded",that.state.turns);
-      })
     });
   }
 
