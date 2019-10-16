@@ -1,0 +1,19 @@
+button {
+  min-width: 150px;
+  height: 40px;
+  font-size: 1.6rem;
+  margin-bottom: $baseline;
+  cursor: pointer;
+
+  &.button-link {
+    // display: inline-block;
+    width: auto;
+    min-width: auto;
+    height: auto;
+    margin-bottom: 0;
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+  }
+}

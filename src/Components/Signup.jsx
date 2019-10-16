@@ -88,7 +88,7 @@ class SignUpForm extends Component {
 
 const SignUpLink = (props) => (
   <p className="login-link">
-    Don't have an account? <a onClick={props.toggle}>Sign up</a>
+    Don't have an account? <button className="button-link" onClick={props.toggle}>Sign up</button>
   </p>
 );
 

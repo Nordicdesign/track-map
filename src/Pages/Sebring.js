@@ -29,7 +29,7 @@ const MAP = {
     { name: "16", shape: "circle", coords: [65,688,24], fillColor: "rgba(0, 0, 0, 0.25)" },
   ]
 }
- 
+
 export default function Sebring() {
   return (
     <Track

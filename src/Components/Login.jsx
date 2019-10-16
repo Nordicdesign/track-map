@@ -88,7 +88,7 @@ class Login extends Component {
 
 const LoginLink = (props) => (
   <p className="login-link">
-    Already a user? <a onClick={props.toggle}>Log in</a>
+    Already a user? <button className="button-link" onClick={props.toggle}>Log in</button>
   </p>
 );
 

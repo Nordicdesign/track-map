@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 
 function User(props) {
   return (
-    <span>{props.userEmail} - <a onClick={props.logout}>log out</a></span>
+    <span>{props.userEmail} - <button className="button-link" onClick={props.logout}>log out</button></span>
   )
 }
 

@@ -7,6 +7,8 @@ import ImageMapper from 'react-image-mapper'
 import Drawer from '../Components/Drawer'
 import Summary from '../Components/Summary'
 import renderIf from 'render-if'
+import SessionCreator from '../Components/SessionCreator'
+import SessionSelection from '../Components/SessionSelection'
 
 let dataIsReady = false;
 
@@ -20,29 +22,110 @@ class Track extends Component {
       error: null,
       isOpen: false,
       turn: null,
-      turns: Array(this.props.numberTurns).fill({},1)
+      turns: Array(this.props.numberTurns).fill({},1),
+      sessions: [],
+      currentSession: null,
     };
     this.clicked = this.clicked.bind(this);
   }
 
-  loadData = (props) => {
-    // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
-    const trackID = this.props.trackID;
+  saveDataInState = (snapshot) => {
+    // if no data exists have an empty object, rather than null
+    let newState = [];
+    let sessions = snapshot.val();
 
-    let that = this; //🤯
-    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
-      // if no data exists have an empty object, rather than null
-      let turns;
-      !snapshot.val() ? turns = {} : turns = snapshot.val();
+    for (let session in sessions) {
+      newState.push({
+        id: session,
+        name: sessions[session].name,
+        turns: sessions[session].turn
+      });
+    }
 
-      that.setState({
-        turns: update(that.state.turns, {$merge: turns})
+    // current state
+    let currentState = newState.slice(-1);
+    let turns = currentState.map((session) => {
+      return session.turns
+    }).pop();
+
+    if(!turns) {
+      turns = []
+    }
+
+    // load in state
+    this.setState({
+      // clear the data first, because of the merge
+      turns: Array(this.props.numberTurns).fill({},1),
+    }, () => {
+      this.setState({
+        sessions: newState,
+        currentSession: currentState[0].id,
+        turns: update(this.state.turns, {$merge: turns})
       },() => {
         dataIsReady = true;
-        console.log("data loaded");
-        console.log(that.state.turns);
+        console.log("turns loaded",this.state.turns);
       })
+    })
+  }
+
+
+  initiateSession = (props) => {
+    const trackID = this.props.trackID;
+    const authUser = this.state.authUser;
+    let newSession = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/').push();
+    newSession.set({
+        name: 'default',
     });
+    console.log('session created ✅');
+
+    let that = this;
+    firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+      that.saveDataInState(snapshot)
+    })
+  }
+
+  loadData = () => {
+    // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
+    const trackID = this.props.trackID;
+    let that = this; //🤯
+    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+      // check if there are any sessions yet
+      if (!snapshot.val()) {
+        console.log("there are no sessions!!! 😱");
+        that.initiateSession();
+      } else { // the session actually exists
+        that.saveDataInState(snapshot)
+      }
+    });
+  }
+
+  changeSession = (event) => {
+    const newSession = event.target.value;
+
+    // the new session to load
+    let newState = this.state.sessions.filter(session => session.id === newSession);
+    let turns = newState.map((session) => {
+      return session.turns
+    }).pop();
+
+    if(!turns) { // in case there's no data in firebase
+      turns = []
+    }
+    // load in state
+    this.setState({
+      // clear the data first, because of the merge
+      turns: Array(this.props.numberTurns).fill({},1),
+    }, () => {
+      this.setState({
+        // save the new one
+        currentSession: newSession,
+        turns: update(this.state.turns, {$merge: turns})
+      },() => {
+        dataIsReady = true;
+        console.log("turns loaded",this.state.turns);
+      })
+    })
+
   }
 
   componentDidMount(props) {
@@ -96,6 +179,21 @@ class Track extends Component {
     return (
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
+        <>
+        <div className="sessions">
+          <SessionCreator
+            trackID={this.props.trackID}
+            numberTurns={this.props.numberTurns}
+            authUser={this.state.authUser}
+            loadData={this.loadData}
+           />
+          <SessionSelection
+            sessions={this.state.sessions}
+            currentSession={this.state.currentSession}
+            changeSession={this.changeSession}
+          />
+        </div>
+
         <div className="track-wrapper">
         <div className="track">
           <ImageMapper
@@ -116,9 +214,11 @@ class Track extends Component {
             trackName={trackName}
             trackID={trackID}
             authUser={this.state.authUser}
+            currentSession={this.state.currentSession}
           />
         )}
         </div>
+        </>
 
       }
       </div>

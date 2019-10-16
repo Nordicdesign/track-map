@@ -35,14 +35,14 @@ class Drawer extends Component {
 
   registerNotes(event, turnID) {
     var updates = {};
-    updates['/users/'+ this.props.authUser +'/tracks/'+ this.props.trackID +'/turn/' + turnID + '/notes'] = event.target.value;
+    updates['/users/'+ this.props.authUser +'/tracks/'+ this.props.trackID + '/sessions/' + this.props.currentSession + '/turn/' + turnID + '/notes'] = event.target.value;
     return firebase.database().ref().update(updates);
   }
 
   updateTurn(turnID, section, behaviour) {
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
-    updates['/users/' + this.props.authUser + '/tracks/'+ this.props.trackID +'/turn/' + turnID + '/' + section] = behaviour;
+    updates['/users/' + this.props.authUser + '/tracks/'+ this.props.trackID + '/sessions/' + this.props.currentSession + '/turn/' + turnID + '/' + section] = behaviour;
     return firebase.database().ref().update(updates);
   }
 
