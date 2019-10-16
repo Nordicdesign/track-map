@@ -61,10 +61,14 @@ class SessionCreator extends Component {
     // console.log('session created ✅');
   }
 
+
+
   render() {
     let sent = this.state.sent;
+    const isEnabled = this.state.inputText.length > 0;
 
     return (
+
       <div className="session-creator">
         {!sent ?
           <form onSubmit={this.createNewSession}>
@@ -75,7 +79,7 @@ class SessionCreator extends Component {
                 onChange={this.handleChange}
               />
             </label>
-            <input type="submit" value="Save" />
+            <input type="submit" disabled={!isEnabled} value="Save" />
           </form> :
           <p>Session Created</p>
         }
