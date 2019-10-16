@@ -67,6 +67,37 @@ class Track extends Component {
       })
     });
   }
+
+  changeSession = (event) => {
+    const newSession = event.target.value;
+
+    // the new session to load
+    let newState = this.state.sessions.filter(session => session.id === newSession);
+    let turns = newState.map((session) => {
+      return session.turns
+    }).pop();
+
+    if(!turns) { // in case there's no data in firebase
+      turns = []
+    }
+    // load in state
+    this.setState({
+      // clear the data first, because of the merge
+      turns: Array(this.props.numberTurns).fill({},1),
+    }, () => {
+      this.setState({
+        // save the new one
+        currentSession: newSession,
+        turns: update(this.state.turns, {$merge: turns})
+      },() => {
+        dataIsReady = true;
+        console.log("turns loaded",this.state.turns);
+      })
+    })
+
+  }
+
+
   // loadData = (props) => {
   //   // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
   //   const trackID = this.props.trackID;
@@ -145,7 +176,11 @@ class Track extends Component {
           numberTurns={this.props.numberTurns}
           authUser={this.state.authUser}
          />
-        <SessionSelection sessions={this.state.sessions} />
+        <SessionSelection
+          sessions={this.state.sessions}
+          currentSession={this.state.currentSession}
+          changeSession={this.changeSession}
+        />
         <div className="track-wrapper">
         <div className="track">
           <ImageMapper
