@@ -9,6 +9,7 @@ function SessionSelection(props) {
 
   return (
     <div className="session-selection">
+      Session
       <select onChange={props.changeSession} value={props.currentSession}>
         {sessions}
       </select>

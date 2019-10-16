@@ -171,16 +171,19 @@ class Track extends Component {
       <div className="wrapper">
       {!this.state.authUser ? <NotLoggedIn/> :
         <>
-        <SessionCreator
-          trackID={this.props.trackID}
-          numberTurns={this.props.numberTurns}
-          authUser={this.state.authUser}
-         />
-        <SessionSelection
-          sessions={this.state.sessions}
-          currentSession={this.state.currentSession}
-          changeSession={this.changeSession}
-        />
+        <div className="sessions">
+          <SessionCreator
+            trackID={this.props.trackID}
+            numberTurns={this.props.numberTurns}
+            authUser={this.state.authUser}
+           />
+          <SessionSelection
+            sessions={this.state.sessions}
+            currentSession={this.state.currentSession}
+            changeSession={this.changeSession}
+          />
+        </div>
+
         <div className="track-wrapper">
         <div className="track">
           <ImageMapper

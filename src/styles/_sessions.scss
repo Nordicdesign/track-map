@@ -1,6 +1,46 @@
+.sessions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: $baseline;
+}
+
 .session-creator {
-  label {
+
+  form {
     display: flex;
     flex-direction: row;
+    align-items: center;
+
+    label {
+      margin-bottom: 0;
+      margin-right: $baseline/2;
+      line-height: 40px;
+    }
+
+    input {
+      margin-top: 0;
+    }
+
+    input[type="submit"] {
+      margin-left: $baseline/2;
+      width: auto;
+    }
+  }
+}
+
+
+.session-selection {
+  padding-left: $baseline;
+  border-left: 1px solid tomato;
+  margin-left: $baseline;
+  font-size: 1.6rem;
+
+  select {
+    border-radius: 2px;
+    margin-left: $baseline/2;
+    border: 1px solid #ccc;
+    height: 40px;
+    font-size: 1.6rem;
   }
 }
