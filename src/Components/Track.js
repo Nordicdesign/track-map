@@ -52,13 +52,19 @@ class Track extends Component {
       turns = []
     }
 
+    // load in state
     this.setState({
-      sessions: newState,
-      currentSession: currentState[0].id,
-      turns: update(this.state.turns, {$merge: turns})
-    },() => {
-      dataIsReady = true;
-      console.log("turns loaded",this.state.turns);
+      // clear the data first, because of the merge
+      turns: Array(this.props.numberTurns).fill({},1),
+    }, () => {
+      this.setState({
+        sessions: newState,
+        currentSession: currentState[0].id,
+        turns: update(this.state.turns, {$merge: turns})
+      },() => {
+        dataIsReady = true;
+        console.log("turns loaded",this.state.turns);
+      })
     })
   }
 
@@ -78,7 +84,7 @@ class Track extends Component {
     })
   }
 
-  loadData = (props) => {
+  loadData = () => {
     // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
     const trackID = this.props.trackID;
     let that = this; //🤯
@@ -122,29 +128,7 @@ class Track extends Component {
 
   }
 
-
-  // loadData = (props) => {
-  //   // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
-  //   const trackID = this.props.trackID;
-  //
-  //   let that = this; //🤯
-  //   firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/turn').on('value', function(snapshot) {
-  //     // if no data exists have an empty object, rather than null
-  //     let turns;
-  //     !snapshot.val() ? turns = [] : turns = snapshot.val();
-  //
-  //     console.log("turns loaded", turns);
-  //
-  //     that.setState({
-  //       turns: update(that.state.turns, {$merge: turns})
-  //     },() => {
-  //       dataIsReady = true;
-  //       console.log("data loaded",that.state.turns);
-  //     })
-  //   });
-  // }
-
-  componentWillMount(props) {
+  componentDidMount(props) {
     let that = this;
     const trackID = this.props.trackID;
     const trackName = this.props.trackName;
@@ -201,6 +185,7 @@ class Track extends Component {
             trackID={this.props.trackID}
             numberTurns={this.props.numberTurns}
             authUser={this.state.authUser}
+            loadData={this.loadData}
            />
           <SessionSelection
             sessions={this.state.sessions}

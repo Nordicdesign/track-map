@@ -26,7 +26,6 @@ class SessionCreator extends Component {
     const sessionData = {
         name: inputText
     }
-
     console.log("let's create a new session!", sessionData);
     event.preventDefault();
 
@@ -34,10 +33,10 @@ class SessionCreator extends Component {
     let newSession = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/').push();
     newSession.set(sessionData)
 
-    // console.log('session created ✅');
+    this.setState({
+      sent: true,
+    }, this.props.loadData())
   }
-
-
 
   render() {
     let sent = this.state.sent;
@@ -56,7 +55,7 @@ class SessionCreator extends Component {
             />
             <input type="submit" disabled={!isEnabled} value="Create" />
           </form> :
-          <p>Session Created</p>
+          <p>Ready to go</p>
         }
 
       </div>
