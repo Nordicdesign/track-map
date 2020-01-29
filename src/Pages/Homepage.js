@@ -13,6 +13,7 @@ export const Homepage = () => {
           <li><Link to={ROUTES.SHANGHAI}>Shanghai</Link></li>
           <li><Link to={ROUTES.SPA}>Spa Franchorchamps</Link></li>
           <li><Link to={ROUTES.WATKINS}>Watkins Glen</Link></li>
+          <li><Link to={ROUTES.BATHURST}>Mount Panorama</Link></li>
         </ul>
         <h2>About this tool</h2>
         <p>Trackmap is a digital way to capture notes to help you learn a circuit. For each turn you can say whether you had oversteer or understeer, and write some thoughts on best way to approach it, braking points, etc.</p>

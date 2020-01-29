@@ -15,6 +15,7 @@ import LaSarthe from './Pages/LaSarthe'
 import Sebring from './Pages/Sebring'
 import Shanghai from './Pages/Shanghai'
 import Watkins from './Pages/Watkins-glen'
+import Bathurst from './Pages/Mount-panorama'
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
              <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
              <Route path={ROUTES.WATKINS} component={Watkins}/>
              <Route path={ROUTES.SEBRING} component={Sebring}/>
+             <Route path={ROUTES.BATHURST} component={Bathurst}/>
           </div>
           </>
       </Router>
