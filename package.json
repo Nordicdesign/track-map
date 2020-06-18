@@ -25,6 +25,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "resolutions": {
+    "**/**/lodash": "^4.17.12" ,
+    "**/**/set-value": "^2.0.1"  
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
