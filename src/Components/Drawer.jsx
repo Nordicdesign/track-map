@@ -61,7 +61,7 @@ class Drawer extends Component {
     if (this.props.isOpen) {
       visibility = "show";
     }
-    console.log(this.props.turnsData);
+    // console.log(this.props.turnsData);
 
     return (
 

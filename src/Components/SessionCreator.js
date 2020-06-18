@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase/app'
 import "firebase/database"
+import Data from '../Utils/Data'
+
+const data = new Data();
 
 class SessionCreator extends Component {
 
@@ -20,9 +23,8 @@ class SessionCreator extends Component {
 
   createNewSession(event) {
     // alert('A name was submitted: ' + this.state.inputText);
-    const trackID = this.props.trackID;
-    const authUser = this.props.authUser;
-    const inputText = this.state.inputText
+    const {trackID,authUser} = this.props;
+    const {inputText} = this.state
     const sessionData = {
         name: inputText
     }
@@ -35,7 +37,7 @@ class SessionCreator extends Component {
 
     this.setState({
       sent: true,
-    }, this.props.loadData())
+    }, data.loadData(authUser, trackID))
   }
 
   render() {

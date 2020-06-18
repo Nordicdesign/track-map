@@ -1,132 +1,95 @@
 .track-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "meta map map"
+    "session session session"
+    "notes notes notes";
+}
 
-  .summary {
-    padding: 0 $baseline;
-    background: #f1f1f2;
+.track-meta {
+  grid-area: meta;
+  padding: $baseline;
+}
+
+.track-map {
+  grid-area: map;
+  padding: $baseline;
+}
+
+.track-session {
+  grid-area: session;
+  background: #FCFAD6;
+  padding: $baseline $baseline 0;
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #808080;
   }
-
-  @media all and (max-width: 1050px) {
-    flex-direction: column;
-  }
-
-
-  @media all and (min-width: 1050px) {
-    .track {
-      width: 70%;
-    }
-    .summary {
-      flex-basis: 30%;
-      width: 30%;
-    }
+  p {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: bold;
   }
 }
 
-// TRACK LOGS
-.corner-areas {
+.track-notes {
+  grid-area: notes;
+  padding: 0 $baseline $baseline;
+  background: #FCFAD6;
+  min-height: 300px;
   display: flex;
   flex-direction: row;
-  padding-left: $baseline/2;
-  margin: $baseline*2 0 $baseline;
 
-  li {
-    width: 146px;
-    margin-right: $baseline*2;
-    font-size: 1.2rem;
-    background: #ddd;
-    line-height: 24px;
-    padding: 4px 0 4px $baseline/2;
-    border-bottom: 1px solid #333;
-    text-align: center;
-    font-weight: 700;
-
-    &:last-child {
-      margin-right: 0;
-    }
+  h3 {
+    font-size: 2.4rem;
+    font-weight: bold;
   }
 }
 
+.track-observations {
+  width: 60%;
+  margin-right: $baseline*2;
 
-.track-turn-individual {
-  div {
+  .track-observations-header {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
-
-    p {
-      background: #333;
-      color: white;
-      font-size: 2rem;
-      line-height: 26px;
-      width: 84px;
-      text-align: center;
-      display: inline-block;
-      margin-right: $baseline;
-      margin-left: -$baseline;
-      margin-bottom: 0;
-
-      span {
-        display: block;
-        font-size: 1rem;
-        line-height: 1.2;
-      }
-    }
-    ul {
-      display: flex;
-      flex-direction: row;
-
-      li {
-        margin-right: $baseline*1.5;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        span {
-          width: 100%;
-        }
-
-        button {
-          width: 44px;
-          min-width: auto;
-          margin-left: $baseline/2;
-          line-height: 33px;
-          font-size: 1.6rem;
-          cursor: pointer;
-          transition: 0.3s all ease;
-          border-radius: 2px;
-
-          &:hover {
-            background: tomato;
-            color: #fff;
-          }
-
-          &.selected {
-            background: tomato;
-            color: #fff;
-          }
-        }
-      }
-    }
+    align-items: baseline;
   }
 
-  .track-turn-notes {
-    margin: 0 0 $baseline*2 $baseline/2;
+  .obs-entry {
+    border-bottom: 1px solid #E9E9E9;
+    padding-bottom: $baseline;
 
-    label {
-      font-weight: bold;
-      color: #ccc;
+    .obs-name {
+      color: #808080;
+      margin-bottom: $baseline/2;
     }
 
-    textarea {
-      display: block;
-      border: none;
-      border-bottom: 1px solid #333;
-      font-size: 1.4rem;
-      width: 97%;
+    h4 {
+      font-size: 1.3rem;
+      color: #808080;
+      margin-bottom: $baseline/4;
+      margin-top: $baseline/4;
     }
   }
+}
 
+.trackMap {
+  h1 {
+    color: $colour-base;
+    color: $colour-base;
+  }
+}
 
+.track-corners {
+  width: 40%;
+  .track-corners-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+  }
 }

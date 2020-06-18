@@ -16,6 +16,8 @@ import Sebring from './Pages/Sebring'
 import Shanghai from './Pages/Shanghai'
 import Watkins from './Pages/Watkins-glen'
 import Bathurst from './Pages/Mount-panorama'
+import Zolder from './Pages/Zolder'
+import Daytona from './Pages/Daytona'
 
 class App extends Component {
   render() {
@@ -34,6 +36,8 @@ class App extends Component {
              <Route path={ROUTES.WATKINS} component={Watkins}/>
              <Route path={ROUTES.SEBRING} component={Sebring}/>
              <Route path={ROUTES.BATHURST} component={Bathurst}/>
+             <Route path={ROUTES.ZOLDER} component={Zolder}/>
+             <Route path={ROUTES.DAYTONA} component={Daytona}/>
           </div>
           </>
       </Router>
