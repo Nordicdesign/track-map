@@ -5,7 +5,8 @@ export function CornersList(props) {
   console.log(props);
   return (
     <div key={props.name} className="corner-entry">
-      <p>Corner data goes here</p>
+      <p className="corner-number">{props.name}</p>
+      <p>{props.notes.notes}</p>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AddNewObservation from '../Components/AddNewObservation'
+import { AddNewObservation, AddNewConer } from '../Components/AddNew'
 import { ObservationList, NoObservations } from '../Components/ObservationList'
 import { CornersList, NoCorners } from '../Components/CornersList'
 // import TrackNotes from '../Components/TrackNotes'
@@ -24,6 +24,9 @@ class Daytona extends Component {
     this.handleAddObservation = this.handleAddObservation.bind(this);
     this.handleCancelObservation = this.handleCancelObservation.bind(this);
     this.handleCreateObservation = this.handleCreateObservation.bind(this);
+    this.handleAddCorner = this.handleAddCorner.bind(this);
+    this.handleCancelCorner = this.handleCancelCorner.bind(this);
+    this.handleCreateCorner = this.handleCreateCorner.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
@@ -33,12 +36,15 @@ class Daytona extends Component {
       sessions: [],
       currentSession: null,
       observations: [],
-      corners: [],
+      corners: null,
       dataIsReady: false,
       addNewObservation: false,
       newObservation: null,
       newObservationNotes: "",
-      newObservationSetupName: ""
+      newObservationSetupName: "",
+      addNewCorner: false,
+      newCornerNumber: "",
+      newCornerNotes: ""
     };
   }
 
@@ -60,8 +66,17 @@ class Daytona extends Component {
     this.setState({addNewObservation: false});
   }
 
+  handleAddCorner() {
+    this.setState({addNewCorner: true});
+  }
+
+  handleCancelCorner() {
+    this.setState({addNewCorner: false});
+  }
+
   handleCreateObservation(e) {
     e.preventDefault();
+    this.setState({addNewObservation: false});
     const date = new Date();
     const obs = {
       time: date.getTime(),
@@ -76,7 +91,18 @@ class Daytona extends Component {
       // })
       console.log("the function return",obs);
     })
+  }
 
+  handleCreateCorner(e) {
+    e.preventDefault();
+    this.setState({addNewCorner: false});
+    let { authUser, currentSession, newCornerNumber, newCornerNotes } = this.state
+    const obs = {
+      notes: newCornerNotes,
+    }
+    data.recordCorner(authUser, trackID, currentSession, newCornerNumber, obs, function(obs) {
+      console.log("the function return",obs);
+    })
   }
 
   // registerNotes(e, turnID) {
@@ -106,7 +132,7 @@ class Daytona extends Component {
           // let { corners, observations } = that.state
 
           data.loadData(uid, trackID, function(values) {
-            console.log("values from load data",values);
+            // console.log("values from load data",values);
             // console.log("obs", values.newState[0].observations);
             // let observationsValues = []
             // let cornerValues = []
@@ -146,7 +172,7 @@ class Daytona extends Component {
 
   render() {
 
-    let { sessions, currentSession, addNewObservation, newObservationNotes, newObservationSetupName, observations, corners } = this.state
+    let { sessions, currentSession, addNewObservation, addNewCorner, newObservationNotes, newObservationSetupName, observations, corners } = this.state
     // console.log(sessions);
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
@@ -155,8 +181,6 @@ class Daytona extends Component {
       sessionName = found.name
       // date = timestamp.toLocaleString()
     }
-
-    console.log(corners.length);
 
     let newOvervationEntry;
     if (addNewObservation) {
@@ -170,6 +194,18 @@ class Daytona extends Component {
         />
       )
     }
+    let newCornerEntry;
+    if (addNewCorner) {
+      newCornerEntry = (
+        <AddNewConer
+          handleCancelCorner={this.handleCancelCorner}
+          handleCreateCorner={this.handleCreateCorner}
+          newCornerNotes={this.newCornerNotes}
+          handleInputChange={this.handleInputChange}
+        />
+      )
+    }
+
 
     return (
       <div className="track-wrapper">
@@ -217,19 +253,19 @@ class Daytona extends Component {
           <div className="track-corners">
             <div className="track-corners-header">
               <h3>Corners</h3>
-              <button onClick={this.handleAddObservation}>Add new</button>
+              <button onClick={this.handleAddCorner}>Add new</button>
             </div>
 
+            {newCornerEntry}
+
             <div>
-              { corners.length > 0 ? (corners.map(function(obs) {
+              { corners ? ( Object.entries(corners).map(corner => {
                 return (
                   <CornersList
-                    name={obs.time}
-                    notes={obs.notes}
-                    setup={obs.setup}
+                    name={corner[0]}
+                    notes={corner[1]}
                   />
-                )
-              })) : <NoCorners/>
+              )})) : <NoCorners/>
               }
             </div>
           </div>

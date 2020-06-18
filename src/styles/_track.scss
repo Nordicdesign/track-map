@@ -92,4 +92,17 @@
     flex-direction: row;
     align-items: baseline;
   }
+
+  .corner-entry {
+    display: flex;
+    flex-direction: row;
+
+    .corner-number {
+      font-size: 2rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-style: italic;
+      width: 60px;
+    }
+  }
 }

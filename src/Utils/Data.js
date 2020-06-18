@@ -37,11 +37,13 @@ class Data {
   }
 
   saveDataInState(snapshot) {
-    // if no data exists have an empty object, rather than null
-    let corners = [];
-    let observations = [];
+    // if no data exists have an empty array/object, rather than null
+    let corners
+    let observations = []
     let sessions = []
-    let data = snapshot.val();
+    let data = snapshot.val()
+
+    console.log("the snapshot",data)
 
     for (let session in data) {
       sessions.push({
@@ -56,9 +58,13 @@ class Data {
     let currentSession = sessions.slice(-1);
 
     if (typeof currentSession[0].corners !== "undefined") {
-      for (let obs in currentSession[0].corners) {
-        observations.push(currentSession[0].corners[obs])
-      }
+      // console.log(currentSession[0].corners);
+      // for (let obs in currentSession[0].corners) {
+      //   observations.push(currentSession[0].corners[obs])
+      // }
+
+      corners = currentSession[0].corners
+
     }
 
     if (typeof currentSession[0].observations !== "undefined") {
@@ -91,10 +97,14 @@ class Data {
     return {
       observations: data
     }
-    // let that = this;
-    // firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-    //   onResult(that.saveDataInState(snapshot))
-    // })
+  }
+  recordCorner(authUser, trackID, session, corner, data) {
+    let newData = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/' + session + '/corners/t' + corner + '/');
+    newData.set(data);
+    console.log('information recorded ✅');
+    return {
+      corners: data
+    }
   }
 }
 
