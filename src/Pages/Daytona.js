@@ -23,10 +23,9 @@ class Daytona extends Component {
     super(props,context);
     this.handleAddObservation = this.handleAddObservation.bind(this);
     this.handleCancelObservation = this.handleCancelObservation.bind(this);
-    this.handleCreateObservation = this.handleCreateObservation.bind(this);
     this.handleAddCorner = this.handleAddCorner.bind(this);
     this.handleCancelCorner = this.handleCancelCorner.bind(this);
-    this.handleCreateCorner = this.handleCreateCorner.bind(this);
+    // this.handleCreateCorner = this.handleCreateCorner.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
     // this.handleCancelEditCorner = this.handleCancelEditCorner.bind(this);
     // this.handleEditCorner = this.handleEditCorner.bind(this);
@@ -38,7 +37,7 @@ class Daytona extends Component {
       error: null,
       sessions: [],
       currentSession: null,
-      observations: [],
+      observations: null,
       corners: null,
       dataIsReady: false,
       visibleNotesForm: false,
@@ -65,14 +64,6 @@ class Daytona extends Component {
   //   });
   // }
 
-  addOrEditObservation(obj) {
-    /* to be done */
-  }
-
-  onDelete(id) {
-    /* to be done */
-  }
-
   handleAddObservation() {
     this.setState({visibleNotesForm: true});
   }
@@ -88,14 +79,6 @@ class Daytona extends Component {
   handleCancelCorner() {
     this.setState({visibleCornerForm: false});
   }
-
-  // handleStartEditCorner() {
-  //   this.setState({editCorner: true});
-  // }
-  //
-  // handleCancelEditCorner() {
-  //   this.setState({editCorner: false});
-  // }
 
   addOrEdit = (obj) => {
     if (this.state.currentId === "") {
@@ -113,23 +96,10 @@ class Daytona extends Component {
     }
   }
 
-  handleCreateObservation(e) {
-    e.preventDefault();
-    this.setState({addNewObservation: false});
-    const date = new Date();
-    const obs = {
-      time: date.getTime(),
-      notes: this.state.newObservationNotes,
-      setup: this.state.newObservationSetupName
+  onDelete = (type, id) => {
+    if (window.confirm(`Are you sure to delete ${id}?`)) {
+        data.deleteEntry(this.state.authUser, trackID, this.state.currentSession, type, id)
     }
-    console.log("please send this to firebase",obs);
-    // let that = this
-    data.recordObservation(this.state.authUser, trackID, this.state.currentSession, obs, function(obs) {
-      // this.setState({
-      //   observations: update(this.state.observations, {$merge: obs})
-      // })
-      console.log("the function return",obs);
-    })
   }
 
   handleCreateCorner(e) {
@@ -144,27 +114,6 @@ class Daytona extends Component {
     })
   }
 
-  handleEditCorner(e) {
-    e.preventDefault();
-    this.setState({editCorner: false});
-    let { authUser, currentSession, editCornerNumber, editCornerNotes } = this.state
-    const obs = {
-      notes: editCornerNotes,
-    }
-    data.recordCorner(authUser, trackID, currentSession, editCornerNumber, obs, function(obs) {
-      console.log("the function return",obs);
-    })
-  }
-
-  // registerNotes(e, turnID) {
-  //   const {trackID} = this.props
-  //   const {authUser, currentSession} = this.state
-  //   var updates = {};
-  //   updates['/users/'+ authUser +'/tracks/'+ trackID + '/sessions/' + currentSession + '/turn/' + turnID + '/notes'] = e.target.value;
-  //   return firebase.database().ref().update(updates);
-  // }
-
-  // componentDidMount(props) {
   componentDidMount() {
     let that = this;
     // const {trackID,trackName} = this.props;
@@ -206,8 +155,6 @@ class Daytona extends Component {
               corners: values.corners
             },() => {
               that.setState({dataIsReady: true})
-              // console.log("Corners loaded",corners);
-              // console.log("Observations loaded",observations);
             })
           })
         })
@@ -285,17 +232,19 @@ class Daytona extends Component {
             </div>
 
             {newOvervationEntry}
+            {console.log(observations)}
             <div>
-              { observations.length > 0 ? (observations.map(function(obs) {
-                return (
-                  <ObservationList
-                    key={obs.time}
-                    name={obs.time}
-                    notes={obs.notes}
-                    setup={obs.setup}
+              { (observations) ?
+                Object.keys(observations).reverse().map((key) => (
+                   <ObservationList
+                    key={key}
+                    id={key}
+                    name={observations[key].time}
+                    notes={observations[key].notes}
+                    setupName={observations[key].setupName}
+                    onDelete={this.onDelete}
                   />
-                )
-              })) : <NoObservations/>
+              )) : <NoObservations/>
               }
             </div>
 

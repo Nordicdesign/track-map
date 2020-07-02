@@ -1,25 +1,29 @@
 import React from 'react';
 
-export function ObservationList(props) {
-  let date = new Date(props.name)
+const ObservationList = (props) => {
+  let { name, id, notes, setupName, onDelete } = props
+  let date = new Date(name)
   date = date.toLocaleString()
   return (
     <div className="obs-entry">
       <p className="obs-name">{date}</p>
-      <p>{props.notes}</p>
-      {props.setup === '' ? "" : (
+      <p>{notes}</p>
+      {setupName === "" ? " " : (
         <>
         <h4>Setup name</h4>
-        <p>{props.setup}</p>
+        <p>{setupName}</p>
+
         </>
       )}
-
+      <p><button onClick={() => onDelete("observations", id)}>Delete</button></p>
     </div>
   )
 }
 
-export function NoObservations() {
+const NoObservations = () => {
   return (
     <p>Add some observations</p>
   )
 }
+
+export { ObservationList, NoObservations }

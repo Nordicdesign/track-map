@@ -64,8 +64,10 @@
     padding-bottom: $baseline;
 
     .obs-name {
-      color: #808080;
-      margin-bottom: $baseline/2;
+      color: #ccc;
+      margin-top: $baseline;      
+      margin-bottom: 0;
+      font-size: 1.2rem;
     }
 
     h4 {
