@@ -4,7 +4,7 @@ export function ObservationList(props) {
   let date = new Date(props.name)
   date = date.toLocaleString()
   return (
-    <div key={props.name} className="obs-entry">
+    <div className="obs-entry">
       <p className="obs-name">{date}</p>
       <p>{props.notes}</p>
       {props.setup === '' ? "" : (

@@ -91,9 +91,12 @@ class Data {
   }
 
   recordObservation(authUser, trackID, session, data) {
-    let newData = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/' + session + '/observations/').push(data);
-    newData.set();
-    console.log('information recorded ✅');
+    firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/' + session + '/observations/').push(
+      data,
+      err => {
+        if (err) console.log(err);      
+      }
+    );
     return {
       observations: data
     }

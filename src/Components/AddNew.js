@@ -1,35 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-export function AddNewObservation(props) {
+// a lot from http://www.codaffection.com/react/react-firebase-crud/
+
+const AddNewObservation = (props) => {
+
+  const initialFieldValues = {
+    notes: '',
+    setupName: ''
+  }
+
+  var [values, setValues] = useState(initialFieldValues)
+
+  const handleChange = e => {
+      var { name, value } = e.target
+      setValues({
+        ...values,
+        [name]: value
+      })
+  }
+
+  const handleFormSubmit = e => {
+    e.preventDefault()
+    props.addOrEdit(values);
+  }
+
   return (
     <div className="new-observation">
-      <form onSubmit={props.handleCreateObservation} formMethod="post">
+      <form onSubmit={handleFormSubmit} formMethod="post" autoComplete="off">
       <fieldset>
         <ul>
           <li>
-            <label htmlFor="newObservationNotes">Notes</label>
+            <label htmlFor="notes">Notes</label>
             <textarea
-              id="newObservationNotes"
-              name="newObservationNotes"
-              value={props.newObservationNotes}
-              onChange={props.handleInputChange}
+              id="notes"
+              name="notes"
+              value={values.notes}
+              onChange={handleChange}
               rows="6"
               />
           </li>
           <li>
-            <label htmlFor="newObservationSetupName">Setup name (optional)</label>
+            <label htmlFor="setupName">Setup name (optional)</label>
             <input
               type="text"
-              name="newObservationSetupName"
-              id="newObservationSetupName"
-              value={props.newObservationSetupName}
-              onChange={props.handleInputChange}
+              name="setupName"
+              id="setupName"
+              value={values.setupName}
+              onChange={handleChange}
              />
           </li>
           <li className="form-actions">
             <input
               type="submit"
-              value="Add observation"
+              value={props.currentId === "" ? "Add" : "Edit"}
               className="button-submit"
             />
             <button className="button-link" onClick={props.handleCancelObservation}>Cancel</button>
@@ -41,29 +64,50 @@ export function AddNewObservation(props) {
   )
 }
 
-export function AddNewConer(props) {
+const AddNewCorner = (props) => {
+
+  const initialFieldValues = {
+    notes: '',
+    setupName: ''
+  }
+
+  var [values, setValues] = useState(initialFieldValues)
+
+  const handleInputChange = e => {
+      var { name, value } = e.target
+      setValues({
+        ...values,
+        [name]: value
+      })
+  }
+
+  const handleFormSubmit = e => {
+    e.preventDefault()
+    console.log(values);
+  }
+
   return (
     <div className="new-corner">
-      <form onSubmit={props.handleCreateCorner} formMethod="post">
+      <form onSubmit={handleFormSubmit} formMethod="post" autoComplete="off">
       <fieldset>
         <ul>
           <li>
-            <label htmlFor="newCornerNumber">Turn #</label>
+            <label htmlFor="number">Turn #</label>
             <input
               type="text"
-              id="newCornerNumber"
-              name="newCornerNumber"
-              value={props.newCornerNumber}
-              onChange={props.handleInputChange}
+              id="number"
+              name="number"
+              value={values.number}
+              onChange={handleInputChange}
               />
           </li>
           <li>
-            <label htmlFor="newCornerNotes">Notes</label>
+            <label htmlFor="notes">Notes</label>
             <textarea
-              id="newCornerNotes"
-              name="newCornerNotes"
-              value={props.newCornerNotes}
-              onChange={props.handleInputChange}
+              id="notes"
+              name="notes"
+              value={values.notes}
+              onChange={handleInputChange}
               rows="4"
               />
           </li>
@@ -81,3 +125,5 @@ export function AddNewConer(props) {
     </div>
   )
 }
+
+export { AddNewObservation, AddNewCorner }
