@@ -6,7 +6,14 @@ const ObservationList = (props) => {
   date = date.toLocaleString()
   return (
     <div className="obs-entry">
-      <p className="obs-name">{date}</p>
+      <div className="obs-entry-header">
+        <p className="obs-name">{date}</p>
+        <div>
+          <button className="button-icon" onClick=""><div class="icon icon-pencil-square"></div></button>
+          <button className="button-icon" onClick={() => onDelete("observations", id)}><div class="icon icon-trash"></div></button>
+        </div>
+      </div>
+
       <p>{notes}</p>
       {setupName === "" ? " " : (
         <>
@@ -15,7 +22,6 @@ const ObservationList = (props) => {
 
         </>
       )}
-      <p><button onClick={() => onDelete("observations", id)}>Delete</button></p>
     </div>
   )
 }

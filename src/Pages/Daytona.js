@@ -97,7 +97,7 @@ class Daytona extends Component {
   }
 
   onDelete = (type, id) => {
-    if (window.confirm(`Are you sure to delete ${id}?`)) {
+    if (window.confirm(`Are you sure to delete this entry`)) {
         data.deleteEntry(this.state.authUser, trackID, this.state.currentSession, type, id)
     }
   }

@@ -63,9 +63,19 @@
     border-bottom: 1px solid #E9E9E9;
     padding-bottom: $baseline;
 
+    .obs-entry-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: $baseline;
+
+      .icon {
+        font-size: 1.8rem;
+      }
+    }
+
     .obs-name {
       color: #ccc;
-      margin-top: $baseline;      
       margin-bottom: 0;
       font-size: 1.2rem;
     }
