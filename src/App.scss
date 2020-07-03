@@ -8,20 +8,28 @@
 @import "styles/track";
 @import "styles/forms";
 @import "styles/layout";
-@import "styles/drawer";
 @import "styles/sessions";
-@import "styles/notes";
 
 .listCircuits {
   li {
-    background: $colour-gray-300;
+    border: 1px solid $colour-gray-300;
+    border-radius: 2px;
     margin-bottom: $baseline/2;
     padding: $baseline/2;
+    transition: 0.2s ease all;
 
     &:hover {
-      color: #fff;
-      background: $colour-accent;
+      background: #f3f4f5;
       cursor: pointer;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    a {
+      color: $colour-accent;
+      text-decoration: none;
     }
   }
 }

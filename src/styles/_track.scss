@@ -15,6 +15,10 @@
 .track-map {
   grid-area: map;
   padding: $baseline;
+
+  img {
+    max-height: 400px;
+  }
 }
 
 .track-session {
