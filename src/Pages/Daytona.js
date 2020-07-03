@@ -81,18 +81,20 @@ class Daytona extends Component {
   }
 
   addOrEdit = (obj) => {
+    this.setState({visibleNotesForm: false});
+    const date = new Date();
+    const obs = {
+      notes: obj.notes,
+      setupName: obj.setupName,
+      time: date.getTime(),
+    }
+
     if (this.state.currentId === "") {
-      this.setState({visibleNotesForm: false});
-      const date = new Date();
-      const obs = {
-        notes: obj.notes,
-        setupName: obj.setupName,
-        time: date.getTime(),
-      }
       data.recordObservation(this.state.authUser, trackID, this.state.currentSession, obs)
     }
     else {
-      console.log("we're editing");
+      data.editObservation(this.state.authUser, trackID, this.state.currentSession, this.state.currentId, obs)
+      this.setState({currentId: ""})
     }
   }
 
@@ -100,6 +102,14 @@ class Daytona extends Component {
     if (window.confirm(`Are you sure to delete this entry`)) {
         data.deleteEntry(this.state.authUser, trackID, this.state.currentSession, type, id)
     }
+  }
+
+  setCurrentId = (id) => {
+    this.setState({
+      currentId: id
+    }, () => {
+      this.setState({visibleNotesForm: true})
+    })
   }
 
   handleCreateCorner(e) {
@@ -171,7 +181,7 @@ class Daytona extends Component {
   render() {
 
     let { sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
-    // console.log(sessions);
+
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
     if (typeof found !== "undefined") {
@@ -180,16 +190,17 @@ class Daytona extends Component {
       // date = timestamp.toLocaleString()
     }
 
-    let newOvervationEntry;
-    if (visibleNotesForm) {
-      newOvervationEntry = (
-        <AddNewObservation
-          currentId={currentId}
-          addOrEdit={this.addOrEdit}
-          handleCancelObservation={this.handleCancelObservation}
-        />
-      )
-    }
+    // let newOvervationEntry;
+    // if (visibleNotesForm) {
+    //   newOvervationEntry = (
+    //     <AddNewObservation
+    //       currentId={currentId}
+    //       addOrEdit={this.addOrEdit}
+    //       observations={observations}
+    //       handleCancelObservation={this.handleCancelObservation}
+    //     />
+    //   )
+    // }
     let newCornerEntry;
     if (visibleCornerForm) {
       newCornerEntry = (
@@ -231,22 +242,31 @@ class Daytona extends Component {
               <button onClick={this.handleAddObservation}>Add new</button>
             </div>
 
-            {newOvervationEntry}
-            {console.log(observations)}
-            <div>
-              { (observations) ?
-                Object.keys(observations).reverse().map((key) => (
-                   <ObservationList
-                    key={key}
-                    id={key}
-                    name={observations[key].time}
-                    notes={observations[key].notes}
-                    setupName={observations[key].setupName}
-                    onDelete={this.onDelete}
-                  />
-              )) : <NoObservations/>
-              }
-            </div>
+            {visibleNotesForm ? (
+              <AddNewObservation
+                currentId={currentId}
+                addOrEdit={this.addOrEdit}
+                observations={observations}
+                handleCancelObservation={this.handleCancelObservation}
+              />
+            ) : (
+              <div>
+                { (observations) ?
+                  Object.keys(observations).reverse().map((key) => (
+                     <ObservationList
+                      key={key}
+                      id={key}
+                      name={observations[key].time}
+                      notes={observations[key].notes}
+                      setupName={observations[key].setupName}
+                      onDelete={this.onDelete}
+                      setCurrentId={this.setCurrentId}
+                    />
+                )) : <NoObservations/>
+                }
+              </div>
+            )}
+
 
           </div>
 

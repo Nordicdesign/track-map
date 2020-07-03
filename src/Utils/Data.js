@@ -43,7 +43,7 @@ class Data {
     let sessions = []
     let data = snapshot.val()
 
-    console.log("the snapshot",data)
+    // console.log("the snapshot",data)
 
     for (let session in data) {
       sessions.push({
@@ -85,8 +85,6 @@ class Data {
     //   turns = []
     // }
 
-    console.log(observations);
-
     return {
       corners,
       observations,
@@ -97,6 +95,17 @@ class Data {
 
   recordObservation(authUser, trackID, session, data) {
     firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/' + session + '/observations/').push(
+      data,
+      err => {
+        if (err) console.log(err);
+      }
+    );
+    return {
+      observations: data
+    }
+  }
+  editObservation(authUser, trackID, session, id, data) {
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}/observations/${id}`).set(
       data,
       err => {
         if (err) console.log(err);

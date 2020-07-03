@@ -4,12 +4,25 @@ import React, { useState, useEffect } from 'react';
 
 const AddNewObservation = (props) => {
 
+  let { currentId, observations, addOrEdit, handleCancelObservation } = props
+
   const initialFieldValues = {
     notes: '',
     setupName: ''
   }
 
   var [values, setValues] = useState(initialFieldValues)
+
+  useEffect(() => {
+    if (currentId === '') {
+      setValues({ ...initialFieldValues})
+    }
+    else {
+      setValues({
+        ...observations[currentId]
+      })
+    }
+  }, [currentId, observations])
 
   const handleChange = e => {
       var { name, value } = e.target
@@ -21,7 +34,7 @@ const AddNewObservation = (props) => {
 
   const handleFormSubmit = e => {
     e.preventDefault()
-    props.addOrEdit(values);
+    addOrEdit(values);
   }
 
   return (
@@ -52,10 +65,10 @@ const AddNewObservation = (props) => {
           <li className="form-actions">
             <input
               type="submit"
-              value={props.currentId === "" ? "Add" : "Edit"}
+              value={currentId === "" ? "Add" : "Edit"}
               className="button-submit"
             />
-            <button className="button-link" onClick={props.handleCancelObservation}>Cancel</button>
+            <button className="button-link" onClick={handleCancelObservation}>Cancel</button>
           </li>
         </ul>
       </fieldset>
