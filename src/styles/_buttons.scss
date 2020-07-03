@@ -48,3 +48,17 @@ input[type="submit"].button-submit {
     background: darken(#4A90E2, 10);
   }
 }
+
+.button-icon {
+  width: auto;
+  height: auto;
+  border: none;
+  background: none;
+  min-width: 0;
+  margin: 0;
+
+  &:hover {
+    color: black;
+    background: none;
+  }
+}

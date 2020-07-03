@@ -10,13 +10,6 @@ import Header from './Components/Header'
 import {Homepage} from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
 import NotLoggedIn from './Components/NotLoggedIn'
-import Spa from './Pages/Spa'
-import LaSarthe from './Pages/LaSarthe'
-import Sebring from './Pages/Sebring'
-import Shanghai from './Pages/Shanghai'
-import Watkins from './Pages/Watkins-glen'
-import Bathurst from './Pages/Mount-panorama'
-import Zolder from './Pages/Zolder'
 import Daytona from './Pages/Daytona'
 
 class App extends Component {
@@ -30,13 +23,6 @@ class App extends Component {
              <Route exact path={ROUTES.LANDING} component={Homepage}/>
              <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
              <Route path={ROUTES.SIGN_IN} component={NotLoggedIn}/>
-             <Route path={ROUTES.SPA} component={Spa}/>
-             <Route path={ROUTES.LEMANS} component={LaSarthe}/>
-             <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
-             <Route path={ROUTES.WATKINS} component={Watkins}/>
-             <Route path={ROUTES.SEBRING} component={Sebring}/>
-             <Route path={ROUTES.BATHURST} component={Bathurst}/>
-             <Route path={ROUTES.ZOLDER} component={Zolder}/>
              <Route path={ROUTES.DAYTONA} component={Daytona}/>
           </div>
           </>

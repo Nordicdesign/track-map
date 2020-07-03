@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import { AddNewObservation, AddNewConer } from '../Components/AddNew'
+import { AddNewObservation, AddNewCorner } from '../Components/AddNew'
 import { ObservationList, NoObservations } from '../Components/ObservationList'
 import { CornersList, NoCorners } from '../Components/CornersList'
-// import TrackNotes from '../Components/TrackNotes'
-// import TrackMeta from '../Components/TrackMeta'
 import Data from '../Utils/Data'
 import * as firebase from 'firebase/app'
 import "firebase/database"
-// import update from 'immutability-helper'
 import SessionSelection from '../Components/SessionSelection'
 
 const data = new Data();
-
-// const numberTurns = 10 + 1; // Add the number of actual turns, but we need an extra one for the zero
 const trackName = "Daytona";
 const trackID= "daytona";
 const URL = "/images/Daytona_International_Speedway_-_Road_Course.svg__81933_original.webp";
@@ -21,13 +16,8 @@ const URL = "/images/Daytona_International_Speedway_-_Road_Course.svg__81933_ori
 class Daytona extends Component {
   constructor(props,context) {
     super(props,context);
-    this.handleAddObservation = this.handleAddObservation.bind(this);
-    this.handleCancelObservation = this.handleCancelObservation.bind(this);
-    this.handleCreateObservation = this.handleCreateObservation.bind(this);
-    this.handleAddCorner = this.handleAddCorner.bind(this);
-    this.handleCancelCorner = this.handleCancelCorner.bind(this);
-    this.handleCreateCorner = this.handleCreateCorner.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       authUser: null,
@@ -35,89 +25,74 @@ class Daytona extends Component {
       error: null,
       sessions: [],
       currentSession: null,
-      observations: [],
+      observations: null,
       corners: null,
       dataIsReady: false,
-      addNewObservation: false,
-      newObservation: null,
-      newObservationNotes: "",
-      newObservationSetupName: "",
-      addNewCorner: false,
-      newCornerNumber: "",
-      newCornerNotes: ""
+      visibleNotesForm: false,
+      visibleCornerForm: false,
+      currentId: ""
     };
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+  handleAdd(type) {
+    if (type === "notes")
+      this.setState({visibleNotesForm: true});
+    else if (type === 'corner')
+      this.setState({visibleCornerForm: true});
   }
 
-  handleAddObservation() {
-    this.setState({addNewObservation: true});
+  handleCancel(type) {
+    if (type === "notes")
+      this.setState({visibleNotesForm: false});
+    else if (type === 'corner')
+      this.setState({visibleCornerForm: false});
   }
 
-  handleCancelObservation() {
-    this.setState({addNewObservation: false});
-  }
-
-  handleAddCorner() {
-    this.setState({addNewCorner: true});
-  }
-
-  handleCancelCorner() {
-    this.setState({addNewCorner: false});
-  }
-
-  handleCreateObservation(e) {
-    e.preventDefault();
-    this.setState({addNewObservation: false});
+  addOrEdit = (obj) => {
+    this.setState({visibleNotesForm: false});
     const date = new Date();
     const obs = {
+      notes: obj.notes,
+      setupName: obj.setupName,
       time: date.getTime(),
-      notes: this.state.newObservationNotes,
-      setup: this.state.newObservationSetupName
     }
-    console.log("please send this to firebase",obs);
-    // let that = this
-    data.recordObservation(this.state.authUser, trackID, this.state.currentSession, obs, function(obs) {
-      // this.setState({
-      //   observations: update(this.state.observations, {$merge: obs})
-      // })
-      console.log("the function return",obs);
+
+    if (this.state.currentId === "") {
+      data.recordObservation(this.state.authUser, trackID, this.state.currentSession, obs)
+    }
+    else {
+      data.editObservation(this.state.authUser, trackID, this.state.currentSession, this.state.currentId, obs)
+      this.setState({currentId: ""})
+    }
+  }
+
+  addOrEditCorner = (corner, notes) => {
+    let { authUser, currentSession } = this.state
+    this.setState({visibleCornerForm: false});
+    let obs = { notes }
+    data.recordCorner(authUser, trackID, currentSession, corner, obs)
+    this.setState({currentId: ""})
+  }
+
+  onDelete = (type, id) => {
+    if (window.confirm(`Are you sure to delete this entry`)) {
+        data.deleteEntry(this.state.authUser, trackID, this.state.currentSession, type, id)
+    }
+  }
+
+  setCurrentId = (type, id) => {
+    this.setState({
+      currentId: id
+    }, () => {
+      if (type === 'notes')
+        this.setState({visibleNotesForm: true})
+      else if (type === 'corners')
+        this.setState({visibleCornerForm: true})
     })
   }
 
-  handleCreateCorner(e) {
-    e.preventDefault();
-    this.setState({addNewCorner: false});
-    let { authUser, currentSession, newCornerNumber, newCornerNotes } = this.state
-    const obs = {
-      notes: newCornerNotes,
-    }
-    data.recordCorner(authUser, trackID, currentSession, newCornerNumber, obs, function(obs) {
-      console.log("the function return",obs);
-    })
-  }
-
-  // registerNotes(e, turnID) {
-  //   const {trackID} = this.props
-  //   const {authUser, currentSession} = this.state
-  //   var updates = {};
-  //   updates['/users/'+ authUser +'/tracks/'+ trackID + '/sessions/' + currentSession + '/turn/' + turnID + '/notes'] = e.target.value;
-  //   return firebase.database().ref().update(updates);
-  // }
-
-  // componentDidMount(props) {
   componentDidMount() {
     let that = this;
-    // const {trackID,trackName} = this.props;
-
     // first time only, when the user loads the page and they are logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -142,21 +117,13 @@ class Daytona extends Component {
             // if (typeof values.newState[0].observations !== "undefined") {
             //   observationsValues.push(values.newState[0].observations)
             // }
-
-            // console.log(observationsValues);
-
             that.setState({
               sessions: values.sessions,
               currentSession: values.currentSession[0].id,
-              // corners: update(corners, {$merge: cornerValues}),
-              // observations: update(that.state.observations, {$merge: observationsValues}),
-              // observations: observationsValues,
               observations: values.observations,
               corners: values.corners
             },() => {
               that.setState({dataIsReady: true})
-              // console.log("Corners loaded",corners);
-              // console.log("Observations loaded",observations);
             })
           })
         })
@@ -172,8 +139,8 @@ class Daytona extends Component {
 
   render() {
 
-    let { sessions, currentSession, addNewObservation, addNewCorner, newObservationNotes, newObservationSetupName, observations, corners } = this.state
-    // console.log(sessions);
+    let { sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
+
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
     if (typeof found !== "undefined") {
@@ -181,31 +148,6 @@ class Daytona extends Component {
       sessionName = found.name
       // date = timestamp.toLocaleString()
     }
-
-    let newOvervationEntry;
-    if (addNewObservation) {
-      newOvervationEntry = (
-        <AddNewObservation
-          handleCancelObservation={this.handleCancelObservation}
-          handleCreateObservation={this.handleCreateObservation}
-          newObservationNotes={newObservationNotes}
-          newObservationSetupName={newObservationSetupName}
-          handleInputChange={this.handleInputChange}
-        />
-      )
-    }
-    let newCornerEntry;
-    if (addNewCorner) {
-      newCornerEntry = (
-        <AddNewConer
-          handleCancelCorner={this.handleCancelCorner}
-          handleCreateCorner={this.handleCreateCorner}
-          newCornerNotes={this.newCornerNotes}
-          handleInputChange={this.handleInputChange}
-        />
-      )
-    }
-
 
     return (
       <div className="track-wrapper">
@@ -231,43 +173,67 @@ class Daytona extends Component {
           <div className="track-observations">
             <div className="track-observations-header">
               <h3>Observations</h3>
-              <button onClick={this.handleAddObservation}>Add new</button>
+              <button onClick={() => this.handleAdd('notes')}>Add new</button>
             </div>
 
-            {newOvervationEntry}
-            <div>
-              { observations.length > 0 ? (observations.map(function(obs) {
-                return (
-                  <ObservationList
-                    name={obs.time}
-                    notes={obs.notes}
-                    setup={obs.setup}
-                  />
-                )
-              })) : <NoObservations/>
-              }
-            </div>
+            {visibleNotesForm ? (
+              <AddNewObservation
+                currentId={currentId}
+                addOrEdit={this.addOrEdit}
+                observations={observations}
+                handleCancel={this.handleCancel}
+              />
+            ) : (
+              <div>
+                { (observations) ?
+                  Object.keys(observations).reverse().map((key) => (
+                     <ObservationList
+                      key={key}
+                      id={key}
+                      name={observations[key].time}
+                      notes={observations[key].notes}
+                      setupName={observations[key].setupName}
+                      onDelete={this.onDelete}
+                      setCurrentId={this.setCurrentId}
+                    />
+                )) : <NoObservations/>
+                }
+              </div>
+            )}
+
 
           </div>
 
           <div className="track-corners">
             <div className="track-corners-header">
               <h3>Corners</h3>
-              <button onClick={this.handleAddCorner}>Add new</button>
+              <button onClick={() => this.handleAdd('corner')}>Add new</button>
             </div>
 
-            {newCornerEntry}
+            {visibleCornerForm ? (
+              <AddNewCorner
+                currentId={currentId}
+                addOrEditCorner={this.addOrEditCorner}
+                corners={corners}
+                handleCancel={this.handleCancel}
+              />
+            ) : (
+              <div>
+                { corners ? ( Object.entries(corners).map(corner => {
+                  return (
+                    <CornersList
+                      key={Math.random()}
+                      name={corner[0]}
+                      notes={corner[1]}
+                      onDelete={this.onDelete}
+                      setCurrentId={this.setCurrentId}
+                    />
+                )})) : <NoCorners/>
+                }
+              </div>
+            )}
 
-            <div>
-              { corners ? ( Object.entries(corners).map(corner => {
-                return (
-                  <CornersList
-                    name={corner[0]}
-                    notes={corner[1]}
-                  />
-              )})) : <NoCorners/>
-              }
-            </div>
+
           </div>
         </div>
       </div>
