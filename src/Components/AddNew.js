@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const AddNewObservation = (props) => {
 
-  let { currentId, observations, addOrEdit, handleCancelObservation } = props
+  let { currentId, observations, addOrEdit, handleCancel } = props
 
   const initialFieldValues = {
     notes: '',
@@ -68,7 +68,7 @@ const AddNewObservation = (props) => {
               value={currentId === "" ? "Add" : "Edit"}
               className="button-submit"
             />
-            <button className="button-link" onClick={handleCancelObservation}>Cancel</button>
+          <button className="button-link" onClick={() => handleCancel('notes')}>Cancel</button>
           </li>
         </ul>
       </fieldset>
@@ -79,14 +79,28 @@ const AddNewObservation = (props) => {
 
 const AddNewCorner = (props) => {
 
+  let { currentId, corners, addOrEditCorner, handleCancel } = props
+
   const initialFieldValues = {
     notes: '',
-    setupName: ''
+    number: ''
   }
 
   var [values, setValues] = useState(initialFieldValues)
 
-  const handleInputChange = e => {
+  useEffect(() => {
+    if (currentId === '') {
+      setValues({ ...initialFieldValues})
+    }
+    else {
+      setValues({
+        ...corners[currentId],
+        number: currentId
+      })
+    }
+  }, [currentId, corners])
+
+  const handleChange = e => {
       var { name, value } = e.target
       setValues({
         ...values,
@@ -96,7 +110,7 @@ const AddNewCorner = (props) => {
 
   const handleFormSubmit = e => {
     e.preventDefault()
-    console.log(values);
+    addOrEditCorner(values.number, values.notes);
   }
 
   return (
@@ -107,11 +121,11 @@ const AddNewCorner = (props) => {
           <li>
             <label htmlFor="number">Turn #</label>
             <input
-              type="text"
+              type="number"
               id="number"
               name="number"
               value={values.number}
-              onChange={handleInputChange}
+              onChange={handleChange}
               />
           </li>
           <li>
@@ -120,17 +134,17 @@ const AddNewCorner = (props) => {
               id="notes"
               name="notes"
               value={values.notes}
-              onChange={handleInputChange}
+              onChange={handleChange}
               rows="4"
               />
           </li>
           <li className="form-actions">
             <input
               type="submit"
-              value="Add corner"
+              value={currentId === "" ? "Add corner" : "Edit"}
               className="button-submit"
             />
-            <button className="button-link" onClick={props.handleCancelCorner}>Cancel</button>
+          <button className="button-link" onClick={() => handleCancel('corner')}>Cancel</button>
           </li>
         </ul>
       </fieldset>

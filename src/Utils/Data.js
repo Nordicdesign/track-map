@@ -118,13 +118,15 @@ class Data {
 
   deleteEntry(authUser,trackID, session, type, id) {
     firebase.database().ref(`users/${authUser}/tracks/${trackID}/sessions/${session}/${type}/${id}`).remove(
-        err => { if (err) console.log(err) })
+      err => { if (err) console.log(err) })
   }
 
   recordCorner(authUser, trackID, session, corner, data) {
-    let newData = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/' + session + '/corners/t' + corner + '/');
-    newData.set(data);
-    console.log('information recorded ✅');
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}/corners/${corner}`).set(data,
+      err => {
+        if (err) console.log(err);
+      }
+    );
     return {
       corners: data
     }

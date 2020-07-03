@@ -108,13 +108,25 @@
   .corner-entry {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+
+    .corner-notes {
+      margin-right: auto;
+      flex-basis: auto;
+    }
+
+    .corner-actions {
+      width: 56px;
+      flex-shrink: 0;
+    }
 
     .corner-number {
       font-size: 2rem;
       text-transform: uppercase;
       font-weight: 700;
       font-style: italic;
-      width: 60px;
+      width: 45px;
+      flex-shrink: 0;
     }
   }
 }
