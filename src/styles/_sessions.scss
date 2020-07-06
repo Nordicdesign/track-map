@@ -40,12 +40,47 @@
   border-right: 1px solid tomato;
   margin-right: $baseline;
   font-size: 1.6rem;
+  display: flex;
+  align-items: baseline;
 
   select {
+    display: block;
     border-radius: 2px;
-    margin-left: $baseline/2;
+    margin-top: $baseline/4;
     border: 1px solid #ccc;
     height: 40px;
     font-size: 1.6rem;
+    width: 100%;
+  }
+
+  label {
+    margin-right: auto;
+    width: 70%;
+  }
+
+  .button-icon {
+    font-size: 1.8rem;
+  }
+}
+
+.new-session {
+  label {
+    margin-bottom: $baseline/2;
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+
+    input[type="submit"] {
+      width: auto;
+    }
+  }
+
+  .new-session-p {
+    font-size: 1.4rem;
+    color: $colour-gray-700;
   }
 }

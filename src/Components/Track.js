@@ -72,10 +72,49 @@ class Track extends Component {
     this.setState({currentId: ""})
   }
 
+  renameSession = (value) => {
+    let { authUser, currentSession, trackID } = this.state
+    data.renameSession(authUser, trackID, currentSession, value)
+  }
+
+  newSession = (value) => {
+    let { authUser, trackID } = this.state
+    data.newSession(authUser, trackID, value)
+  }
+
   onDelete = (type, id) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
         data.deleteEntry(this.state.authUser, this.state.trackID, this.state.currentSession, type, id)
     }
+  }
+
+  changeSession = (e) => {
+    const newSession = e.target.value;
+
+    // the new session to load
+    let newState = this.state.sessions.filter(session => session.id === newSession);
+    let corners = newState.map((session) => {
+      return session.corners
+    }).pop();
+    let observations = newState.map((session) => {
+      return session.observations
+    }).pop();
+
+
+    // if(!turns) { // in case there's no data in firebase
+    //   turns = []
+    // }
+    // load in state
+      this.setState({
+        // save the new one
+        currentSession: newSession,
+        // corners: update(this.state.corners, {$merge: corners})
+        corners,
+        observations
+    },() => {
+      // dataIsReady = true;
+      console.log("turns loaded",this.state.observations);
+    })
   }
 
   setCurrentId = (type, id) => {
@@ -155,6 +194,8 @@ class Track extends Component {
             sessions={sessions}
             currentSession={currentSession}
             changeSession={this.changeSession}
+            renameSession={this.renameSession}
+            newSession={this.newSession}
           />
         </div>
 
