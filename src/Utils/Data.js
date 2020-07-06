@@ -131,6 +131,16 @@ class Data {
       corners: data
     }
   }
+
+  renameSession(authUser,trackID, session, value) {
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}`).set({
+      name: value
+    },
+      err => {
+        if (err) console.log(err);
+      }
+    );
+  }
 }
 
 export default Data

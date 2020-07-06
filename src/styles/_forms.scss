@@ -24,3 +24,35 @@ input[type="submit"] {
   margin-top: $baseline;
   color: tomato;
 }
+
+
+.new-observation,
+.new-corner {
+
+  label {
+    margin-bottom: $baseline/4;
+  }
+  textarea {
+    width: 100%;
+    font-family: $fontstack;
+    font-size: 1.4rem;
+    padding: $baseline/4;
+    background: #F7F7F7;
+    border-radius: 2px;
+  }
+
+  input[type="text"] {
+    background: #F7F7F7;
+    border-radius: 2px;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E9E9E9;
+    padding-bottom: $baseline;
+    margin-bottom: $baseline*2;
+  }
+}

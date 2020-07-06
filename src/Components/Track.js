@@ -72,6 +72,11 @@ class Track extends Component {
     this.setState({currentId: ""})
   }
 
+  renameSession = (value) => {
+    let { authUser, currentSession, trackID } = this.state
+    data.renameSession(authUser, trackID, currentSession, value)
+  }
+
   onDelete = (type, id) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
         data.deleteEntry(this.state.authUser, this.state.trackID, this.state.currentSession, type, id)
@@ -155,6 +160,7 @@ class Track extends Component {
             sessions={sessions}
             currentSession={currentSession}
             changeSession={this.changeSession}
+            renameSession={this.renameSession}
           />
         </div>
 
