@@ -62,3 +62,25 @@
     font-size: 1.8rem;
   }
 }
+
+.new-session {
+  label {
+    margin-bottom: $baseline/2;
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+
+    input[type="submit"] {
+      width: auto;
+    }
+  }
+
+  .new-session-p {
+    font-size: 1.4rem;
+    color: $colour-gray-700;
+  }
+}

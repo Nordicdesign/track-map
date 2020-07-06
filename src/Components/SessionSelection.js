@@ -36,6 +36,13 @@ const SessionSelection = (props) => {
       })
   }
 
+  const handleCancelSessions = () => {
+    setValues({
+      changeName: false,
+      newSession: false
+    })
+  }
+
   const handleFormSubmit = e => {
     e.preventDefault()
     props.renameSession(values.sessionName);
@@ -53,7 +60,7 @@ const SessionSelection = (props) => {
       {values.changeName ? (
         <div className="new-session">
           <form onSubmit={handleFormSubmit} autoComplete="off" method="post">
-            <label>New session name
+            <label>Rename session
             <input
               type="text"
               name="sessionName"
@@ -61,17 +68,21 @@ const SessionSelection = (props) => {
               value={values.sessionName}
               onChange={handleChange}
               /></label>
-            <input
-              type="submit"
-              value="Rename"
-            />
+            <div>
+              <input
+                type="submit"
+                value="Rename"
+                className="button-submit"
+              />
+              <p><button className="button-link" onClick={() => handleCancelSessions()}>Cancel</button></p>
+            </div>
         </form>
         </div>
       ) : (
         values.newSession ? (
           <div className="new-session">
             <form onSubmit={handleNewSessionSubmit} autoComplete="off" method="post">
-              <label>New session name
+              <label>Create new session
               <input
                 type="text"
                 name="sessionName"
@@ -79,11 +90,16 @@ const SessionSelection = (props) => {
                 value={values.sessionName}
                 onChange={handleChange}
                 /></label>
-              <input
-                type="submit"
-                value="Create"
-              />
-          </form>
+              <div>
+                <input
+                  type="submit"
+                  value="Create"
+                  className="button-submit"
+                />
+                <p><button className="button-link" onClick={() => handleCancelSessions()}>Cancel</button></p>
+              </div>
+            </form>
+            <p className="new-session-p">Sessions help you keep your notes organised by cars, or maybe different weekends. </p>
           </div>
         ) : (
           <div className="session-selection">
