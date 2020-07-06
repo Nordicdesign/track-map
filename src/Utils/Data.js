@@ -36,6 +36,20 @@ class Data {
     })
   }
 
+  newSession(authUser,trackID, value) {
+    let newSession = firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions/`).push();
+    newSession.set({
+        name: value,
+    });
+    console.log('session created ✅');
+    // let that = this;
+    // firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+    //   // onResult(() => return snapshot)
+    //   // return snapshot.val();
+    //   onResult(that.saveDataInState(snapshot))
+    // })
+  }
+
   saveDataInState(snapshot) {
     // if no data exists have an empty array/object, rather than null
     let corners

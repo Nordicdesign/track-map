@@ -5,6 +5,7 @@ const SessionSelection = (props) => {
 
   const initialFieldValues = {
     changeName: false,
+    newSession: false,
     sessionName: ''
   }
 
@@ -23,6 +24,10 @@ const SessionSelection = (props) => {
     setValues({changeName: true})
   }
 
+  const showNewSession = () => {
+    setValues({newSession: true})
+  }
+
   const handleChange = e => {
       var { name, value } = e.target
       setValues({
@@ -35,6 +40,12 @@ const SessionSelection = (props) => {
     e.preventDefault()
     props.renameSession(values.sessionName);
     setValues({changeName: false})
+  }
+
+  const handleNewSessionSubmit = e => {
+    e.preventDefault()
+    props.newSession(values.sessionName);
+    setValues({newSession: false})
   }
 
   return (
@@ -57,17 +68,36 @@ const SessionSelection = (props) => {
         </form>
         </div>
       ) : (
-        <div className="session-selection">
-          <label>Session
-            <select onChange={props.changeSession} value={props.currentSession}>
-              {sessions}
-            </select>
-          </label>
-          <div>
-            <button className="button-icon" onClick={showChangeName}><div className="icon icon-pencil-square"></div></button>
-            <button className="button-icon" onClick={showChangeName}><div className="icon icon-plus-circle"></div></button>
+        values.newSession ? (
+          <div className="new-session">
+            <form onSubmit={handleNewSessionSubmit} autoComplete="off" method="post">
+              <label>New session name
+              <input
+                type="text"
+                name="sessionName"
+                id="sessionName"
+                value={values.sessionName}
+                onChange={handleChange}
+                /></label>
+              <input
+                type="submit"
+                value="Create"
+              />
+          </form>
           </div>
-        </div>
+        ) : (
+          <div className="session-selection">
+            <label>Session
+              <select onChange={props.changeSession} value={props.currentSession}>
+                {sessions}
+              </select>
+            </label>
+            <div>
+              <button className="button-icon" onClick={showChangeName}><div className="icon icon-pencil-square"></div></button>
+              <button className="button-icon" onClick={showNewSession}><div className="icon icon-plus-circle"></div></button>
+            </div>
+          </div>
+        )
       )}
     </div>
   )
