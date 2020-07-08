@@ -104,7 +104,7 @@ const SessionSelection = (props) => {
         ) : (
           <div className="session-selection">
             <label>Session
-              <select onChange={props.changeSession} value={props.currentSession}>
+              <select onChange={props.changeSession} value={props.currentSession ? props.currentSession : ''}>
                 {sessions}
               </select>
             </label>
