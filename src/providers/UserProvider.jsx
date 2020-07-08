@@ -12,13 +12,14 @@ class UserProvider extends Component {
 
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged(userAuth => {
-      this.setState({
-        user: {
-          userID: userAuth.uid,
-          userEmail: userAuth.email
-        }
-
-      });
+      if (userAuth) {
+        this.setState({
+          user: {
+            userID: userAuth.uid,
+            userEmail: userAuth.email
+          }
+        });
+      }
     });
   };
 
