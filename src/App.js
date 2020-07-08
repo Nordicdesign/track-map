@@ -6,12 +6,15 @@ import {
 import './App.scss'
 import * as ROUTES from './constants/routes';
 
+import UserProvider from './providers/UserProvider'
 import Header from './Components/Header'
 import {Homepage} from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
 // import NotLoggedIn from './Components/NotLoggedIn'
 import LoginPage from './Components/Login'
 import SignUpForm from './Components/Signup';
+
+// import tracks
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
 import Sebring from './Pages/Sebring'
@@ -27,24 +30,24 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <>
-          <Header />
-          <div className="App">
-             <Route exact path={ROUTES.LANDING} component={Homepage}/>
-             <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
-             <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
-             <Route path={ROUTES.SIGN_UP} component={SignUpForm}/>
-             <Route path={ROUTES.SPA} component={Spa}/>
-             <Route path={ROUTES.LEMANS} component={LaSarthe}/>
-             <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
-             <Route path={ROUTES.WATKINS} component={Watkins}/>
-             <Route path={ROUTES.SEBRING} component={Sebring}/>
-             <Route path={ROUTES.BATHURST} component={Bathurst}/>
-             <Route path={ROUTES.ZOLDER} component={Zolder}/>
-             <Route path={ROUTES.DAYTONA} component={Daytona}/>
-             <Route path={ROUTES.BARCELONA} component={Barcelona}/>
-          </div>
-          </>
+          <UserProvider>
+            <Header />
+            <div className="App">
+               <Route exact path={ROUTES.LANDING} component={Homepage}/>
+               <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
+               <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
+               <Route path={ROUTES.SIGN_UP} component={SignUpForm}/>
+               <Route path={ROUTES.SPA} component={Spa}/>
+               <Route path={ROUTES.LEMANS} component={LaSarthe}/>
+               <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
+               <Route path={ROUTES.WATKINS} component={Watkins}/>
+               <Route path={ROUTES.SEBRING} component={Sebring}/>
+               <Route path={ROUTES.BATHURST} component={Bathurst}/>
+               <Route path={ROUTES.ZOLDER} component={Zolder}/>
+               <Route path={ROUTES.DAYTONA} component={Daytona}/>
+               <Route path={ROUTES.BARCELONA} component={Barcelona}/>
+            </div>
+        </UserProvider>
       </Router>
     </div>
     );

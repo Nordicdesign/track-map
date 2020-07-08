@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as ROUTES from '../constants/routes'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
-
-const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  error: null,
-  authUser: null,
-};
+import { UserContext } from "../providers/UserProvider";
 
 function User(props) {
   return (
@@ -18,66 +11,49 @@ function User(props) {
   )
 }
 
-class Header extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { loading: true, ...INITIAL_STATE }
+const Header = () => {
+  const user = useContext(UserContext);
+  const initial_state = {
+    email: null
   }
 
-  logout = () => {
+  let [values, setValues] = useState(initial_state)
+
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      setValues({email:user.userEmail})
+    }
+  }, [user])
+
+  const logout = () => {
     firebase.auth().signOut().then(function() {
       console.log("logged out!");
     })
-    .then(authUser => {
-      this.setState({
-        authUser: null,
-        userEmail: null,
-        error: null
-      })
+    .then(() => {
+      setValues({email: null})
     })
     .catch(function(error) {
       console.log(error);
     });
   }
 
-  componentDidMount() {
-    let that = this;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        var userEmail = user.email;
-        var uid = user.uid;
-
-        that.setState({
-          authUser: uid,
-          userEmail: userEmail
-        })
-      } else {
-        // User is signed out.
-        console.log("user signed out");
+  return (
+    <header>
+      <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
+      <p>
+      { values.email
+        ?
+          <User
+            userEmail={values.email}
+            logout={logout}
+          />
+        :
+          <Link to={ROUTES.SIGN_IN}>Log in</Link>
       }
-    });
-  }
-
-  render() {
-    return (
-      <header>
-        <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
-        <p>
-        { this.state.authUser
-          ?
-            <User
-              userEmail={this.state.userEmail}
-              logout={this.logout}
-            />
-          :
-            <Link to={ROUTES.SIGN_IN}>Log in</Link>
-        }
-      </p>
-      </header>
-    )
-  }
+    </p>
+    </header>
+  )
 }
 
 export default Header;
