@@ -56,3 +56,12 @@ input[type="submit"] {
     margin-bottom: $baseline*2;
   }
 }
+
+.signup-form {
+  max-width: 400px;
+  width: 96%;
+  margin: $baseline*4 auto;
+  background: $colour-gray-100;
+  padding: $baseline*2;
+  border-radius: 4px;
+}

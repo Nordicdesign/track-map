@@ -1,66 +1,82 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 import {firebaseConfig} from '../constants/firebase'
+import { SignUpLink } from './Signup'
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-class Login extends Component {
+const LoginPage = () => {
+  return (
+    <div className="signup-form">
+      <h1>Log in</h1>
+      <Login />
+      <hr />
+      <SignUpLink />
+    </div>
+  )
+}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      error: ''
-    };
+const Login = () => {
 
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  let history = useHistory();
+
+  const initialFieldValues = {
+    email: '',
+    password: '',
+    error: ''
   }
+  let [values, setValues] = useState(initialFieldValues)
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  };
 
-  onSubmit = event => {
+  const onSubmit = event => {
     event.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    firebase.auth().signInWithEmailAndPassword(values.email, values.password)
       .then(() => {
-        // this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.LANDING);
+        history.push(ROUTES.LANDING);
       })
     .catch(error => {
-      this.setState({ error });
+      setValues({ error });
     });
   };
 
-  render() {
-    const {
-      email,
-      password,
-      error,
-    } = this.state;
+  const handleChange = e => {
+      var { name, value } = e.target
+      setValues({
+        ...values,
+        [name]: value
+      })
+  }
+
+  useEffect(() => {
+    console.log("re-render");
+    let email = document.querySelector('#email');
+    let pss = document.querySelector('#password');
+    setValues({ ...values,
+      email: email.value,
+      password: pss.value
+    });
+    // setValues(initialFieldValues)
+  }, [values.error])
+
 
     // const isInvalid =
     //   password === '' ||
     //   email === '';
 
     return (
-      <div>
-        <h1>Log in</h1>
-        <form>
+        <form autoComplete="off">
           <label>
             Email address
             <input
               name="email"
-              value={email}
-              onChange={this.handleChange}
+              id="email"
+              value={values.email}
+              onChange={handleChange}
               type="text"
               placeholder="Email Address"
             />
@@ -70,27 +86,27 @@ class Login extends Component {
             Password
             <input
               name="password"
-              value={password}
-              onChange={this.handleChange}
+              id="password"
+              value={values.password}
+              onChange={handleChange}
               type="password"
               placeholder="Password"
             />
           </label>
-        <button type="submit" onClick={this.onSubmit}>Log In</button>
+        <button onClick={onSubmit}>Log In</button>
 
-          {error && <p className="error-handling">{error.message}</p>}
+          {values.error && <p className="error-handling">{values.error.message}</p>}
           <p>Forgot your password? <Link to={ROUTES.PASSWORD_FORGET}>Get a new one</Link></p>
         </form>
-      </div>
-    );
+    )
   }
-}
 
 const LoginLink = (props) => (
   <p className="login-link">
-    Already a user? <button className="button-link" onClick={props.toggle}>Log in</button>
+    Already a user? <Link to={ROUTES.SIGN_IN}>Log in</Link>
   </p>
 );
 
-export default withRouter(Login);
+export default withRouter(LoginPage);
+// export default LoginPage;
 export {LoginLink};

@@ -9,7 +9,9 @@ import * as ROUTES from './constants/routes';
 import Header from './Components/Header'
 import {Homepage} from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
-import NotLoggedIn from './Components/NotLoggedIn'
+// import NotLoggedIn from './Components/NotLoggedIn'
+import LoginPage from './Components/Login'
+import SignUpForm from './Components/Signup';
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
 import Sebring from './Pages/Sebring'
@@ -30,7 +32,8 @@ class App extends Component {
           <div className="App">
              <Route exact path={ROUTES.LANDING} component={Homepage}/>
              <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
-             <Route path={ROUTES.SIGN_IN} component={NotLoggedIn}/>
+             <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
+             <Route path={ROUTES.SIGN_UP} component={SignUpForm}/>
              <Route path={ROUTES.SPA} component={Spa}/>
              <Route path={ROUTES.LEMANS} component={LaSarthe}/>
              <Route path={ROUTES.SHANGHAI} component={Shanghai}/>

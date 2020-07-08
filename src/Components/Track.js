@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { AddNewObservation, AddNewCorner } from './AddNew'
 import { ObservationList, NoObservations } from './ObservationList'
 import { CornersList, NoCorners } from './CornersList'
@@ -6,6 +7,7 @@ import Data from '../Utils/Data'
 import * as firebase from 'firebase/app'
 import "firebase/database"
 import SessionSelection from './SessionSelection'
+import * as ROUTES from '../constants/routes'
 
 const data = new Data();
 
@@ -175,7 +177,7 @@ class Track extends Component {
 
   render() {
 
-    let { sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
+    let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
     const { trackName, URL } = this.props
 
     const found = sessions.find(session => session.id === currentSession);
@@ -186,94 +188,113 @@ class Track extends Component {
       // date = timestamp.toLocaleString()
     }
 
+    const Guest = () => {
+      return (
+        <div className="guest">
+          <h2>Sign up free</h2>
+          <p>Start taking notes and improve your driving everytime you get on track. </p>
+          <p><button><Link to={ROUTES.SIGN_UP}></Link></button></p>
+          <p>Already a user? <Link to="/login">Log in</Link>.</p>
+        </div>
+      )
+    }
+
     return (
       <div className="track-wrapper">
         <div className="track-meta">
           <h1>{trackName}</h1>
-          <SessionSelection
-            sessions={sessions}
-            currentSession={currentSession}
-            changeSession={this.changeSession}
-            renameSession={this.renameSession}
-            newSession={this.newSession}
-          />
+
+          { authUser ? (
+            <SessionSelection
+              sessions={sessions}
+              currentSession={currentSession}
+              changeSession={this.changeSession}
+              renameSession={this.renameSession}
+              newSession={this.newSession}
+            />
+        ) : ( null ) }
+
         </div>
 
         <div className="track-map">
           <img src={URL} alt={trackName} />
         </div>
+        { authUser ? (
+          <div className="track-session">
+            <h2>Session</h2>
+            <p>{sessionName}</p>
+          </div>
+        ) : ( null ) }
 
-        <div className="track-session">
-          <h2>Session</h2>
-          <p>{sessionName}</p>
-        </div>
 
         <div className="track-notes">
-          <div className="track-observations">
-            <div className="track-observations-header">
-              <h3>Observations</h3>
-              <button onClick={() => this.handleAdd('notes')}>Add new</button>
+          { authUser ? (
+            <>
+            <div className="track-observations">
+              <div className="track-observations-header">
+                <h3>Observations</h3>
+                <button onClick={() => this.handleAdd('notes')}>Add new</button>
+              </div>
+
+              {visibleNotesForm ? (
+                <AddNewObservation
+                  currentId={currentId}
+                  addOrEdit={this.addOrEdit}
+                  observations={observations}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { (observations) ?
+                    Object.keys(observations).reverse().map((key) => (
+                       <ObservationList
+                        key={key}
+                        id={key}
+                        name={observations[key].time}
+                        notes={observations[key].notes}
+                        setupName={observations[key].setupName}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )) : <NoObservations/>
+                  }
+                </div>
+              )}
+
+
             </div>
 
-            {visibleNotesForm ? (
-              <AddNewObservation
-                currentId={currentId}
-                addOrEdit={this.addOrEdit}
-                observations={observations}
-                handleCancel={this.handleCancel}
-              />
-            ) : (
-              <div>
-                { (observations) ?
-                  Object.keys(observations).reverse().map((key) => (
-                     <ObservationList
-                      key={key}
-                      id={key}
-                      name={observations[key].time}
-                      notes={observations[key].notes}
-                      setupName={observations[key].setupName}
-                      onDelete={this.onDelete}
-                      setCurrentId={this.setCurrentId}
-                    />
-                )) : <NoObservations/>
-                }
+            <div className="track-corners">
+              <div className="track-corners-header">
+                <h3>Corners</h3>
+                <button onClick={() => this.handleAdd('corner')}>Add new</button>
               </div>
-            )}
 
-
-          </div>
-
-          <div className="track-corners">
-            <div className="track-corners-header">
-              <h3>Corners</h3>
-              <button onClick={() => this.handleAdd('corner')}>Add new</button>
+              {visibleCornerForm ? (
+                <AddNewCorner
+                  currentId={currentId}
+                  addOrEditCorner={this.addOrEditCorner}
+                  corners={corners}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { corners ? ( Object.entries(corners).map(corner => {
+                    return (
+                      <CornersList
+                        key={Math.random()}
+                        name={corner[0]}
+                        notes={corner[1]}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )})) : <NoCorners/>
+                  }
+                </div>
+              )}
             </div>
-
-            {visibleCornerForm ? (
-              <AddNewCorner
-                currentId={currentId}
-                addOrEditCorner={this.addOrEditCorner}
-                corners={corners}
-                handleCancel={this.handleCancel}
-              />
-            ) : (
-              <div>
-                { corners ? ( Object.entries(corners).map(corner => {
-                  return (
-                    <CornersList
-                      key={Math.random()}
-                      name={corner[0]}
-                      notes={corner[1]}
-                      onDelete={this.onDelete}
-                      setCurrentId={this.setCurrentId}
-                    />
-                )})) : <NoCorners/>
-                }
-              </div>
-            )}
-
-
-          </div>
+            </>
+          ) : ( <Guest /> ) }
         </div>
       </div>
     )
