@@ -20,13 +20,13 @@ const Header = () => {
   let [values, setValues] = useState(initial_state)
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       setValues({email:user.userEmail})
     }
   }, [user])
 
   const logout = () => {
+    sessionStorage.clear()
     firebase.auth().signOut().then(function() {
       console.log("logged out!");
     })

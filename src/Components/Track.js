@@ -4,29 +4,30 @@ import { AddNewObservation, AddNewCorner } from './AddNew'
 import { ObservationList, NoObservations } from './ObservationList'
 import { CornersList, NoCorners } from './CornersList'
 import Data from '../Utils/Data'
-import * as firebase from 'firebase/app'
 import "firebase/database"
 import SessionSelection from './SessionSelection'
 import * as ROUTES from '../constants/routes'
+import { UserContext } from "../providers/UserProvider";
 
 const data = new Data();
 
 class Track extends Component {
+  // for the context API
+  static contextType = UserContext;
+
   constructor(props,context) {
     super(props,context);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    //
-    // const { trackID } = props
-    // console.log(trackID);
+
     this.state = {
       authUser: null,
-      userEmail: null,
+      // userEmail: null,
       error: null,
       sessions: [],
       currentSession: null,
       observations: null,
-      corners: null,
+      // corners: null,
       dataIsReady: false,
       visibleNotesForm: false,
       visibleCornerForm: false,
@@ -34,6 +35,8 @@ class Track extends Component {
       trackID: props.trackID
     };
   }
+
+
   handleAdd(type) {
     if (type === "notes")
       this.setState({visibleNotesForm: true});
@@ -131,48 +134,55 @@ class Track extends Component {
   }
 
   componentDidMount() {
-    let that = this;
-    // first time only, when the user loads the page and they are logged in
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        let userEmail = user.email;
-        let uid = user.uid;
-        that.setState({
-          authUser: uid,
-          userEmail: userEmail
-        }, function() {
+    let user = this.context
+    let that = this
 
-          // let { corners, observations } = that.state
-          data.loadData(uid, that.state.trackID, function(values) {
-            // console.log("values from load data",values);
-            // console.log("obs", values.newState[0].observations);
-            // let observationsValues = []
-            // let cornerValues = []
-            // if (typeof values.newState[0].corners !== "undefined") {
-            //   cornerValues = values.newState[0].corners
-            // }
-            // if (typeof values.newState[0].observations !== "undefined") {
-            //   observationsValues.push(values.newState[0].observations)
-            // }
-            that.setState({
-              sessions: values.sessions,
-              currentSession: values.currentSession[0].id,
-              observations: values.observations,
-              corners: values.corners
-            },() => {
-              that.setState({dataIsReady: true})
-            })
+    // get user from context on normal navigation
+    if (user) {
+      sessionStorage.setItem("authUser", user.userID)
+      this.setState({
+        authUser: user.userID
+      }, () => {
+        data.loadData(user.userID, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
           })
         })
-      } else {
-        that.setState({
-          authUser: null,
-          userEmail: null,
-          error: null
+      })
+    }
+    // ensure user is there if page get hard refreshed
+    let sessionUser = sessionStorage.getItem("authUser")
+    if (this.state.authUser === null && sessionUser !== null) {
+      this.setState({
+        authUser: sessionUser
+      }, () => {
+        data.loadData(sessionUser, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
+          })
         })
-      }
-    });
+      })
+    }
+  }
+
+  componentDidUpdate() {
+    let user = this.context
+    let sessionUser = sessionStorage.getItem("authUser")
+    // clear the authUser when the user logs out
+    if (this.state.authUser !== null && user === null && !sessionUser) {
+      console.log("doom and gloom!");
+      this.setState({authUser: null})
+    }
   }
 
   render() {

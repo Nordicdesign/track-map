@@ -53,7 +53,6 @@ const Login = () => {
   }
 
   useEffect(() => {
-    console.log("re-render");
     let email = document.querySelector('#email');
     let pss = document.querySelector('#password');
     setValues({ ...values,
