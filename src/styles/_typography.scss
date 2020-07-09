@@ -2,6 +2,7 @@
 body, html {
   font-family: $fontstack;
   font-size: 62.5%;
+  font-weight: 400;
 }
 
 p, li, td {
@@ -30,6 +31,10 @@ h2 {
 h3 {
   font-size: 2.2rem;
   margin: 1em 0 .3em;
+}
+
+h4 {
+  font-size: 1.6rem;
 }
 
 a {

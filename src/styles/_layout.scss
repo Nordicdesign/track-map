@@ -4,8 +4,36 @@
   padding: $baseline;
 
   &.homepage {
-    max-width: 600px;
+    // max-width: 600px;
     margin: $baseline auto;
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+
+    @media screen and (max-width: $screen-medium) {
+      flex-direction: column;
+    }
+
+    main {
+      ul {
+        width: 100%;
+        min-width: 400px;
+
+        @media screen and (max-width: $screen-medium) {
+          min-width: 0;
+        }
+      }
+    }
+
+    aside {
+      width: 350px;
+      margin-left: $baseline*3;
+
+      @media screen and (max-width: $screen-medium) {
+        margin-left: 0;
+        width: auto;
+      }
+    }
   }
 }
 

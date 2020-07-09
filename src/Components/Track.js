@@ -1,229 +1,308 @@
-import React, { Component } from 'react';
-import * as firebase from 'firebase/app'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { AddNewObservation, AddNewCorner } from './AddNew'
+import { ObservationList, NoObservations } from './ObservationList'
+import { CornersList, NoCorners } from './CornersList'
+import Data from '../Utils/Data'
 import "firebase/database"
-import update from 'immutability-helper'
-import NotLoggedIn from '../Components/NotLoggedIn'
-import ImageMapper from 'react-image-mapper'
-import Drawer from '../Components/Drawer'
-import Summary from '../Components/Summary'
-import renderIf from 'render-if'
-import SessionCreator from '../Components/SessionCreator'
-import SessionSelection from '../Components/SessionSelection'
+import SessionSelection from './SessionSelection'
+import * as ROUTES from '../constants/routes'
+import { UserContext } from "../providers/UserProvider";
 
-let dataIsReady = false;
+const data = new Data();
 
 class Track extends Component {
+  // for the context API
+  static contextType = UserContext;
+
   constructor(props,context) {
     super(props,context);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
       authUser: null,
-      userEmail: null,
+      // userEmail: null,
       error: null,
-      isOpen: false,
-      turn: null,
-      turns: Array(this.props.numberTurns).fill({},1),
       sessions: [],
       currentSession: null,
+      observations: null,
+      // corners: null,
+      dataIsReady: false,
+      visibleNotesForm: false,
+      visibleCornerForm: false,
+      currentId: "",
+      trackID: props.trackID
     };
-    this.clicked = this.clicked.bind(this);
   }
 
-  saveDataInState = (snapshot) => {
-    // if no data exists have an empty object, rather than null
-    let newState = [];
-    let sessions = snapshot.val();
 
-    for (let session in sessions) {
-      newState.push({
-        id: session,
-        name: sessions[session].name,
-        turns: sessions[session].turn
-      });
+  handleAdd(type) {
+    if (type === "notes")
+      this.setState({visibleNotesForm: true});
+    else if (type === 'corner')
+      this.setState({visibleCornerForm: true});
+  }
+
+  handleCancel(type) {
+    if (type === "notes")
+      this.setState({visibleNotesForm: false});
+    else if (type === 'corner')
+      this.setState({visibleCornerForm: false});
+  }
+
+  addOrEdit = (obj) => {
+    this.setState({visibleNotesForm: false});
+    const date = new Date();
+    const obs = {
+      notes: obj.notes,
+      setupName: obj.setupName,
+      time: date.getTime(),
     }
 
-    // current state
-    let currentState = newState.slice(-1);
-    let turns = currentState.map((session) => {
-      return session.turns
-    }).pop();
-
-    if(!turns) {
-      turns = []
+    if (this.state.currentId === "") {
+      data.recordObservation(this.state.authUser, this.state.trackID, this.state.currentSession, obs)
     }
-
-    // load in state
-    this.setState({
-      // clear the data first, because of the merge
-      turns: Array(this.props.numberTurns).fill({},1),
-    }, () => {
-      this.setState({
-        sessions: newState,
-        currentSession: currentState[0].id,
-        turns: update(this.state.turns, {$merge: turns})
-      },() => {
-        dataIsReady = true;
-        console.log("turns loaded",this.state.turns);
-      })
-    })
+    else {
+      data.editObservation(this.state.authUser, this.state.trackID, this.state.currentSession, this.state.currentId, obs)
+      this.setState({currentId: ""})
+    }
   }
 
-
-  initiateSession = (props) => {
-    const trackID = this.props.trackID;
-    const authUser = this.state.authUser;
-    let newSession = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/').push();
-    newSession.set({
-        name: 'default',
-    });
-    console.log('session created ✅');
-
-    let that = this;
-    firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-      that.saveDataInState(snapshot)
-    })
+  addOrEditCorner = (corner, notes) => {
+    let { authUser, currentSession } = this.state
+    this.setState({visibleCornerForm: false});
+    let obs = { notes }
+    data.recordCorner(authUser, this.state.trackID, currentSession, corner, obs)
+    this.setState({currentId: ""})
   }
 
-  loadData = () => {
-    // const trackTurns = ["La Source", "", "", "", "Raidillon", "Eau Rouge", "", "Les Combes" ];
-    const trackID = this.props.trackID;
-    let that = this; //🤯
-    firebase.database().ref('/users/' + that.state.authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-      // check if there are any sessions yet
-      if (!snapshot.val()) {
-        console.log("there are no sessions!!! 😱");
-        that.initiateSession();
-      } else { // the session actually exists
-        that.saveDataInState(snapshot)
-      }
-    });
+  renameSession = (value) => {
+    let { authUser, currentSession, trackID } = this.state
+    data.renameSession(authUser, trackID, currentSession, value)
   }
 
-  changeSession = (event) => {
-    const newSession = event.target.value;
+  newSession = (value) => {
+    let { authUser, trackID } = this.state
+    data.newSession(authUser, trackID, value)
+  }
 
+  onDelete = (type, id) => {
+    if (window.confirm(`Are you sure to delete this entry`)) {
+        data.deleteEntry(this.state.authUser, this.state.trackID, this.state.currentSession, type, id)
+    }
+  }
+
+  changeSession = (e) => {
+    const newSession = e.target.value;
     // the new session to load
     let newState = this.state.sessions.filter(session => session.id === newSession);
-    let turns = newState.map((session) => {
-      return session.turns
+    let corners = newState.map((session) => {
+      return session.corners
+    }).pop();
+    let observations = newState.map((session) => {
+      return session.observations
     }).pop();
 
-    if(!turns) { // in case there's no data in firebase
-      turns = []
-    }
+    // if(!turns) { // in case there's no data in firebase
+    //   turns = []
+    // }
     // load in state
-    this.setState({
-      // clear the data first, because of the merge
-      turns: Array(this.props.numberTurns).fill({},1),
-    }, () => {
       this.setState({
         // save the new one
         currentSession: newSession,
-        turns: update(this.state.turns, {$merge: turns})
-      },() => {
-        dataIsReady = true;
-        console.log("turns loaded",this.state.turns);
-      })
+        corners,
+        observations
+    },() => {
+      // dataIsReady = true;
+      console.log("turns loaded",this.state.observations);
     })
-
   }
 
-  componentDidMount(props) {
-    let that = this;
-    const trackID = this.props.trackID;
-    const trackName = this.props.trackName;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        var userEmail = user.email;
-        var uid = user.uid;
-        that.setState({
-          authUser: uid,
-          userEmail: userEmail
-        }, function() {
-          console.log("waiting for the state to finish");
-          // get the data
-          var updates = {};
-          updates['/users/'+ this.state.authUser +'/tracks/'+ trackID +'/name'] = trackName;
-          firebase.database().ref().update(updates);
-          this.loadData();
-        })
-      } else {
-        that.setState({
-          authUser: null,
-          userEmail: null,
-          error: null
-        })
-      }
-    });
-  }
-
-  clicked(area) {
-    console.log('You\'ve clicked turn '+area.name);
+  setCurrentId = (type, id) => {
     this.setState({
-      isOpen: !this.state.isOpen,
-      turn: area.name,
-    });
+      currentId: id
+    }, () => {
+      if (type === 'notes')
+        this.setState({visibleNotesForm: true})
+      else if (type === 'corners')
+        this.setState({visibleCornerForm: true})
+    })
   }
 
-  render(props) {
-    const canvasWidth = window.innerWidth;
-    const canvasMargin = this.props.canvasMargin;
-    const imgWidth = this.props.imgWidth;
-    const URL = this.props.URL;
-    const MAP = this.props.MAP;
-    const trackID = this.props.trackID;
-    const trackName = this.props.trackName;
+  componentDidMount() {
+    let user = this.context
+    let that = this
+    // get user from context on normal navigation
+    if (user && user !== 'guest') {
+      sessionStorage.setItem("authUser", user.userID)
+      this.setState({
+        authUser: user.userID
+      }, () => {
+        data.loadData(user.userID, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
+          })
+        })
+      })
+    }
+    // ensure user is there if page get hard refreshed
+    let sessionUser = sessionStorage.getItem("authUser")
+    if (this.state.authUser === null && sessionUser !== null) {
+      this.setState({
+        authUser: sessionUser
+      }, () => {
+        data.loadData(sessionUser, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
+          })
+        })
+      })
+    }
+  }
 
+  componentDidUpdate() {
+    let user = this.context
+    let sessionUser = sessionStorage.getItem("authUser")
+    // clear the authUser when the user logs out
+    if (this.state.authUser !== null && user === 'guest' && !sessionUser) {
+      console.log("doom and gloom!");
+      this.setState({authUser: null})
+      sessionStorage.clear()
+    }
+  }
+
+  render() {
+    let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
+    const { trackName, URL } = this.props
+
+    const found = sessions.find(session => session.id === currentSession);
+    let sessionName = ""
+    if (typeof found !== "undefined") {
+      sessionName = found.name
+    }
+
+    const Guest = () => {
+      return (
+        <div className="guest">
+          <h2>Sign up free</h2>
+          <p>Start taking notes and improve your driving everytime you get on track. </p>
+          <p><button><Link to={ROUTES.SIGN_UP}>Sign up</Link></button></p>
+          <p>Already a user? <Link to="/login">Log in</Link>.</p>
+        </div>
+      )
+    }
 
     return (
-      <div className="wrapper">
-      {!this.state.authUser ? <NotLoggedIn/> :
-        <>
-        <div className="sessions">
-          <SessionCreator
-            trackID={this.props.trackID}
-            numberTurns={this.props.numberTurns}
-            authUser={this.state.authUser}
-            loadData={this.loadData}
-           />
-          <SessionSelection
-            sessions={this.state.sessions}
-            currentSession={this.state.currentSession}
-            changeSession={this.changeSession}
-          />
+      <div className="track-wrapper">
+        <div className="track-meta">
+          <h1>{trackName}</h1>
+
+          { authUser ? (
+            <SessionSelection
+              sessions={sessions}
+              currentSession={currentSession}
+              changeSession={this.changeSession}
+              renameSession={this.renameSession}
+              newSession={this.newSession}
+            />
+        ) : ( null ) }
+
         </div>
 
-        <div className="track-wrapper">
-        <div className="track">
-          <ImageMapper
-            src={URL}
-            map={MAP}
-            width={canvasWidth-canvasMargin}
-            imgWidth={imgWidth}
-            onClick={area => this.clicked(area)}
-          />
+        <div className="track-map">
+          <img src={URL} alt={trackName} />
         </div>
-        <Summary notes={this.state.turns} />
-        {renderIf(dataIsReady)(
-          <Drawer
-            isOpen={this.state.isOpen}
-            onClick={area => this.clicked(this.state.turn)}
-            turnsData={this.state.turns}
-            turn={this.state.turn}
-            trackName={trackName}
-            trackID={trackID}
-            authUser={this.state.authUser}
-            currentSession={this.state.currentSession}
-          />
-        )}
-        </div>
-        </>
+        { authUser ? (
+          <div className="track-session">
+            <h2>Session</h2>
+            <p>{sessionName}</p>
+          </div>
+        ) : ( null ) }
 
-      }
+
+        <div className="track-notes">
+          { authUser ? (
+            <>
+            <div className="track-observations">
+              <div className="track-observations-header">
+                <h3>Observations</h3>
+                <button onClick={() => this.handleAdd('notes')}>Add new</button>
+              </div>
+
+              {visibleNotesForm ? (
+                <AddNewObservation
+                  currentId={currentId}
+                  addOrEdit={this.addOrEdit}
+                  observations={observations}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { (observations) ?
+                    Object.keys(observations).reverse().map((key) => (
+                       <ObservationList
+                        key={key}
+                        id={key}
+                        name={observations[key].time}
+                        notes={observations[key].notes}
+                        setupName={observations[key].setupName}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )) : <NoObservations/>
+                  }
+                </div>
+              )}
+
+
+            </div>
+
+            <div className="track-corners">
+              <div className="track-corners-header">
+                <h3>Corners</h3>
+                <button onClick={() => this.handleAdd('corner')}>Add new</button>
+              </div>
+
+              {visibleCornerForm ? (
+                <AddNewCorner
+                  currentId={currentId}
+                  addOrEditCorner={this.addOrEditCorner}
+                  corners={corners}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { corners ? ( Object.entries(corners).map(corner => {
+                    return (
+                      <CornersList
+                        key={Math.random()}
+                        name={corner[0]}
+                        notes={corner[1]}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )})) : <NoCorners/>
+                  }
+                </div>
+              )}
+            </div>
+            </>
+          ) : ( <Guest /> ) }
+        </div>
       </div>
-    );
+    )
   }
-}
+};
 
-export default Track;
+export default Track

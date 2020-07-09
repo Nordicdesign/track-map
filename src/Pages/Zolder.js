@@ -1,11 +1,11 @@
 import React from 'react'
 
 import Track from '../Components/Track'
-const trackName = "Sebring";
-const trackID= "sebring";
-const URL = "/images/Sebring_International_Raceway.svg";
+const trackName = "Circuit Zolder";
+const trackID= "zolder";
+const URL = "/images/Zolder.svg";
 
-const Sebring = () => {
+const Zolder = () => {
   return (
     <Track
       trackName={trackName}
@@ -15,4 +15,4 @@ const Sebring = () => {
   )
 }
 
-export default Sebring
+export default Zolder
