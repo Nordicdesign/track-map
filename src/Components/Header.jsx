@@ -42,14 +42,15 @@ const Header = () => {
     <header>
       <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
       <p>
-      { values.email
-        ?
-          <User
-            userEmail={values.email}
-            logout={logout}
-          />
-        :
-          <Link to={ROUTES.SIGN_IN}>Log in</Link>
+      { !user ? "" :
+        values.email
+          ?
+            <User
+              userEmail={values.email}
+              logout={logout}
+            />
+          :
+            <Link to={ROUTES.SIGN_IN}>Log in</Link>
       }
     </p>
     </header>

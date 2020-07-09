@@ -22,7 +22,7 @@ class UserProvider extends Component {
       }
       else {
         this.setState({
-          user: null
+          user: 'guest'
         })
       }
     });
