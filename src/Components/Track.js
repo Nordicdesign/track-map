@@ -1,30 +1,33 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { AddNewObservation, AddNewCorner } from './AddNew'
 import { ObservationList, NoObservations } from './ObservationList'
 import { CornersList, NoCorners } from './CornersList'
 import Data from '../Utils/Data'
-import * as firebase from 'firebase/app'
 import "firebase/database"
 import SessionSelection from './SessionSelection'
+import * as ROUTES from '../constants/routes'
+import { UserContext } from "../providers/UserProvider";
 
 const data = new Data();
 
 class Track extends Component {
+  // for the context API
+  static contextType = UserContext;
+
   constructor(props,context) {
     super(props,context);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    //
-    // const { trackID } = props
-    // console.log(trackID);
+
     this.state = {
       authUser: null,
-      userEmail: null,
+      // userEmail: null,
       error: null,
       sessions: [],
       currentSession: null,
       observations: null,
-      corners: null,
+      // corners: null,
       dataIsReady: false,
       visibleNotesForm: false,
       visibleCornerForm: false,
@@ -32,6 +35,8 @@ class Track extends Component {
       trackID: props.trackID
     };
   }
+
+
   handleAdd(type) {
     if (type === "notes")
       this.setState({visibleNotesForm: true});
@@ -90,7 +95,6 @@ class Track extends Component {
 
   changeSession = (e) => {
     const newSession = e.target.value;
-
     // the new session to load
     let newState = this.state.sessions.filter(session => session.id === newSession);
     let corners = newState.map((session) => {
@@ -100,7 +104,6 @@ class Track extends Component {
       return session.observations
     }).pop();
 
-
     // if(!turns) { // in case there's no data in firebase
     //   turns = []
     // }
@@ -108,7 +111,6 @@ class Track extends Component {
       this.setState({
         // save the new one
         currentSession: newSession,
-        // corners: update(this.state.corners, {$merge: corners})
         corners,
         observations
     },() => {
@@ -129,151 +131,174 @@ class Track extends Component {
   }
 
   componentDidMount() {
-    let that = this;
-    // first time only, when the user loads the page and they are logged in
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        let userEmail = user.email;
-        let uid = user.uid;
-        that.setState({
-          authUser: uid,
-          userEmail: userEmail
-        }, function() {
-
-          // let { corners, observations } = that.state
-          data.loadData(uid, that.state.trackID, function(values) {
-            // console.log("values from load data",values);
-            // console.log("obs", values.newState[0].observations);
-            // let observationsValues = []
-            // let cornerValues = []
-            // if (typeof values.newState[0].corners !== "undefined") {
-            //   cornerValues = values.newState[0].corners
-            // }
-            // if (typeof values.newState[0].observations !== "undefined") {
-            //   observationsValues.push(values.newState[0].observations)
-            // }
-            that.setState({
-              sessions: values.sessions,
-              currentSession: values.currentSession[0].id,
-              observations: values.observations,
-              corners: values.corners
-            },() => {
-              that.setState({dataIsReady: true})
-            })
+    let user = this.context
+    let that = this
+    // get user from context on normal navigation
+    if (user && user !== 'guest') {
+      sessionStorage.setItem("authUser", user.userID)
+      this.setState({
+        authUser: user.userID
+      }, () => {
+        data.loadData(user.userID, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
           })
         })
-      } else {
-        that.setState({
-          authUser: null,
-          userEmail: null,
-          error: null
+      })
+    }
+    // ensure user is there if page get hard refreshed
+    let sessionUser = sessionStorage.getItem("authUser")
+    if (this.state.authUser === null && sessionUser !== null) {
+      this.setState({
+        authUser: sessionUser
+      }, () => {
+        data.loadData(sessionUser, this.state.trackID, function(values) {
+          that.setState({
+            sessions: values.sessions,
+            currentSession: values.currentSession[0].id,
+            observations: values.observations,
+            // corners: values.corners
+          },() => {
+            that.setState({dataIsReady: true})
+          })
         })
-      }
-    });
+      })
+    }
+  }
+
+  componentDidUpdate() {
+    let user = this.context
+    let sessionUser = sessionStorage.getItem("authUser")
+    // clear the authUser when the user logs out
+    if (this.state.authUser !== null && user === 'guest' && !sessionUser) {
+      console.log("doom and gloom!");
+      this.setState({authUser: null})
+      sessionStorage.clear()
+    }
   }
 
   render() {
-
-    let { sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
+    let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
     const { trackName, URL } = this.props
 
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
     if (typeof found !== "undefined") {
-      // console.log(found.name);
       sessionName = found.name
-      // date = timestamp.toLocaleString()
+    }
+
+    const Guest = () => {
+      return (
+        <div className="guest">
+          <h2>Sign up free</h2>
+          <p>Start taking notes and improve your driving everytime you get on track. </p>
+          <p><button><Link to={ROUTES.SIGN_UP}>Sign up</Link></button></p>
+          <p>Already a user? <Link to="/login">Log in</Link>.</p>
+        </div>
+      )
     }
 
     return (
       <div className="track-wrapper">
         <div className="track-meta">
           <h1>{trackName}</h1>
-          <SessionSelection
-            sessions={sessions}
-            currentSession={currentSession}
-            changeSession={this.changeSession}
-            renameSession={this.renameSession}
-            newSession={this.newSession}
-          />
+
+          { authUser ? (
+            <SessionSelection
+              sessions={sessions}
+              currentSession={currentSession}
+              changeSession={this.changeSession}
+              renameSession={this.renameSession}
+              newSession={this.newSession}
+            />
+        ) : ( null ) }
+
         </div>
 
         <div className="track-map">
           <img src={URL} alt={trackName} />
         </div>
+        { authUser ? (
+          <div className="track-session">
+            <h2>Session</h2>
+            <p>{sessionName}</p>
+          </div>
+        ) : ( null ) }
 
-        <div className="track-session">
-          <h2>Session</h2>
-          <p>{sessionName}</p>
-        </div>
 
         <div className="track-notes">
-          <div className="track-observations">
-            <div className="track-observations-header">
-              <h3>Observations</h3>
-              <button onClick={() => this.handleAdd('notes')}>Add new</button>
+          { authUser ? (
+            <>
+            <div className="track-observations">
+              <div className="track-observations-header">
+                <h3>Observations</h3>
+                <button onClick={() => this.handleAdd('notes')}>Add new</button>
+              </div>
+
+              {visibleNotesForm ? (
+                <AddNewObservation
+                  currentId={currentId}
+                  addOrEdit={this.addOrEdit}
+                  observations={observations}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { (observations) ?
+                    Object.keys(observations).reverse().map((key) => (
+                       <ObservationList
+                        key={key}
+                        id={key}
+                        name={observations[key].time}
+                        notes={observations[key].notes}
+                        setupName={observations[key].setupName}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )) : <NoObservations/>
+                  }
+                </div>
+              )}
+
+
             </div>
 
-            {visibleNotesForm ? (
-              <AddNewObservation
-                currentId={currentId}
-                addOrEdit={this.addOrEdit}
-                observations={observations}
-                handleCancel={this.handleCancel}
-              />
-            ) : (
-              <div>
-                { (observations) ?
-                  Object.keys(observations).reverse().map((key) => (
-                     <ObservationList
-                      key={key}
-                      id={key}
-                      name={observations[key].time}
-                      notes={observations[key].notes}
-                      setupName={observations[key].setupName}
-                      onDelete={this.onDelete}
-                      setCurrentId={this.setCurrentId}
-                    />
-                )) : <NoObservations/>
-                }
+            <div className="track-corners">
+              <div className="track-corners-header">
+                <h3>Corners</h3>
+                <button onClick={() => this.handleAdd('corner')}>Add new</button>
               </div>
-            )}
 
-
-          </div>
-
-          <div className="track-corners">
-            <div className="track-corners-header">
-              <h3>Corners</h3>
-              <button onClick={() => this.handleAdd('corner')}>Add new</button>
+              {visibleCornerForm ? (
+                <AddNewCorner
+                  currentId={currentId}
+                  addOrEditCorner={this.addOrEditCorner}
+                  corners={corners}
+                  handleCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  { corners ? ( Object.entries(corners).map(corner => {
+                    return (
+                      <CornersList
+                        key={Math.random()}
+                        name={corner[0]}
+                        notes={corner[1]}
+                        onDelete={this.onDelete}
+                        setCurrentId={this.setCurrentId}
+                      />
+                  )})) : <NoCorners/>
+                  }
+                </div>
+              )}
             </div>
-
-            {visibleCornerForm ? (
-              <AddNewCorner
-                currentId={currentId}
-                addOrEditCorner={this.addOrEditCorner}
-                corners={corners}
-                handleCancel={this.handleCancel}
-              />
-            ) : (
-              <div>
-                { corners ? ( Object.entries(corners).map(corner => {
-                  return (
-                    <CornersList
-                      key={Math.random()}
-                      name={corner[0]}
-                      notes={corner[1]}
-                      onDelete={this.onDelete}
-                      setCurrentId={this.setCurrentId}
-                    />
-                )})) : <NoCorners/>
-                }
-              </div>
-            )}
-
-
-          </div>
+            </>
+          ) : ( <Guest /> ) }
         </div>
       </div>
     )

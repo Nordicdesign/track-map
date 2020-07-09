@@ -1,94 +1,93 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
 import {firebaseConfig} from '../constants/firebase'
+import {LoginLink} from './Login'
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
 const SignUpPage = () => (
-  <div>
+  <div className="signup-form">
     <h1>Create an account</h1>
     <SignUpForm />
+    <hr/>
+    <LoginLink />
   </div>
 );
 
-const INITIAL_STATE = {
-  email: '',
-  passwordOne: '',
-  error: '',
-};
+const SignUpForm = () => {
 
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE }
-  };
+  let history = useHistory();
 
-  onSubmit = event => {
+  const initialFieldValues = {
+    email: '',
+    passwordOne: '',
+    error: ''
+  }
+  let [values, setValues] = useState(initialFieldValues)
+
+
+  const onSubmit = event => {
     event.preventDefault();
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.passwordOne)
+    firebase.auth().createUserWithEmailAndPassword(values.email, values.passwordOne)
       .then(authUser => {
         console.log("user created");
-        // this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        history.push(ROUTES.LANDING);
       })
       .catch(error => {
-        this.setState({ error });
+        setValues({ error });
       })
   }
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  const handleChange = e => {
+      var { name, value } = e.target
+      setValues({
+        ...values,
+        [name]: value
+      })
+  }
 
-  render() {
-    const {
-      email,
-      passwordOne,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne === '' ||
-      email === '';
+  const isInvalid =
+    values.passwordOne === '' ||
+    values.email === '';
 
     return (
-      <form>
-        <label>
-          Email address
-          <input
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Email Address"
-          />
-        </label>
+        <form>
+          <label>
+            Email address
+            <input
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              type="text"
+              placeholder="Email Address"
+            />
+          </label>
 
-        <label>
-          Choose a password
-          <input
-            name="passwordOne"
-            value={passwordOne}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-        </label>
-        <button disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign Up</button>
+          <label>
+            Choose a password
+            <input
+              name="passwordOne"
+              value={values.passwordOne}
+              onChange={handleChange}
+              type="password"
+              placeholder="Password"
+            />
+          </label>
+          <button disabled={isInvalid} onClick={onSubmit} type="submit">Sign Up</button>
 
-        {error && <p className="error-handling">{error.message}</p>}
-      </form>
+          {values.error && <p className="error-handling">{values.error.message}</p>}
+        </form>
     );
-  }
 }
 
 const SignUpLink = (props) => (
   <p className="login-link">
-    Don't have an account? <button className="button-link" onClick={props.toggle}>Sign up</button>
+    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign up</Link>
   </p>
 );
 
