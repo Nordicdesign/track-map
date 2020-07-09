@@ -22,6 +22,8 @@ const LoginPage = () => {
 }
 
 const Login = () => {
+  // clear any garbage
+  sessionStorage.clear()
 
   let history = useHistory();
 
@@ -31,7 +33,6 @@ const Login = () => {
     error: ''
   }
   let [values, setValues] = useState(initialFieldValues)
-
 
   const onSubmit = event => {
     event.preventDefault();
@@ -61,7 +62,6 @@ const Login = () => {
     });
     // setValues(initialFieldValues)
   }, [values.error])
-
 
     // const isInvalid =
     //   password === '' ||
@@ -107,5 +107,4 @@ const LoginLink = (props) => (
 );
 
 export default withRouter(LoginPage);
-// export default LoginPage;
 export {LoginLink};

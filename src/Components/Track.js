@@ -95,7 +95,6 @@ class Track extends Component {
 
   changeSession = (e) => {
     const newSession = e.target.value;
-
     // the new session to load
     let newState = this.state.sessions.filter(session => session.id === newSession);
     let corners = newState.map((session) => {
@@ -105,7 +104,6 @@ class Track extends Component {
       return session.observations
     }).pop();
 
-
     // if(!turns) { // in case there's no data in firebase
     //   turns = []
     // }
@@ -113,7 +111,6 @@ class Track extends Component {
       this.setState({
         // save the new one
         currentSession: newSession,
-        // corners: update(this.state.corners, {$merge: corners})
         corners,
         observations
     },() => {
@@ -136,9 +133,8 @@ class Track extends Component {
   componentDidMount() {
     let user = this.context
     let that = this
-
     // get user from context on normal navigation
-    if (user) {
+    if (user && user !== 'guest') {
       sessionStorage.setItem("authUser", user.userID)
       this.setState({
         authUser: user.userID
@@ -179,23 +175,21 @@ class Track extends Component {
     let user = this.context
     let sessionUser = sessionStorage.getItem("authUser")
     // clear the authUser when the user logs out
-    if (this.state.authUser !== null && user === null && !sessionUser) {
+    if (this.state.authUser !== null && user === 'guest' && !sessionUser) {
       console.log("doom and gloom!");
       this.setState({authUser: null})
+      sessionStorage.clear()
     }
   }
 
   render() {
-
     let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
     const { trackName, URL } = this.props
 
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
     if (typeof found !== "undefined") {
-      // console.log(found.name);
       sessionName = found.name
-      // date = timestamp.toLocaleString()
     }
 
     const Guest = () => {
@@ -203,7 +197,7 @@ class Track extends Component {
         <div className="guest">
           <h2>Sign up free</h2>
           <p>Start taking notes and improve your driving everytime you get on track. </p>
-          <p><button><Link to={ROUTES.SIGN_UP}></Link></button></p>
+          <p><button><Link to={ROUTES.SIGN_UP}>Sign up</Link></button></p>
           <p>Already a user? <Link to="/login">Log in</Link>.</p>
         </div>
       )
