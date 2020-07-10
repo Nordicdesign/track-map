@@ -8,7 +8,7 @@ class Data {
 
   loadData(authUser, trackID, onResult) {
     let that = this;
-    firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).on('value', function(snapshot) {
       // check if there are any sessions yet
       if (!snapshot.val()) {
         console.log("there are no sessions!!! 😱");
@@ -19,6 +19,11 @@ class Data {
     });
   }
 
+  detachListener(authUser, trackID) {
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off()
+    console.log("Firebase detached");
+  }
+
   initiateSession(authUser,trackID, onResult) {
     let newSession = firebase.database().ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/').push();
     newSession.set({
@@ -27,7 +32,7 @@ class Data {
     console.log('session created ✅');
 
     let that = this;
-    firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).on('value', function(snapshot) {
       onResult(that.saveDataInState(snapshot))
     })
   }

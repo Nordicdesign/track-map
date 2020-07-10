@@ -187,9 +187,10 @@ class Track extends Component {
     }
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     console.log("unmounted");
     this.setState({...initial_load})
+    data.detachListener(this.state.authUser, this.state.trackID)
   }
 
   render() {
