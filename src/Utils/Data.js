@@ -12,11 +12,9 @@ class Data {
       // check if there are any sessions yet
       if (!snapshot.val()) {
         console.log("there are no sessions!!! 😱");
-        // that.initiateSession(authUser, trackID);
         that.initiateSession(authUser, trackID, onResult);
       } else { // the session actually exists
         onResult(that.saveDataInState(snapshot))
-        // onResult(snapshot.val())
       }
     });
   }
@@ -30,8 +28,6 @@ class Data {
 
     let that = this;
     firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-      // onResult(() => return snapshot)
-      // return snapshot.val();
       onResult(that.saveDataInState(snapshot))
     })
   }
@@ -42,12 +38,6 @@ class Data {
         name: value,
     });
     console.log('session created ✅');
-    // let that = this;
-    // firebase.database().ref('/users/' + authUser + '/tracks/'+ trackID +'/sessions').on('value', function(snapshot) {
-    //   // onResult(() => return snapshot)
-    //   // return snapshot.val();
-    //   onResult(that.saveDataInState(snapshot))
-    // })
   }
 
   saveDataInState(snapshot) {
@@ -56,8 +46,6 @@ class Data {
     let observations = []
     let sessions = []
     let data = snapshot.val()
-
-    // console.log("the snapshot",data)
 
     for (let session in data) {
       sessions.push({
@@ -71,33 +59,13 @@ class Data {
     // // current state
     let currentSession = sessions.slice(-1);
     if (typeof currentSession[0].corners !== "undefined") {
-      // console.log(currentSession[0].corners);
-      // for (let obs in currentSession[0].corners) {
-      //   observations.push(currentSession[0].corners[obs])
-      // }
       corners = currentSession[0].corners
     }
 
     if (typeof currentSession[0].observations !== "undefined") {
-
       // keep as an object
       observations = currentSession[0].observations
-
-      // // turn it into an array
-      // for (let obs in currentSession[0].observations) {
-      //   observations.push(currentSession[0].observations[obs])
-      // }
-      //
-      // observations = observations.reverse()
     }
-
-    // let data = currentState.map((session) => {
-    //   return session.turns
-    // }).pop();
-
-    // if(!turns) {
-    //   turns = []
-    // }
 
     return {
       corners,
