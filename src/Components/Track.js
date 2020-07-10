@@ -4,7 +4,7 @@ import { AddNewObservation, AddNewCorner } from './AddNew'
 import { ObservationList, NoObservations } from './ObservationList'
 import { CornersList, NoCorners } from './CornersList'
 import Data from '../Utils/Data'
-import "firebase/database"
+// import "firebase/database"
 import SessionSelection from './SessionSelection'
 import * as ROUTES from '../constants/routes'
 import { UserContext } from "../providers/UserProvider";
@@ -16,6 +16,7 @@ const initial_load = {
   error: null,
   sessions: [],
   currentSession: null,
+  corners: null,
   observations: null,
   dataIsReady: false,
   visibleNotesForm: false,
@@ -147,7 +148,7 @@ class Track extends Component {
             sessions: values.sessions,
             currentSession: values.currentSession[0].id,
             observations: values.observations,
-            // corners: values.corners
+            corners: values.corners
           },() => {
             that.setState({dataIsReady: true})
           })
@@ -166,7 +167,7 @@ class Track extends Component {
             sessions: values.sessions,
             currentSession: values.currentSession[0].id,
             observations: values.observations,
-            // corners: values.corners
+            corners: values.corners
           },() => {
             that.setState({dataIsReady: true})
           })
@@ -187,6 +188,7 @@ class Track extends Component {
   }
 
   componentDidUnmount() {
+    console.log("unmounted");
     this.setState({...initial_load})
   }
 
