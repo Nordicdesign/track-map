@@ -24,6 +24,7 @@ import Bathurst from './Pages/Mount-panorama'
 import Zolder from './Pages/Zolder'
 import Daytona from './Pages/Daytona'
 import Barcelona from './Pages/Barcelona'
+import RoadAmerica from './Pages/RoadAmerica'
 
 class App extends Component {
   render() {
@@ -46,6 +47,7 @@ class App extends Component {
                <Route path={ROUTES.ZOLDER} component={Zolder}/>
                <Route path={ROUTES.DAYTONA} component={Daytona}/>
                <Route path={ROUTES.BARCELONA} component={Barcelona}/>
+               <Route path={ROUTES.ROADAMERICA} component={RoadAmerica}/>
             </div>
         </UserProvider>
       </Router>

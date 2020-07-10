@@ -12,6 +12,7 @@ export const HomepageSignedIn = () => {
             <li><Link to={ROUTES.DAYTONA}>Daytona - Road course</Link></li>
             <li><Link to={ROUTES.LEMANS}>Le Mans - Circuit de la Sarthe</Link></li>
             <li><Link to={ROUTES.BATHURST}>Mount Panorama - Bathurst</Link></li>
+            <li><Link to={ROUTES.ROADAMERICA}>Road America</Link></li>
             <li><Link to={ROUTES.SEBRING}>Sebring</Link></li>
             <li><Link to={ROUTES.SHANGHAI}>Shanghai</Link></li>
             <li><Link to={ROUTES.SPA}>Spa-Franchorchamps</Link></li>

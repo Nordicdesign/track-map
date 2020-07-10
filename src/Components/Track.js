@@ -11,6 +11,18 @@ import { UserContext } from "../providers/UserProvider";
 
 const data = new Data();
 
+const initial_load = {
+  authUser: null,
+  error: null,
+  sessions: [],
+  currentSession: null,
+  observations: null,
+  dataIsReady: false,
+  visibleNotesForm: false,
+  visibleCornerForm: false,
+  currentId: "",
+}
+
 class Track extends Component {
   // for the context API
   static contextType = UserContext;
@@ -21,17 +33,7 @@ class Track extends Component {
     this.handleCancel = this.handleCancel.bind(this);
 
     this.state = {
-      authUser: null,
-      // userEmail: null,
-      error: null,
-      sessions: [],
-      currentSession: null,
-      observations: null,
-      // corners: null,
-      dataIsReady: false,
-      visibleNotesForm: false,
-      visibleCornerForm: false,
-      currentId: "",
+      ...initial_load,
       trackID: props.trackID
     };
   }
@@ -135,6 +137,7 @@ class Track extends Component {
     let that = this
     // get user from context on normal navigation
     if (user && user !== 'guest') {
+      console.log("normal load");
       sessionStorage.setItem("authUser", user.userID)
       this.setState({
         authUser: user.userID
@@ -154,6 +157,7 @@ class Track extends Component {
     // ensure user is there if page get hard refreshed
     let sessionUser = sessionStorage.getItem("authUser")
     if (this.state.authUser === null && sessionUser !== null) {
+      console.log("additional load for refresh");
       this.setState({
         authUser: sessionUser
       }, () => {
@@ -180,6 +184,10 @@ class Track extends Component {
       this.setState({authUser: null})
       sessionStorage.clear()
     }
+  }
+
+  componentDidUnmount() {
+    this.setState({...initial_load})
   }
 
   render() {
