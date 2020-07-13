@@ -18,6 +18,7 @@ import SignUpForm from './Components/Signup';
 import Spa from './Pages/Spa'
 import LaSarthe from './Pages/LaSarthe'
 import Sebring from './Pages/Sebring'
+import Silverstone from './Pages/Silverstone'
 import Shanghai from './Pages/Shanghai'
 import Watkins from './Pages/Watkins-glen'
 import Bathurst from './Pages/Mount-panorama'
@@ -48,6 +49,7 @@ class App extends Component {
                <Route path={ROUTES.DAYTONA} component={Daytona}/>
                <Route path={ROUTES.BARCELONA} component={Barcelona}/>
                <Route path={ROUTES.ROADAMERICA} component={RoadAmerica}/>
+               <Route path={ROUTES.SILVERSTONE} component={Silverstone}/>
             </div>
         </UserProvider>
       </Router>
