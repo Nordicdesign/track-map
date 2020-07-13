@@ -35,7 +35,7 @@ class Track extends Component {
 
     this.state = {
       ...initial_load,
-      trackID: props.trackID
+      trackID: props.trackID,
     };
   }
 
@@ -195,7 +195,7 @@ class Track extends Component {
 
   render() {
     let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
-    const { trackName, URL } = this.props
+    const { trackName, URL, imgCC, imgAuthor } = this.props
 
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
@@ -233,6 +233,7 @@ class Track extends Component {
 
         <div className="track-map">
           <img src={URL} alt={trackName} />
+          {imgAuthor && (<p>Image by <a href={imgCC}>{imgAuthor}</a></p>)}
         </div>
         { authUser ? (
           <div className="track-session">
