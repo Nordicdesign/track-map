@@ -56,6 +56,7 @@ const SignUpForm = () => {
     values.email === '';
 
     return (
+      <>
         <form>
           <label>
             Email address
@@ -82,6 +83,8 @@ const SignUpForm = () => {
 
           {values.error && <p className="error-handling">{values.error.message}</p>}
         </form>
+        <p>This tool is highly experimental and provided as-is. Don't be surprised if there are errors or data loss!</p>
+        </>
     );
 }
 
