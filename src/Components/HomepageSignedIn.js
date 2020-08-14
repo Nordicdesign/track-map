@@ -9,9 +9,11 @@ export const HomepageSignedIn = () => {
           <h1>Select a track</h1>
           <h2>North America</h2>
           <ul className="listCircuits">
+            <li><Link to={ROUTES.MOSPORT}>Canadian Tire Motorsport Park - Mosport</Link></li>
             <li><Link to={ROUTES.DAYTONA}>Daytona - Road course</Link></li>
             <li><Link to={ROUTES.LAGUNA}>Laguna Seca</Link></li>
             <li><Link to={ROUTES.ROADAMERICA}>Road America</Link></li>
+            <li><Link to={ROUTES.ROADATLANTA}>Road Atlanta</Link></li>
             <li><Link to={ROUTES.SEBRING}>Sebring</Link></li>
             <li><Link to={ROUTES.WATKINS}>Watkins Glen</Link></li>
           </ul>
@@ -19,13 +21,19 @@ export const HomepageSignedIn = () => {
           <ul className="listCircuits">
             <li><Link to={ROUTES.BARCELONA}>Circuit de Catalunya (Barcelona)</Link></li>
             <li><Link to={ROUTES.LEMANS}>Le Mans - Circuit de la Sarthe</Link></li>
+            <li><Link to={ROUTES.MAGIONE}>Magione</Link></li>
+            <li><Link to={ROUTES.MUGELLO}>Mugello</Link></li>
+            <li><Link to={ROUTES.NURBURGRING}>Nurburgring</Link></li>
             <li><Link to={ROUTES.SILVERSTONE}>Silverstone</Link></li>
             <li><Link to={ROUTES.SPA}>Spa-Franchorchamps</Link></li>
+            <li><Link to={ROUTES.VALLELUNGA}>Vallelunga</Link></li>
+            <li><Link to={ROUTES.ZANDVOORT}>Zandvoort</Link></li>
             <li><Link to={ROUTES.ZOLDER}>Zolder</Link></li>
           </ul>
           <h2>Asia</h2>
           <ul className="listCircuits">
             <li><Link to={ROUTES.SHANGHAI}>Shanghai</Link></li>
+            <li><Link to={ROUTES.SUZUKA}>Suzuka</Link></li>
           </ul>
           <h2>Australia</h2>
           <ul className="listCircuits">

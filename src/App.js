@@ -27,6 +27,14 @@ import Daytona from './Pages/Daytona'
 import Barcelona from './Pages/Barcelona'
 import RoadAmerica from './Pages/RoadAmerica'
 import Laguna from './Pages/Laguna'
+import Mugello from './Pages/Mugello'
+import Zandvoort from './Pages/Zandvoort'
+import Nurburgring from './Pages/Nurburgring'
+import Magione from './Pages/Magione'
+import Vallelunga from './Pages/Vallelunga'
+import RoadAtlanta from './Pages/RoadAtlanta'
+import Mosport from './Pages/Mosport'
+import Suzuka from './Pages/Suzuka'
 
 class App extends Component {
   render() {
@@ -52,6 +60,14 @@ class App extends Component {
                <Route path={ROUTES.ROADAMERICA} component={RoadAmerica}/>
                <Route path={ROUTES.SILVERSTONE} component={Silverstone}/>
                <Route path={ROUTES.LAGUNA} component={Laguna}/>
+               <Route path={ROUTES.MUGELLO} component={Mugello}/>
+               <Route path={ROUTES.ZANDVOORT} component={Zandvoort}/>
+               <Route path={ROUTES.NURBURGRING} component={Nurburgring}/>
+               <Route path={ROUTES.MAGIONE} component={Magione}/>
+               <Route path={ROUTES.VALLELUNGA} component={Vallelunga}/>
+               <Route path={ROUTES.ROADATLANTA} component={RoadAtlanta}/>
+               <Route path={ROUTES.MOSPORT} component={Mosport}/>
+               <Route path={ROUTES.SUZUKA} component={Suzuka}/>
             </div>
         </UserProvider>
       </Router>
