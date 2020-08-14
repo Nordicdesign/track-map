@@ -10,6 +10,7 @@ export const HomepageSignedIn = () => {
           <h2>North America</h2>
           <ul className="listCircuits">
             <li><Link to={ROUTES.DAYTONA}>Daytona - Road course</Link></li>
+            <li><Link to={ROUTES.LAGUNA}>Laguna Seca</Link></li>
             <li><Link to={ROUTES.ROADAMERICA}>Road America</Link></li>
             <li><Link to={ROUTES.SEBRING}>Sebring</Link></li>
             <li><Link to={ROUTES.WATKINS}>Watkins Glen</Link></li>

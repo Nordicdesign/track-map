@@ -26,6 +26,7 @@ import Zolder from './Pages/Zolder'
 import Daytona from './Pages/Daytona'
 import Barcelona from './Pages/Barcelona'
 import RoadAmerica from './Pages/RoadAmerica'
+import Laguna from './Pages/Laguna'
 
 class App extends Component {
   render() {
@@ -50,6 +51,7 @@ class App extends Component {
                <Route path={ROUTES.BARCELONA} component={Barcelona}/>
                <Route path={ROUTES.ROADAMERICA} component={RoadAmerica}/>
                <Route path={ROUTES.SILVERSTONE} component={Silverstone}/>
+               <Route path={ROUTES.LAGUNA} component={Laguna}/>
             </div>
         </UserProvider>
       </Router>

@@ -54,7 +54,7 @@
   background: #FCFAD6;
   min-height: 300px;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
 
   h3 {
     font-size: 2.4rem;
@@ -63,8 +63,8 @@
 }
 
 .track-observations {
-  width: 60%;
-  margin-right: $baseline*2;
+  width: 50%;
+  margin-left: $baseline*2;
 
   .track-observations-header {
     display: flex;
@@ -111,7 +111,7 @@
 }
 
 .track-corners {
-  width: 40%;
+  width: 50%;
   .track-corners-header {
     display: flex;
     justify-content: space-between;
