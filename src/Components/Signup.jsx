@@ -26,16 +26,30 @@ const SignUpForm = () => {
   const initialFieldValues = {
     email: '',
     passwordOne: '',
-    error: ''
+    error: null,
+    idAdmin: false
   }
   let [values, setValues] = useState(initialFieldValues)
 
 
   const onSubmit = event => {
     event.preventDefault();
-    firebase.auth().createUserWithEmailAndPassword(values.email, values.passwordOne)
+    const { email, password } = values
+
+    // const { username, email, passwordOne, isAdmin } = this.state;
+    const roles = {};
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(authUser => {
         console.log("user created");
+        return firebase
+          .user(authUser.user.uid)
+          .set({
+            email,
+            roles,
+          })
+      })
+      .then(() => {
         history.push(ROUTES.LANDING);
       })
       .catch(error => {

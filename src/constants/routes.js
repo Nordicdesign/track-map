@@ -3,7 +3,7 @@ export const SIGN_UP = '/signup';
 export const SIGN_IN = '/login';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
-export const ADMIN = '/admin';
+export const ADMIN = '/racecontrol';
 export const PASSWORD_FORGET = '/forgot-password';
 
 // tracks

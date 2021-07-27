@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
+// import * as ROLES from '../constants/roles';
 import { withRouter, Link, useHistory } from 'react-router-dom'
 import {firebaseConfig} from '../constants/firebase'
 import { SignUpLink } from './Signup'
@@ -26,17 +27,32 @@ const Login = () => {
   sessionStorage.clear()
 
   let history = useHistory();
+  // let database = firebase.database();
 
   const initialFieldValues = {
     email: '',
     password: '',
-    error: ''
+    error: null
   }
   let [values, setValues] = useState(initialFieldValues)
 
   const onSubmit = event => {
     event.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+    // const roles = {}
+    // roles[ROLES.ADMIN] = ROLES.ADMIN;
+    // console.log(roles);
+    const { email, password } = values
+    firebase.auth().signInWithEmailAndPassword(email,password)
+      // .then(authUser => {
+      //   // console.log(authUser.user.uid);
+      //   database
+      //     .ref('/users/' + authUser.user.uid + '/roles/').set(
+      //       roles,
+      //       err => {
+      //         if (err) console.log(err);
+      //       }
+      //     )
+      // })
       .then(() => {
         history.push(ROUTES.LANDING);
       })

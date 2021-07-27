@@ -8,11 +8,12 @@ import * as ROUTES from './constants/routes';
 
 import UserProvider from './providers/UserProvider'
 import Header from './Components/Header'
-import {Homepage} from './Pages/Homepage'
+import { Homepage } from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
 // import NotLoggedIn from './Components/NotLoggedIn'
 import LoginPage from './Components/Login'
 import SignUpForm from './Components/Signup';
+import { Admin } from './Pages/admin/Admin'
 
 // import tracks
 import Spa from './Pages/Spa'
@@ -48,6 +49,7 @@ class App extends Component {
                <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
                <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
                <Route path={ROUTES.SIGN_UP} component={SignUpForm}/>
+               <Route path={ROUTES.ADMIN} component={Admin}/>
                <Route path={ROUTES.SPA} component={Spa}/>
                <Route path={ROUTES.LEMANS} component={LaSarthe}/>
                <Route path={ROUTES.SHANGHAI} component={Shanghai}/>
