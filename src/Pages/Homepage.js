@@ -7,11 +7,11 @@ export const Homepage = () => {
   const user = useContext(UserContext);
 
   return (
-    <div className="wrapper">
+    <>
       {!user ? <Loading/> :
          (user === 'guest') ? <Landing /> : <HomepageSignedIn />
       }
-    </div>
+    </>
   )
 }
 

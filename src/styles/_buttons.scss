@@ -11,6 +11,13 @@ button {
   transition: 0.2s ease all;
   font-weight: 500;
 
+  a {
+    color: #4A90E2;
+    text-decoration: none;
+    padding-left: $baseline;
+    padding-right: $baseline;
+  }
+
   &:hover {
     background: lighten(#4A90E2, 35);
   }
@@ -28,6 +35,7 @@ button {
   }
 }
 
+button.button-signup,
 input[type="submit"].button-submit {
   min-width: 120px;
   width: auto;
@@ -43,6 +51,11 @@ input[type="submit"].button-submit {
   background: #4A90E2;
   color: #fff;
   transition: 0.2s ease all;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 
   &:hover {
     background: darken(#4A90E2, 10);
