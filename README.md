@@ -11,3 +11,21 @@ If you have trouble with `createRequire is not a function`, try upgrading your n
 `npm start`
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Contributing
+
+There're two parts needed to grow this project, one is adding new tracks, the other is making the tool more user friendly.
+
+To add new tracks you'll need to:
+
+* Add the track map in svg or png format on the `/public/images` folder
+* Duplicate one of the existing pages and rename as necessary. The constant `trackID` is used by Firebase to create the relevant database structure so don't use spaces or special characters that may brake it
+* Link it on the `HomepageSignedIn.js`
+
+At some point all this should be refactored so there's no need to create individual pages and the information is stored in the database instead. That would make much easier to be able to add new tracks.
+
+Some guides or videos on how to use it would be helpful too. If you'd like to contribute just get in touch! 
+
+## License
+
+This repository is licensed under a [Creative Commons Attribution License](https://creativecommons.org/licenses/by/3.0/us/)
