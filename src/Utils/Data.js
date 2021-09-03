@@ -6,7 +6,8 @@ class Data {
     this.data = data
   }
 
-  loadData(authUser, trackID, onResult) {
+  loadData(props) {
+    let { authUser, trackID, onResult} = props
     let that = this;
     firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).on('value', function(snapshot) {
       // check if there are any sessions yet
@@ -19,8 +20,9 @@ class Data {
     });
   }
 
-  detachListener(authUser, trackID) {
-    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off()
+  detachListener(props) {
+    let { authUser, trackID } = props;
+    firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off();
     console.log("Firebase detached");
   }
 
