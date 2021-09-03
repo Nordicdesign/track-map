@@ -130,25 +130,30 @@ const Track = (props) => {
   }
 
   const setTrackCurrentId = (type, id) => {
-    setCurrentId(id)
-    .then(() => {
-      if (type === 'notes')
-        setVisibleNotesForm(true)
-      else if (type === 'corners')
-        setVisibleCornerForm(true)
-    })
+    setCurrentId(id)  
+    if (type === 'notes')
+      setVisibleNotesForm(true)
+    else if (type === 'corners')
+      setVisibleCornerForm(true)
   }
 
   // on component mount
   useEffect(() => {
+    // do we have a user?
+    let loggedInUser;
+    user && (loggedInUser = user.userID);
 
-    // get user from context on normal navigation
-    if (user && user !== 'guest') {
-      console.log("normal load");
-      sessionStorage.setItem("authUser", user.userID)
-      setAuthUser(user.userID)
+    // check if user exists in local storage for browser refresh
+    let sessionUser = sessionStorage.getItem("authUser")
+    sessionUser && (loggedInUser = sessionUser);
+
+    if (loggedInUser && loggedInUser !== 'guest') {
+      // ensure user is stored everywhere
+      sessionStorage.setItem("authUser", loggedInUser)
+      setAuthUser(loggedInUser)
+
       data.loadData({
-        authUser: user.userID,
+        authUser: loggedInUser,
         trackID: trackID,
         onResult: (values) => {
           console.log("the values:", values);
@@ -159,63 +164,15 @@ const Track = (props) => {
           setDataIsReady(true)
         }
       })
-        //  .then(() => {
-        //   data.loadData({
-        //           authUser: user.userID, trackID: this.state.trackID, onResult: function(values) {
-        //               that.setState({
-        //                   sessions: values.sessions,
-        //                   currentSession: values.currentSession[0].id,
-        //                   observations: values.observations,
-        //                   corners: values.corners
-        //               }, () => {
-        //                   setDataIsReady(true)
-        //               })
-        //           }
-        //       })
-        // })
-      }
-      // ensure user is there if page get hard refreshed
-    // let sessionUser = sessionStorage.getItem("authUser")
-    // if (authUser === null && sessionUser !== null) {
-    //   console.log("additional load for refresh");
-    //   setAuthUser(sessionUser);
-    //   data.loadData({
-    //     authUser: sessionUser,
-    //     trackID: trackID,
-    //     onResult: (values) => {
-    //       setSessions(values.sessions)
-    //       setCurrentSession(values.currentSession[0].id)
-    //       setObservations(values.observations)
-    //       setCorners(values.corners)
-    //       setDataIsReady(true)
-    //     }
-    //   })
-    // }
-      // if (this.state.authUser === null && sessionUser !== null) {
-      //   console.log("additional load for refresh");
-      //   setAuthUser(sessionUser);
-      //     data.loadData({
-      //       authUser: sessionUser, trackID: trackID, onResult: function(values) {
-      //           that.setState({
-      //               sessions: values.sessions,
-      //               currentSession: values.currentSession[0].id,
-      //               observations: values.observations,
-      //               corners: values.corners
-      //           }, () => {
-      //               setDataIsReady(true)
-      //           })
-      //       }
-      //   })
-      // }
-      // componentWillUnmount
+    }
+
+    // componentWillUnmount
     return () => {
       console.log("unmounted");
       // this.setState({...initial_load})
       data.detachListener({ authUser: authUser, trackID: trackID })
     }
   }, [])
-
-  // componentDidMount() {}
 
   // when something updates
   useEffect(() => {
