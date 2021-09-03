@@ -37,7 +37,7 @@ class SessionCreator extends Component {
 
     this.setState({
       sent: true,
-    }, data.loadData(authUser, trackID))
+    }, data.loadData({ authUser, trackID }))
   }
 
   render() {
