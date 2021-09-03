@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CornersList(props) {
+export function CornersList(props:any) {
   let { name, notes, onDelete, setTrackCurrentId } = props
 
   return (
