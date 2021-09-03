@@ -130,7 +130,7 @@ const Track = (props) => {
   }
 
   const setTrackCurrentId = (type, id) => {
-    setCurrentId(id)  
+    setCurrentId(id)
     if (type === 'notes')
       setVisibleNotesForm(true)
     else if (type === 'corners')
@@ -311,7 +311,7 @@ const Track = (props) => {
                         name={corner[0]}
                         notes={corner[1]}
                         onDelete={onDelete}
-                        setCurrentId={setTrackCurrentId}
+                        setTrackCurrentId={setTrackCurrentId}
                       />
                   )})) : <NoCorners/>
                   }
