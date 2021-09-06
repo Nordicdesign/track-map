@@ -9,7 +9,7 @@ export const Homepage = () => {
   return (
     <>
       {!user ? <Loading/> :
-         (user === null) ? <Landing /> : <HomepageSignedIn />
+         (user.user.userEmail === null) ? <Landing /> : <HomepageSignedIn />
       }
     </>
   )

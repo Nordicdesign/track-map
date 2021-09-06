@@ -19,7 +19,6 @@ const Header = () => {
 
   useEffect(() => {
     if (user.user != null) {
-      console.log(user);
       setEmail(user.user.userEmail)
     }
   }, [user])
@@ -31,7 +30,7 @@ const Header = () => {
     })
     .then(() => {
       setEmail(null)
-      user.setUser(null)
+      user.setUser({userID: null, userEmail: null})
     })
     .catch(function(error) {
       console.log(error);
