@@ -5,6 +5,8 @@ import * as firebase from 'firebase/app';
 import "firebase/auth";
 import { UserContext } from "../providers/UserProvider";
 
+
+
 function User(props) {
   return (
     <span>{props.userEmail} - <button className="button-link" onClick={props.logout}>log out</button></span>
@@ -13,15 +15,11 @@ function User(props) {
 
 const Header = () => {
   const user = useContext(UserContext);
-  const initial_state = {
-    email: null
-  }
-
-  let [values, setValues] = useState(initial_state)
+  let [email, setEmail] = useState(null)
 
   useEffect(() => {
     if (user) {
-      setValues({email:user.userEmail})
+      setEmail(user.user.userEmail)
     }
   }, [user])
 
@@ -31,7 +29,8 @@ const Header = () => {
       console.log("logged out!");
     })
     .then(() => {
-      setValues({email: null})
+      setEmail(null)
+      user.setUser(null)
     })
     .catch(function(error) {
       console.log(error);
@@ -43,10 +42,10 @@ const Header = () => {
       <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
       <p>
       { !user ? "" :
-        values.email
+        email
           ?
             <User
-              userEmail={values.email}
+              userEmail={email}
               logout={logout}
             />
           :

@@ -1,40 +1,34 @@
-import React, { createContext, Component } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import * as firebase from 'firebase/app';
 import "firebase/auth";
 
+const initialValues = { userID:null, userEmail: null}
 
-export const UserContext = createContext({ user: null });
+export const UserContext = createContext(initialValues);
 
-class UserProvider extends Component {
-  state = {
-    user: null,
-  }
+const UserProvider = (props) => {
+  const [user, setUser] = useState(initialValues)
 
-  componentDidMount = () => {
+  useEffect(() => {
     firebase.auth().onAuthStateChanged(userAuth => {
       if (userAuth) {
-        this.setState({
-          user: {
-            userID: userAuth.uid,
-            userEmail: userAuth.email
-          }
+        console.log("setting something");
+        setUser({
+          userID: userAuth.uid,
+          userEmail: userAuth.email
         });
       }
       else {
-        this.setState({
-          user: 'guest'
-        })
+        setUser(initialValues)
       }
     });
-  };
+  },[])
 
-  render() {
-    return (
-      <UserContext.Provider value={this.state.user}>
-        {this.props.children}
-      </UserContext.Provider>
-    );
-  }
+  return (
+    <UserContext.Provider value={{user, setUser}}>
+      {props.children}
+    </UserContext.Provider>
+  );
 }
 
 export default UserProvider

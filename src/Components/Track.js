@@ -141,7 +141,7 @@ const Track = (props) => {
   useEffect(() => {
     // do we have a user?
     let loggedInUser;
-    user && (loggedInUser = user.userID);
+    user && (loggedInUser = user.user.userID);
 
     // check if user exists in local storage for browser refresh
     let sessionUser = sessionStorage.getItem("authUser")
