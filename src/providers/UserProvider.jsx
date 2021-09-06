@@ -12,7 +12,6 @@ const UserProvider = (props) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(userAuth => {
       if (userAuth) {
-        console.log("setting something");
         setUser({
           userID: userAuth.uid,
           userEmail: userAuth.email

@@ -18,7 +18,8 @@ const Header = () => {
   let [email, setEmail] = useState(null)
 
   useEffect(() => {
-    if (user) {
+    if (user.user != null) {
+      console.log(user);
       setEmail(user.user.userEmail)
     }
   }, [user])
