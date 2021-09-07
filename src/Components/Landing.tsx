@@ -31,7 +31,7 @@ export const Landing = () => {
 
       <footer className="home-footer">
         <p>The project is at early stages so expect bare minimum functionality and things to not work at all! Use at your own risk, you may lose data.</p>
-        <p>Any suggestions please drop me a line to <a href="mailto:alex.lillo@gmail.com">alex.lillo@gmail.com</a>.</p>
+        <p>If you have suggestions or something is not quite right, please <a href="https://opb3adxlfse.typeform.com/to/sdJJgeJf" rel="noreferrer" target="_blank">fill in this form</a> and we'll try to fix it as soon as humanly possible.</p>
         <p>* TrackMap is just a placeholder, not the real name of this thing, if it ever becomes real.</p>
       </footer>
     </>

@@ -58,7 +58,8 @@ export const HomepageSignedIn = () => {
 
           <p>For each turn you can say whether you had oversteer or understeer, and write some thoughts on best way to approach it, braking points, etc.</p>
           <p>The project is at early beta so expect bare minimum functionality and things to not work at all! Use at your own risk.</p>
-          <p>Any suggestions please drop me a line to <a href="mailto:alex.lillo@gmail.com">alex.lillo@gmail.com</a>.</p>
+          <h3>Suggestions?</h3>
+          <p>If you have suggestions or something is not quite right, please <a href="https://opb3adxlfse.typeform.com/to/sdJJgeJf" rel="noreferrer" target="_blank">fill in this form</a> and we'll try to fix it as soon as humanly possible.</p>
         </aside>
       </div>
     )
