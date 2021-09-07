@@ -9,7 +9,7 @@ import { UserContext } from "../providers/UserProvider";
 
 function User(props) {
   return (
-    <span>{props.userEmail} - <button className="button-link" onClick={props.logout}>log out</button></span>
+    <span data-testid="email">{props.userEmail} - <button className="button-link" onClick={props.logout} data-testid="logout">log out</button></span>
   )
 }
 
@@ -39,7 +39,7 @@ const Header = () => {
 
   return (
     <header>
-      <p><Link to={ROUTES.LANDING}>TrackMap</Link></p>
+      <p data-testid="header-name"><Link to={ROUTES.LANDING}>TrackMap</Link></p>
       <p>
       { !user ? "" :
         email
@@ -49,7 +49,7 @@ const Header = () => {
               logout={logout}
             />
           :
-            <Link to={ROUTES.SIGN_IN}>Log in</Link>
+            <Link data-testid="login" to={ROUTES.SIGN_IN}>Log in</Link>
       }
     </p>
     </header>
