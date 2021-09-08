@@ -49,14 +49,14 @@ const Track = (props) => {
   const handleAdd = (type) => {
     if (type === "notes")
       setVisibleNotesForm(true)
-    else if (type === 'corner')
+    else if (type === "corner")
     setVisibleCornerForm(true)
   }
 
   const handleCancel = (type) => {
     if (type === "notes")
       setVisibleNotesForm(false)
-    else if (type === 'corner')
+    else if (type === "corner")
       setVisibleCornerForm(false)
   }
 

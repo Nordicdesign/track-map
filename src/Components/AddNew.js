@@ -25,7 +25,7 @@ const AddNewObservation = (props) => {
   }, [currentId, observations])
 
   const handleChange = e => {
-      var { name, value } = e.target
+      let { name, value } = e.target
       setValues({
         ...values,
         [name]: value
@@ -34,7 +34,7 @@ const AddNewObservation = (props) => {
 
   const handleFormSubmit = e => {
     e.preventDefault()
-    addOrEdit(values);
+    addOrEdit(values)
   }
 
   return (
@@ -50,6 +50,7 @@ const AddNewObservation = (props) => {
               value={values.notes}
               onChange={handleChange}
               rows="6"
+              data-testid="observation-textarea"
               />
           </li>
           <li>
@@ -60,6 +61,7 @@ const AddNewObservation = (props) => {
               id="setupName"
               value={values.setupName}
               onChange={handleChange}
+              data-testid="setup-name"
              />
           </li>
           <li className="form-actions">
@@ -68,7 +70,7 @@ const AddNewObservation = (props) => {
               value={currentId === "" ? "Add" : "Edit"}
               className="button-submit"
             />
-          <button className="button-link" onClick={() => handleCancel('notes')}>Cancel</button>
+          <button className="button-link" data-testid="cancel-button" onClick={() => handleCancel('notes')}>Cancel</button>
           </li>
         </ul>
       </fieldset>
