@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { AddNewObservation, AddNewCorner } from './AddNew'
-import { ObservationList, NoObservations } from './ObservationList'
-import { CornersList, NoCorners } from './CornersList'
+import { Link, useParams } from 'react-router-dom'
+import { AddNewObservation, AddNewCorner } from '../Components/AddNew'
+import { ObservationList, NoObservations } from '../Components/ObservationList'
+import { CornersList, NoCorners } from '../Components/CornersList'
 import Data from '../Utils/Data'
 // import "firebase/database"
-import SessionSelection from './SessionSelection'
+import SessionSelection from '../Components/SessionSelection'
 import * as ROUTES from '../constants/routes'
 import { UserContext } from "../providers/UserProvider";
+import tracks from '../constants/tracks.json'
+
+const NoTrack = () => {
+  return (
+    <div>
+      <h1>can't find that track</h1>
+      <p>Try again please</p>
+    </div>
+  )
+}
 
 const data = new Data();
 
@@ -24,11 +34,13 @@ const data = new Data();
 //   currentId: "",
 // }
 
-const Track = (props) => {
+const Track = () => {
   // for the context API
   const user = useContext(UserContext);
+  const { trackName } = useParams();
 
   // initialize the state
+  const [trackExists, setTrackExists] = useState(false)
   const [authUser, setAuthUser] = useState(null);
   // const [error, setError] = useState(null);
   const [sessions, setSessions] = useState([]);
@@ -39,12 +51,7 @@ const Track = (props) => {
   const [visibleNotesForm, setVisibleNotesForm] = useState(false);
   const [visibleCornerForm, setVisibleCornerForm] = useState(false);
   const [currentId, setCurrentId] = useState("");
-  const [trackID, setTrackID] = useState(props.trackID)
-
-  // this.state = {
-  //   ...initial_load,
-  //   trackID: props.trackID,
-  // };
+  const [trackID, setTrackID] = useState(trackName)
 
   const handleAdd = (type) => {
     if (type === "notes")
@@ -139,6 +146,12 @@ const Track = (props) => {
 
   // on component mount
   useEffect(() => {
+
+    // does the track exist?
+    if (tracks.hasOwnProperty(trackName)) (
+      setTrackExists(true)
+    );
+
     // do we have a user?
     let loggedInUser;
     user && (loggedInUser = user.user.userID);
@@ -151,6 +164,8 @@ const Track = (props) => {
       // ensure user is stored everywhere
       sessionStorage.setItem("authUser", loggedInUser)
       setAuthUser(loggedInUser)
+
+      console.log("track ID before loading data", trackID);
 
       data.loadData({
         authUser: loggedInUser,
@@ -204,7 +219,7 @@ const Track = (props) => {
 
 
     // let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
-    const { trackName, URL, imgCC, imgAuthor } = props
+    // const { trackName, URL, imgCC, imgAuthor } = props
 
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""
@@ -224,104 +239,106 @@ const Track = (props) => {
     }
 
     return (
-      <div className="track-wrapper">
-        <div className="track-meta">
-          <h1>{trackName}</h1>
+      trackExists ? (
+          <div className="track-wrapper">
+            <div className="track-meta">
+              <h1>{tracks[trackName].name}</h1>
 
-          { authUser ? (
-            <SessionSelection
-              sessions={sessions}
-              currentSession={currentSession}
-              changeSession={changeSession}
-              renameSession={renameSession}
-              newSession={newSession}
-            />
-        ) : ( null ) }
+              { authUser ? (
+                <SessionSelection
+                  sessions={sessions}
+                  currentSession={currentSession}
+                  changeSession={changeSession}
+                  renameSession={renameSession}
+                  newSession={newSession}
+                />
+            ) : ( null ) }
 
-        </div>
+            </div>
 
-        <div className="track-map">
-          <img src={URL} alt={trackName} />
-          {imgAuthor && (<p>Image by <a href={imgCC}>{imgAuthor}</a></p>)}
-        </div>
-        { authUser ? (
-          <div className="track-session">
-            <h2>Session</h2>
-            <p>{sessionName}</p>
+            <div className="track-map">
+              <img src={tracks[trackName].url} alt={tracks[trackName].name} />
+              {tracks[trackName].imgAuthor && (<p>Image by <a href={tracks[trackName].imgCC}>{tracks[trackName].imgAuthor}</a></p>)}
+            </div>
+            { authUser ? (
+              <div className="track-session">
+                <h2>Session</h2>
+                <p>{sessionName}</p>
+              </div>
+            ) : ( null ) }
+
+
+            <div className="track-notes">
+              { authUser ? (
+                <>
+                <div className="track-observations">
+                  <div className="track-observations-header">
+                    <h3>Observations</h3>
+                    <button onClick={() => handleAdd('notes')}>Add new</button>
+                  </div>
+
+                  {visibleNotesForm ? (
+                    <AddNewObservation
+                      currentId={currentId}
+                      addOrEdit={addOrEdit}
+                      observations={observations}
+                      handleCancel={handleCancel}
+                    />
+                  ) : (
+                    <div>
+                      { (observations) ?
+                        Object.keys(observations).reverse().map((key) => (
+                           <ObservationList
+                            key={key}
+                            id={key}
+                            name={observations[key].time}
+                            notes={observations[key].notes}
+                            setupName={observations[key].setupName}
+                            onDelete={onDelete}
+                            setTrackCurrentId={setTrackCurrentId}
+                          />
+                      )) : <NoObservations/>
+                      }
+                    </div>
+                  )}
+
+
+                </div>
+
+                <div className="track-corners">
+                  <div className="track-corners-header">
+                    <h3>Corners</h3>
+                    <button onClick={() => handleAdd('corner')}>Add new</button>
+                  </div>
+
+                  {visibleCornerForm ? (
+                    <AddNewCorner
+                      currentId={currentId}
+                      addOrEditCorner={addOrEditCorner}
+                      corners={corners}
+                      handleCancel={handleCancel}
+                    />
+                  ) : (
+                    <div>
+                      { corners ? ( Object.entries(corners).map(corner => {
+                        return (
+                          <CornersList
+                            key={Math.random()}
+                            name={corner[0]}
+                            notes={corner[1]}
+                            onDelete={onDelete}
+                            setTrackCurrentId={setTrackCurrentId}
+                          />
+                      )})) : <NoCorners/>
+                      }
+                    </div>
+                  )}
+                </div>
+                </>
+              ) : ( <Guest /> ) }
+            </div>
           </div>
-        ) : ( null ) }
-
-
-        <div className="track-notes">
-          { authUser ? (
-            <>
-            <div className="track-observations">
-              <div className="track-observations-header">
-                <h3>Observations</h3>
-                <button onClick={() => handleAdd('notes')}>Add new</button>
-              </div>
-
-              {visibleNotesForm ? (
-                <AddNewObservation
-                  currentId={currentId}
-                  addOrEdit={addOrEdit}
-                  observations={observations}
-                  handleCancel={handleCancel}
-                />
-              ) : (
-                <div>
-                  { (observations) ?
-                    Object.keys(observations).reverse().map((key) => (
-                       <ObservationList
-                        key={key}
-                        id={key}
-                        name={observations[key].time}
-                        notes={observations[key].notes}
-                        setupName={observations[key].setupName}
-                        onDelete={onDelete}
-                        setTrackCurrentId={setTrackCurrentId}
-                      />
-                  )) : <NoObservations/>
-                  }
-                </div>
-              )}
-
-
-            </div>
-
-            <div className="track-corners">
-              <div className="track-corners-header">
-                <h3>Corners</h3>
-                <button onClick={() => handleAdd('corner')}>Add new</button>
-              </div>
-
-              {visibleCornerForm ? (
-                <AddNewCorner
-                  currentId={currentId}
-                  addOrEditCorner={addOrEditCorner}
-                  corners={corners}
-                  handleCancel={handleCancel}
-                />
-              ) : (
-                <div>
-                  { corners ? ( Object.entries(corners).map(corner => {
-                    return (
-                      <CornersList
-                        key={Math.random()}
-                        name={corner[0]}
-                        notes={corner[1]}
-                        onDelete={onDelete}
-                        setTrackCurrentId={setTrackCurrentId}
-                      />
-                  )})) : <NoCorners/>
-                  }
-                </div>
-              )}
-            </div>
-            </>
-          ) : ( <Guest /> ) }
-        </div>
-      </div>
+        ) : <NoTrack />
     )
 };
 
