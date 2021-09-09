@@ -8,11 +8,11 @@ export const PASSWORD_FORGET = '/forgot-password';
 
 // tracks
 export const SPA = 'tracks/spa';
-export const LEMANS = 'tracks/le-mans'
+export const LEMANS = 'tracks/lemans'
 export const SHANGHAI = 'tracks/shanghai'
 export const WATKINS = 'tracks/watkins-glen'
 export const SEBRING = 'tracks/sebring'
-export const BATHURST = 'tracks/mount-panorama'
+export const BATHURST = 'tracks/bathurst'
 export const ZOLDER = 'tracks/zolder'
 export const DAYTONA = 'tracks/daytona'
 export const BARCELONA = '/tracks/barcelona'
