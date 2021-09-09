@@ -1,0 +1,14 @@
+{
+  "barcelona": {
+    "name": "Circuit de Catalunya",
+    "url": "/images/1000px-Circuit_Catalunya_2007.svg.png",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:AlexJ",
+    "imgAuthor": "AlexJ"
+  },
+  "road-america": {
+    "name": "Road America",
+    "url": "/images/Road_America.svg",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger",
+    "imgAuthor": "Will Pittenger"
+  }
+}
