@@ -10,5 +10,112 @@
     "url": "/images/Road_America.svg",
     "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger",
     "imgAuthor": "Will Pittenger"
+  },
+  "lemans": {
+    "name": "Circuit de la Sarthe",
+    "url": "/images/la-sarthe-horizontal.svg",
+    "imgAuthor": "Alex Lillo"
+  },
+  "laguna-seca": {
+    "name": "Laguna Seca",
+    "url": "/images/laguna-seca.png",
+    "imgAuthor": "",
+    "imgCC": ""
+  },
+  "magione": {
+    "name": "Autodromo di Magione",
+    "url": "/images/Autodromo_di_Magione.svg",
+    "imgAuthor": "Francesco Betti Sorbelli",
+    "imgCC": "https://it.wikipedia.org/wiki/Utente:Francesco_Betti_Sorbelli"
+  },
+  "mosport": {
+    "name": "Canadian Tire Motorsport Park",
+    "url": "/images/Mosport-CTMP.svg",
+    "imgAuthor": "Apex-Ash",
+    "imgCC": "https://en.wikipedia.org/wiki/Canadian_Tire_Motorsport_Park#/media/File:Mosport-CTMP.svg"
+  },
+  "bathurst": {
+    "name": "Mount Panorama - Bathurst",
+    "url": "/images/Mount_Panorama.png",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "mugello": {
+    "name": "Mugello",
+    "url": "/images/Mugello_Racing_Circuit_track_map.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "nurburgring": {
+    "name": "Nurburgring - GP",
+    "url": "/images/Nurburgring_-_Grand-Prix-Strecke.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "road-atlanta": {
+    "name": "Road Atlanta",
+    "url": "/images/Road_Atlanta_track_map.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "sebring": {
+    "name": "Sebring",
+    "url": "/images/Sebring_International_Raceway.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "shanghai": {
+    "name": "Shanghai International Circuit",
+    "url": "/images/Circuit_Shanghai_2004.svg",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:AlexJ",
+    "imgAuthor": "AlexJ"
+  },
+  "silverstone": {
+    "name": "Silverstone",
+    "url": "/images/Silverstone_Circuit_2011.png",
+    "imgAuthor": "Tom McKay",
+    "imgCC": "https://commons.wikimedia.org/wiki/File:Silverstone_Circuit_2011.png"
+  },
+  "spa": {
+    "name": "Spa-Francorchamps",
+    "url": "/images/Spa-Francorchamps_of_Belgium.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "suzuka": {
+    "name": "Suzuka",
+    "url": "/images/Suzuka_circuit_map--2005.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "vallelunga": {
+    "name": "Vallelunga",
+    "url": "/images/Track_map_for_Vallelunga--2003_version.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "watkins-glen": {
+    "name": "Watkins Glen",
+    "url": "/images/Watkins_Glen_International_Track_Map.svg",
+    "imgAuthor": "Xander89",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Xander89"
+  },
+  "zandvoort": {
+    "name": "Zandvoort",
+    "url": "/images/Zandvoort.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "zolder": {
+    "name": "Circuit Zolder",
+    "url": "/images/Zolder.svg",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
+  },
+  "daytona": {
+    "name": "Daytona",
+    "url": "/images/Daytona_International_Speedway_-_Road_Course.svg__81933_original.webp",
+    "imgAuthor": "Will Pittenger",
+    "imgCC": "https://commons.wikimedia.org/wiki/User:Will_Pittenger"
   }
 }

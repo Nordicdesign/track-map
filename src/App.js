@@ -13,7 +13,7 @@ import ForgotPassword from './Pages/ForgotPassword'
 // import NotLoggedIn from './Components/NotLoggedIn'
 import LoginPage from './Components/Login'
 import SignUpForm from './Components/Signup';
-import TrackHolder from './Pages/TrackHolder'
+import Track from './Pages/Track'
 
 class App extends Component {
   render() {
@@ -27,7 +27,7 @@ class App extends Component {
                <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword}/>
                <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
                <Route path={ROUTES.SIGN_UP} component={SignUpForm}/>
-               <Route path="/tracks/:trackName" component={TrackHolder}/>
+               <Route path="/tracks/:trackName" component={Track}/>
             </div>
         </UserProvider>
       </Router>
