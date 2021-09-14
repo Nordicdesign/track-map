@@ -2,11 +2,24 @@ import React, { createContext, useState, useEffect } from 'react';
 import * as firebase from 'firebase/app';
 import "firebase/auth";
 
-const initialValues = { userID:null, userEmail: null}
+interface UserContextInterface {
+  user: UserType | null;
+  setUser: (UserType: UserType) => void;
+}
 
-export const UserContext = createContext(initialValues);
+export type UserType = {
+    userID:string | null,
+    userEmail: string | null
+}
 
-const UserProvider = (props) => {
+const initialValues: UserType = {
+  userID: null,
+  userEmail: null
+}
+
+export const UserContext = createContext<Partial<UserContextInterface>>({});
+
+const UserProvider = (props:any) => {
   const [user, setUser] = useState(initialValues)
 
   useEffect(() => {
@@ -16,6 +29,7 @@ const UserProvider = (props) => {
           userID: userAuth.uid,
           userEmail: userAuth.email
         });
+        console.log("just set",user);
       }
       else {
         setUser(initialValues)

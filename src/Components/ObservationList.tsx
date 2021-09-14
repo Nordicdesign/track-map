@@ -3,7 +3,7 @@ import React from 'react';
 const ObservationList = (props:any) => {
   let { name, id, notes, setupName, onDelete, setTrackCurrentId } = props
   let date = new Date(name)
-  let presentableDate = date.toLocaleString()
+  let presentableDate: string = date.toLocaleString()
 
   return (
     <div className="obs-entry">

@@ -23,7 +23,7 @@ class Data {
   detachListener(props) {
     let { authUser, trackID } = props;
     firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off();
-    console.log("Firebase detached");
+    // console.log("Firebase detached");
   }
 
   initiateSession(authUser,trackID, onResult) {

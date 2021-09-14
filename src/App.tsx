@@ -10,7 +10,6 @@ import UserProvider from './providers/UserProvider'
 import Header from './Components/Header'
 import { Homepage } from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
-// import NotLoggedIn from './Components/NotLoggedIn'
 import LoginPage from './Components/Login'
 import SignUpForm from './Components/Signup';
 import Track from './Pages/Track'

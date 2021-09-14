@@ -12,32 +12,20 @@ import tracks from '../constants/tracks.json'
 
 const NoTrack = () => {
   return (
-    <div>
-      <h1>can't find that track</h1>
-      <p>Try again please</p>
+    <div className="wrapper">
+      <h1 data-testid="not-found">Can't find that track</h1>
+      <p><Link to="/">Try again please</Link></p>
     </div>
   )
 }
 
 const data = new Data();
 
-// const initial_load = {
-//   authUser: null,
-//   error: null,
-//   sessions: [],
-//   currentSession: null,
-//   corners: null,
-//   observations: null,
-//   dataIsReady: false,
-//   visibleNotesForm: false,
-//   visibleCornerForm: false,
-//   currentId: "",
-// }
-
 const Track = () => {
   // for the context API
   const user = useContext(UserContext);
   const { trackName } = useParams();
+  console.log("track name:", trackName);
 
   // initialize the state
   const [trackExists, setTrackExists] = useState(false)
@@ -125,15 +113,6 @@ const Track = () => {
     setCorners(corners)
     setObservations(observations)
     console.log("turns loaded",observations);
-    //   this.setState({
-    //     // save the new one
-    //     currentSession: newSession,
-    //     corners,
-    //     observations
-    // },() => {
-    //   // dataIsReady = true;
-    //   console.log("turns loaded",this.state.observations);
-    // })
   }
 
   const setTrackCurrentId = (type, id) => {
@@ -183,7 +162,7 @@ const Track = () => {
 
     // componentWillUnmount
     return () => {
-      console.log("unmounted");
+      // console.log("unmounted");
       // this.setState({...initial_load})
       data.detachListener({ authUser: authUser, trackID: trackID })
     }
@@ -200,26 +179,6 @@ const Track = () => {
     }
   }, [authUser])
 
-  // componentDidUpdate() {
-  //   let user = this.context
-  //   let sessionUser = sessionStorage.getItem("authUser")
-  //   // clear the authUser when the user logs out
-  //   if (this.state.authUser !== null && user === 'guest' && !sessionUser) {
-  //     console.log("doom and gloom!");
-  //     this.setState({authUser: null})
-  //     sessionStorage.clear()
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   console.log("unmounted");
-  //   this.setState({...initial_load})
-  //   data.detachListener({ authUser: this.state.authUser, trackID: this.state.trackID })
-  // }
-
-
-    // let { authUser, sessions, currentSession, visibleNotesForm, visibleCornerForm, observations, corners, currentId } = this.state
-    // const { trackName, URL, imgCC, imgAuthor } = props
 
     const found = sessions.find(session => session.id === currentSession);
     let sessionName = ""

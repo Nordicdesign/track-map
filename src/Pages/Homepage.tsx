@@ -4,12 +4,12 @@ import { HomepageSignedIn } from '../Components/HomepageSignedIn'
 import { UserContext } from "../providers/UserProvider";
 
 export const Homepage = () => {
-  const user = useContext(UserContext);
+  const {user, setUser } = useContext(UserContext);
 
   return (
     <>
       {!user ? <Loading/> :
-         (user.user.userEmail === null) ? <Landing /> : <HomepageSignedIn />
+         (user.userEmail === null) ? <Landing /> : <HomepageSignedIn />
       }
     </>
   )
