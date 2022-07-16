@@ -13,8 +13,8 @@ input[type="submit"] {
   border-radius: 4px;
   height: 40px;
   width: 250px;
-  padding-left: $baseline/2;
-  margin-top: $baseline/2;
+  padding-left: $baseline * 0.5;
+  margin-top: $baseline * 0.5;
   display: block;
   font-size: 1.6rem;
 }
@@ -30,13 +30,13 @@ input[type="submit"] {
 .new-corner {
 
   label {
-    margin-bottom: $baseline/4;
+    margin-bottom: $baseline * 0.25;
   }
   textarea {
     width: 100%;
     font-family: $fontstack;
     font-size: 1.4rem;
-    padding: $baseline/4;
+    padding: $baseline * 0.25;
     background: #F7F7F7;
     border-radius: 2px;
   }

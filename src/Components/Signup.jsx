@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
-import * as firebase from "firebase/app"
+import firebase from 'firebase/app';
 import "firebase/auth"
 import * as ROUTES from '../constants/routes'
 import {firebaseConfig} from '../constants/firebase'

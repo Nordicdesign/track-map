@@ -15,8 +15,8 @@
   li {
     border: 1px solid $colour-gray-300;
     border-radius: 2px;
-    margin-bottom: $baseline/2;
-    padding: $baseline/2;
+    margin-bottom: $baseline * 0.5;
+    padding: $baseline * 0.5;
     transition: 0.2s ease all;
 
     &:hover {

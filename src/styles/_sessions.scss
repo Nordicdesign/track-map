@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: $baseline;
-  margin-top: $baseline/2
+  margin-top: $baseline * 0.5
 }
 
 .session-creator {
@@ -15,7 +15,7 @@
 
     label {
       margin-bottom: 0;
-      margin-right: $baseline/2;
+      margin-right: $baseline * 0.5;
       line-height: 40px;
     }
 
@@ -24,7 +24,7 @@
     }
 
     input[type="submit"] {
-      margin-left: $baseline/2;
+      margin-left: $baseline * 0.5;
       width: auto;
     }
   }
@@ -46,7 +46,7 @@
   select {
     display: block;
     border-radius: 2px;
-    margin-top: $baseline/4;
+    margin-top: $baseline * 0.25;
     border: 1px solid #ccc;
     height: 40px;
     font-size: 1.6rem;
@@ -65,7 +65,7 @@
 
 .new-session {
   label {
-    margin-bottom: $baseline/2;
+    margin-bottom: $baseline * 0.5;
   }
 
   div {
