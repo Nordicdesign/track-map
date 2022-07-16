@@ -3,7 +3,14 @@ import { Link, useParams } from 'react-router-dom'
 import { AddNewObservation, AddNewCorner } from '../Components/AddNew'
 import { ObservationList, NoObservations } from '../Components/ObservationList'
 import { CornersList, NoCorners } from '../Components/CornersList'
-import Data from '../Utils/Data'
+import {
+  recordObservation,
+  editObservation,
+  recordCorner,
+  deleteEntry,
+  detachListener,
+  loadData,
+} from '../Utils/Data'
 import SessionSelection from '../Components/SessionSelection'
 import * as ROUTES from '../constants/routes'
 import { UserContext } from '../providers/UserProvider'
@@ -19,8 +26,6 @@ const NoTrack = () => {
     </div>
   )
 }
-
-const data = new Data()
 
 const Track = () => {
   // for the context API
@@ -62,9 +67,9 @@ const Track = () => {
     }
 
     if (currentId === '') {
-      data.recordObservation(authUser, trackID, currentSession, obs)
+      recordObservation(authUser, trackID, currentSession, obs)
     } else {
-      data.editObservation(authUser, trackID, currentSession, currentId, obs)
+      editObservation(authUser, trackID, currentSession, currentId, obs)
       setCurrentId('')
     }
   }
@@ -72,21 +77,21 @@ const Track = () => {
   const addOrEditCorner = (corner, notes) => {
     setVisibleCornerForm(false)
     let obs = { notes }
-    data.recordCorner(authUser, trackID, currentSession, corner, obs)
+    recordCorner(authUser, trackID, currentSession, corner, obs)
     setCurrentId('')
   }
 
   const renameSession = (value) => {
-    data.renameSession(authUser, trackID, currentSession, value)
+    renameSession(authUser, trackID, currentSession, value)
   }
 
   const newSession = (value) => {
-    data.newSession(authUser, trackID, value)
+    newSession(authUser, trackID, value)
   }
 
   const onDelete = (type, id) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
-      data.deleteEntry(authUser, trackID, currentSession, type, id)
+      deleteEntry(authUser, trackID, currentSession, type, id)
     }
   }
 
@@ -141,7 +146,7 @@ const Track = () => {
 
       console.log('track ID before loading data', trackID)
 
-      data.loadData({
+      loadData({
         authUser: loggedInUser,
         trackID: trackID,
         onResult: (values) => {
@@ -159,7 +164,7 @@ const Track = () => {
     return () => {
       // console.log("unmounted");
       // this.setState({...initial_load})
-      data.detachListener({ authUser: authUser, trackID: trackID })
+      detachListener({ authUser: authUser, trackID: trackID })
     }
   }, [])
 
