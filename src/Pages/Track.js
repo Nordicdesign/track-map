@@ -242,7 +242,7 @@ const Track = () => {
           <>
             <div className="track-observations">
               <div className="track-observations-header">
-                <h3>Observations</h3>
+                <h3>Setup notes</h3>
                 <button onClick={() => handleAdd('notes')}>Add new</button>
               </div>
 
@@ -278,7 +278,7 @@ const Track = () => {
 
             <div className="track-corners">
               <div className="track-corners-header">
-                <h3>Corners</h3>
+                <h3>Track notes</h3>
                 <button onClick={() => handleAdd('corner')}>Add new</button>
               </div>
 

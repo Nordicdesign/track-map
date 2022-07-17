@@ -17,9 +17,16 @@ const initialValues: UserType = {
   userEmail: null,
 }
 
-export const UserContext = createContext<Partial<UserContextInterface>>({})
+export const UserContext = createContext<Partial<UserContextInterface>>({
+  user: initialValues,
+})
 
-const UserProvider = (props: any) => {
+interface UserProviderProps {
+  children: any
+}
+
+export const UserProvider = (props: UserProviderProps) => {
+  const { children } = props
   const [user, setUser] = useState(initialValues)
 
   useEffect(() => {
@@ -29,7 +36,7 @@ const UserProvider = (props: any) => {
           userID: userAuth.uid,
           userEmail: userAuth.email,
         })
-        console.log('just set', user)
+        // console.log('just set', user)
       } else {
         setUser(initialValues)
       }
@@ -38,9 +45,7 @@ const UserProvider = (props: any) => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {props.children}
+      {children}
     </UserContext.Provider>
   )
 }
-
-export default UserProvider
