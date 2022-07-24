@@ -1,63 +1,70 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { AddNewObservation, AddNewCorner } from '../Components/AddNew'
-import { ObservationList, NoObservations } from '../Components/ObservationList'
-import { CornersList, NoCorners } from '../Components/CornersList'
+
+import { AddNewObservation, AddNewCorner } from '../../Components/AddNew'
+import {
+  ObservationList,
+  NoObservations,
+} from '../../Components/ObservationList'
+import { CornersList, NoCorners } from '../../Components/CornersList'
 import {
   recordObservation,
   editObservation,
   recordCorner,
   deleteEntry,
   detachListener,
+  renameSession,
   loadData,
-} from '../Utils/Data'
-import SessionSelection from '../Components/SessionSelection'
-import * as ROUTES from '../constants/routes'
-import { UserContext } from '../providers/UserProvider'
-import tracks from '../constants/tracks.json'
+  newSession,
+} from '../../Utils/Data'
+import SessionSelection from '../../Components/SessionSelection'
+import { UserContext } from '../../providers/UserProvider'
+import tracksJson from '../../constants/tracks.json'
+import { NoTrack } from './components/NoTrack'
+import { Guest } from './components/Guest'
+import { CornerType, NoteType, SessionType } from '../../Utils/types'
 
-const NoTrack = () => {
-  return (
-    <div className="wrapper">
-      <h1 data-testid="not-found">Can't find that track</h1>
-      <p>
-        <Link to="/">Try again please</Link>
-      </p>
-    </div>
-  )
+type TrackParams = {
+  trackName: string
 }
 
-const Track = () => {
+const tracks: any = tracksJson
+
+export const Track = () => {
   // for the context API
   const user = useContext(UserContext)
-  const { trackName } = useParams()
-  console.log('track name:', trackName)
+  const { trackName } = useParams<TrackParams>()
 
   // initialize the state
   const [trackExists, setTrackExists] = useState(false)
-  const [authUser, setAuthUser] = useState(null)
+  const [authUser, setAuthUser] = useState<string | null>(null)
   // const [error, setError] = useState(null);
-  const [sessions, setSessions] = useState([])
-  const [currentSession, setCurrentSession] = useState(null)
-  const [corners, setCorners] = useState(null)
-  const [observations, setObservations] = useState(null)
+  const [sessions, setSessions] = useState<SessionType[] | null>(null)
+  const [sessionName, setSessionName] = useState<string>()
+  const [currentSession, setCurrentSession] = useState<string | null>(null)
+  const [corners, setCorners] = useState<CornerType[] | null>(null)
+  const [observations, setObservations] = useState<any>(null)
   const [dataIsReady, setDataIsReady] = useState(false)
   const [visibleNotesForm, setVisibleNotesForm] = useState(false)
   const [visibleCornerForm, setVisibleCornerForm] = useState(false)
   const [currentId, setCurrentId] = useState('')
   const [trackID, setTrackID] = useState(trackName)
 
-  const handleAdd = (type) => {
+  const handleAdd = (type: string) => {
     if (type === 'notes') setVisibleNotesForm(true)
     else if (type === 'corner') setVisibleCornerForm(true)
   }
 
-  const handleCancel = (type) => {
+  const handleCancel = (type: string) => {
     if (type === 'notes') setVisibleNotesForm(false)
     else if (type === 'corner') setVisibleCornerForm(false)
   }
 
-  const addOrEdit = (obj) => {
+  const addOrEdit = (obj: { notes: NoteType; setupName: string }) => {
+    if (!authUser) {
+      return
+    }
+
     setVisibleNotesForm(false)
     const date = new Date()
     const obs = {
@@ -74,37 +81,37 @@ const Track = () => {
     }
   }
 
-  const addOrEditCorner = (corner, notes) => {
+  const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
     setVisibleCornerForm(false)
-    let obs = { notes }
+    const obs = { notes }
     recordCorner(authUser, trackID, currentSession, corner, obs)
     setCurrentId('')
   }
 
-  const renameSession = (value) => {
+  const handleRenameSession = (value: any) => {
     renameSession(authUser, trackID, currentSession, value)
   }
 
-  const newSession = (value) => {
+  const handleNewSession = (value: any) => {
     newSession(authUser, trackID, value)
   }
 
-  const onDelete = (type, id) => {
+  const handleDelete = (type: any, id: string) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
       deleteEntry(authUser, trackID, currentSession, type, id)
     }
   }
 
-  const changeSession = (e) => {
+  const changeSession = (e: { target: { value: any } }) => {
+    if (!sessions) {
+      return
+    }
+
     const newSession = e.target.value
     // the new session to load
-    let newState = sessions.filter((session) => session.id === newSession)
-    let corners = newState
-      .map((session) => {
-        return session.corners
-      })
-      .pop()
-    let observations = newState
+    const newState = sessions.filter((session) => session.id === newSession)
+    const corners = newState.map((session) => session.corners).pop()
+    const observations = newState
       .map((session) => {
         return session.observations
       })
@@ -115,28 +122,30 @@ const Track = () => {
     // }
     // load in state
     setCurrentSession(newSession)
-    setCorners(corners)
+    if (corners !== undefined) {
+      setCorners(corners)
+    }
     setObservations(observations)
     console.log('turns loaded', observations)
   }
 
-  const setTrackCurrentId = (type, id) => {
+  const setTrackCurrentId = (type: string, id: any) => {
     setCurrentId(id)
     if (type === 'notes') setVisibleNotesForm(true)
     else if (type === 'corners') setVisibleCornerForm(true)
   }
 
-  // on component mount
+  // on page mount
   useEffect(() => {
     // does the track exist?
     if (tracks.hasOwnProperty(trackName)) setTrackExists(true)
 
     // do we have a user?
     let loggedInUser
-    user && (loggedInUser = user.user.userID)
+    user && (loggedInUser = user.user?.userID)
 
     // check if user exists in local storage for browser refresh
-    let sessionUser = sessionStorage.getItem('authUser')
+    const sessionUser = sessionStorage.getItem('authUser')
     sessionUser && (loggedInUser = sessionUser)
 
     if (loggedInUser && loggedInUser !== 'guest') {
@@ -144,12 +153,15 @@ const Track = () => {
       sessionStorage.setItem('authUser', loggedInUser)
       setAuthUser(loggedInUser)
 
-      console.log('track ID before loading data', trackID)
-
       loadData({
         authUser: loggedInUser,
         trackID: trackID,
-        onResult: (values) => {
+        onResult: (values: {
+          sessions: SessionType[]
+          currentSession: SessionType[]
+          observations: any
+          corners: any
+        }) => {
           console.log('the values:', values)
           setSessions(values.sessions)
           setCurrentSession(values.currentSession[0].id)
@@ -168,9 +180,8 @@ const Track = () => {
     }
   }, [])
 
-  // when something updates
   useEffect(() => {
-    let sessionUser = sessionStorage.getItem('authUser')
+    const sessionUser = sessionStorage.getItem('authUser')
     // clear the authUser when the user logs out
     if (authUser !== null && user === 'guest' && !sessionUser) {
       console.log('doom and gloom!')
@@ -179,31 +190,16 @@ const Track = () => {
     }
   }, [authUser])
 
-  const found = sessions.find((session) => session.id === currentSession)
-  let sessionName = ''
-  if (typeof found !== 'undefined') {
-    sessionName = found.name
-  }
+  useEffect(() => {
+    if (!sessions) {
+      return
+    }
 
-  const Guest = () => {
-    return (
-      <div className="guest">
-        <h2>Sign up free</h2>
-        <p>
-          Start taking notes and improve your driving everytime you get on
-          track.{' '}
-        </p>
-        <p>
-          <button>
-            <Link to={ROUTES.SIGN_UP}>Sign up</Link>
-          </button>
-        </p>
-        <p>
-          Already a user? <Link to="/login">Log in</Link>.
-        </p>
-      </div>
-    )
-  }
+    const found = sessions.find((session) => session.id === currentSession)
+    if (typeof found !== 'undefined') {
+      setSessionName(found.name)
+    }
+  }, [currentSession, sessions])
 
   return trackExists ? (
     <div className="track-wrapper">
@@ -265,7 +261,7 @@ const Track = () => {
                           name={observations[key].time}
                           notes={observations[key].notes}
                           setupName={observations[key].setupName}
-                          onDelete={onDelete}
+                          onDelete={handleDelete}
                           setTrackCurrentId={setTrackCurrentId}
                         />
                       ))
@@ -292,13 +288,13 @@ const Track = () => {
               ) : (
                 <div>
                   {corners ? (
-                    Object.entries(corners).map((corner) => {
+                    Object.entries(corners).map((corner, key: React.Key) => {
                       return (
                         <CornersList
-                          key={Math.random()}
+                          key={key}
                           name={corner[0]}
                           notes={corner[1]}
-                          onDelete={onDelete}
+                          onDelete={handleDelete}
                           setTrackCurrentId={setTrackCurrentId}
                         />
                       )
@@ -319,5 +315,3 @@ const Track = () => {
     <NoTrack />
   )
 }
-
-export default Track

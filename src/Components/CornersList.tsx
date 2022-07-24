@@ -1,6 +1,13 @@
 import React from 'react'
 
-export function CornersList(props: any) {
+interface CornerListProps {
+  name: string
+  notes: any //{ notes: string }
+  onDelete: (type: string, name: string) => void
+  setTrackCurrentId: (type: string, name: string) => void
+}
+
+export const CornersList = (props: CornerListProps) => {
   const { name, notes, onDelete, setTrackCurrentId } = props
 
   return (
@@ -25,6 +32,4 @@ export function CornersList(props: any) {
   )
 }
 
-export function NoCorners() {
-  return <p>Add some corner data</p>
-}
+export const NoCorners = () => <p>Add some corner data</p>

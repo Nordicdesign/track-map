@@ -9,7 +9,7 @@ import { Homepage } from './Pages/Homepage'
 import ForgotPassword from './Pages/ForgotPassword'
 import LoginPage from './Components/Login'
 import { SignUpForm } from './Components/Signup'
-import Track from './Pages/Track'
+import { Track } from './Pages/Track/Track'
 
 const App = () => {
   return (

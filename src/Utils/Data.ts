@@ -107,7 +107,7 @@ export function recordObservation(authUser: string | null, trackID: string, sess
     observations: data,
   }
 }
-export function editObservation(authUser: null, trackID: any, session: null, id: string, data: { notes: any; setupName: any; time: number }) {
+export function editObservation(authUser: string, trackID: any, session: any, id: string, data: { notes: any; setupName: any; time: number }) {
   firebase
     .database()
     .ref(
