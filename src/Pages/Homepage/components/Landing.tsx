@@ -14,14 +14,14 @@ export const Landing = () => {
             </p>
             <h2>Improve your on-track performance, fast.</h2>
             <p>
-              <button className="button-signup">
-                <Link to={ROUTES.SIGN_UP}>Create an account</Link>
-              </button>
+              <Link to={ROUTES.SIGN_UP} className="button-primary">
+                Create an account
+              </Link>
             </p>
             <p>
-              <button>
-                <Link to={ROUTES.SIGN_IN}>Log in to your account</Link>
-              </button>
+              <Link to={ROUTES.SIGN_IN} className="button-link">
+                Log in to your account
+              </Link>
             </p>
           </div>
         </section>
