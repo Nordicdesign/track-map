@@ -1,19 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes'
+import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
+
+import * as ROUTES from '../../constants/routes'
 import { User } from './components/User'
-import { UserContext } from '../../providers/UserProvider'
+import { RootState } from '../../app/store'
+import { logOut } from '../../app/users/usersSlice'
 
 export const Header: React.FC = () => {
-  const user = useContext(UserContext)
   const [email, setEmail] = useState<string | null>(null)
+  const userEmail = useSelector((state: RootState) => state.user.userEmail)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if (user.user != null) {
-      setEmail(user.user.userEmail)
+    if (userEmail != null) {
+      setEmail(userEmail)
     }
-  }, [user])
+  }, [userEmail])
 
   const logout = () => {
     sessionStorage.clear()
@@ -23,7 +27,7 @@ export const Header: React.FC = () => {
       .then(() => {
         console.log('logged out!')
         setEmail(null)
-        user.setUser!({ userID: null, userEmail: null })
+        dispatch(logOut)
       })
       .catch(function (error) {
         console.error(error)
@@ -32,13 +36,11 @@ export const Header: React.FC = () => {
 
   return (
     <header>
-      <p data-testid="header-name">
+      <h1 data-testid="header-name">
         <Link to={ROUTES.LANDING}>TrackMap</Link>
-      </p>
+      </h1>
       <p>
-        {!user ? (
-          ''
-        ) : email ? (
+        {email ? (
           <User userEmail={email} logout={logout} />
         ) : (
           <Link data-testid="login" to={ROUTES.SIGN_IN}>

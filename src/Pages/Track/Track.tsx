@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { AddNewObservation, AddNewCorner } from '../../Components/AddNew'
+import { AddNewObservation, AddNewCorner } from '../../components/AddNew'
 import {
   ObservationList,
   NoObservations,
-} from '../../Components/ObservationList'
-import { CornersList, NoCorners } from '../../Components/CornersList'
+} from '../../components/ObservationList'
+import { CornersList, NoCorners } from '../../components/CornersList'
 import {
   recordObservation,
   editObservation,
@@ -16,13 +16,14 @@ import {
   renameSession,
   loadData,
   newSession,
-} from '../../Utils/Data'
-import SessionSelection from '../../Components/SessionSelection'
-import { UserContext } from '../../providers/UserProvider'
+} from '../../utils/data'
+import { SessionSelection } from '../../components/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
-import { NoTrack } from './components/NoTrack'
+// import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
-import { CornerType, NoteType, SessionType } from '../../Utils/types'
+import { CornerType, NoteType, SessionType } from '../../utils/types'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../app/store'
 
 type TrackParams = {
   trackName: string
@@ -32,12 +33,17 @@ const tracks: any = tracksJson
 
 export const Track = () => {
   // for the context API
-  const user = useContext(UserContext)
+  const userEmail = useSelector((state: RootState) => state.user.userEmail)
+  const userID = useSelector((state: RootState) => state.user.userID)
   const { trackName } = useParams<TrackParams>()
+  const history = useHistory()
+
+  if (!trackName) {
+    history.push('/')
+  }
 
   // initialize the state
-  const [trackExists, setTrackExists] = useState(false)
-  const [authUser, setAuthUser] = useState<string | null>(null)
+  // const [authUser, setAuthUser] = useState<string | null>(null)
   // const [error, setError] = useState(null);
   const [sessions, setSessions] = useState<SessionType[] | null>(null)
   const [sessionName, setSessionName] = useState<string>()
@@ -61,7 +67,7 @@ export const Track = () => {
   }
 
   const addOrEdit = (obj: { notes: NoteType; setupName: string }) => {
-    if (!authUser) {
+    if (!userID) {
       return
     }
 
@@ -74,9 +80,9 @@ export const Track = () => {
     }
 
     if (currentId === '') {
-      recordObservation(authUser, trackID, currentSession, obs)
+      recordObservation(userID, trackID, currentSession, obs)
     } else {
-      editObservation(authUser, trackID, currentSession, currentId, obs)
+      editObservation(userID, trackID, currentSession, currentId, obs)
       setCurrentId('')
     }
   }
@@ -84,21 +90,21 @@ export const Track = () => {
   const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
     setVisibleCornerForm(false)
     const obs = { notes }
-    recordCorner(authUser, trackID, currentSession, corner, obs)
+    recordCorner(userID, trackID, currentSession, corner, obs)
     setCurrentId('')
   }
 
-  const handleRenameSession = (value: any) => {
-    renameSession(authUser, trackID, currentSession, value)
-  }
+  // const handleRenameSession = (value: any) => {
+  //   renameSession(userID, trackID, currentSession, value)
+  // }
 
-  const handleNewSession = (value: any) => {
-    newSession(authUser, trackID, value)
-  }
+  // const handleNewSession = (value: any) => {
+  //   newSession(userID, trackID, value)
+  // }
 
   const handleDelete = (type: any, id: string) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
-      deleteEntry(authUser, trackID, currentSession, type, id)
+      deleteEntry(userID, trackID, currentSession, type, id)
     }
   }
 
@@ -138,23 +144,24 @@ export const Track = () => {
   // on page mount
   useEffect(() => {
     // does the track exist?
-    if (tracks.hasOwnProperty(trackName)) setTrackExists(true)
+    if (!tracks.hasOwnProperty(trackName)) {
+      history.push('/')
+    }
 
     // do we have a user?
-    let loggedInUser
-    user && (loggedInUser = user.user?.userID)
-
+    // let loggedInUser
+    // user && (loggedInUser = user.user?.userID)
     // check if user exists in local storage for browser refresh
-    const sessionUser = sessionStorage.getItem('authUser')
-    sessionUser && (loggedInUser = sessionUser)
+    // const sessionUser = sessionStorage.getItem('authUser')
+    // sessionUser && (loggedInUser = sessionUser)
 
-    if (loggedInUser && loggedInUser !== 'guest') {
+    if (userID !== 'guest' && userID !== null) {
       // ensure user is stored everywhere
-      sessionStorage.setItem('authUser', loggedInUser)
-      setAuthUser(loggedInUser)
+      // sessionStorage.setItem('authUser', loggedInUser)
+      // setAuthUser(loggedInUser)
 
       loadData({
-        authUser: loggedInUser,
+        authUser: userID,
         trackID: trackID,
         onResult: (values: {
           sessions: SessionType[]
@@ -167,7 +174,6 @@ export const Track = () => {
           setCurrentSession(values.currentSession[0].id)
           setObservations(values.observations)
           setCorners(values.corners)
-          setDataIsReady(true)
         },
       })
     }
@@ -176,19 +182,19 @@ export const Track = () => {
     return () => {
       // console.log("unmounted");
       // this.setState({...initial_load})
-      detachListener({ authUser: authUser, trackID: trackID })
+      detachListener({ authUser: userID, trackID: trackID })
     }
   }, [])
 
-  useEffect(() => {
-    const sessionUser = sessionStorage.getItem('authUser')
-    // clear the authUser when the user logs out
-    if (authUser !== null && user === 'guest' && !sessionUser) {
-      console.log('doom and gloom!')
-      setAuthUser(null)
-      sessionStorage.clear()
-    }
-  }, [authUser])
+  // useEffect(() => {
+  // const sessionUser = sessionStorage.getItem('authUser')
+  // clear the authUser when the user logs out
+  // if (userID !== null && userID === 'guest' && !sessionUser) {
+  //   console.log('doom and gloom!')
+  //   // setAuthUser(null)
+  //   sessionStorage.clear()
+  //   }
+  // }, [userID])
 
   useEffect(() => {
     if (!sessions) {
@@ -199,14 +205,17 @@ export const Track = () => {
     if (typeof found !== 'undefined') {
       setSessionName(found.name)
     }
+    setDataIsReady(true)
   }, [currentSession, sessions])
 
-  return trackExists ? (
+  return !dataIsReady ? (
+    <p>Data loading</p>
+  ) : (
     <div className="track-wrapper">
       <div className="track-meta">
         <h1>{tracks[trackName].name}</h1>
 
-        {authUser ? (
+        {userID ? (
           <SessionSelection
             sessions={sessions}
             currentSession={currentSession}
@@ -226,7 +235,7 @@ export const Track = () => {
           </p>
         )}
       </div>
-      {authUser ? (
+      {userID ? (
         <div className="track-session">
           <h2>Session</h2>
           <p>{sessionName}</p>
@@ -234,7 +243,7 @@ export const Track = () => {
       ) : null}
 
       <div className="track-notes">
-        {authUser ? (
+        {userID ? (
           <>
             <div className="track-observations">
               <div className="track-observations-header">
@@ -311,7 +320,5 @@ export const Track = () => {
         )}
       </div>
     </div>
-  ) : (
-    <NoTrack />
   )
 }

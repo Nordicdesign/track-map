@@ -1,29 +1,32 @@
 import React, { useState } from 'react'
 
-const SessionSelection = (props: any) => {
+type Props = {
+  sessions: any
+  currentSession: any
+  changeSession: any
+  renameSession: any
+  newSession: any
+}
+
+export const SessionSelection = (props: Props) => {
+  const { sessions, currentSession, changeSession, renameSession, newSession } =
+    props
+  console.log(sessions)
+
   const [changeName, setChangeName] = useState<boolean>(false)
-  const [newSession, setNewSession] = useState<boolean>(false)
+  const [isNewSession, setisNewSession] = useState<boolean>(false)
   const [sessionName, setSessionName] = useState<string>('')
 
-  const ses = props.sessions
-  const sessions = []
-  for (const [index, session] of ses.entries()) {
-    // let date = new Date(session.name)
-    // date = date.toUTCString()
-    sessions.push(
+  const availableSessions = sessions.map((session: any, index: React.Key) => {
+    return (
       <option key={index} value={session.id}>
         {session.name}
-      </option>,
+      </option>
     )
-  }
+  })
 
-  const showChangeName = () => {
-    setChangeName(true)
-  }
-
-  const showNewSession = () => {
-    setNewSession(true)
-  }
+  const showChangeName = () => setChangeName(true)
+  const showNewSession = () => setisNewSession(true)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -36,19 +39,19 @@ const SessionSelection = (props: any) => {
 
   const handleCancelSessions = () => {
     setChangeName(false)
-    setNewSession(false)
+    setisNewSession(false)
   }
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault()
-    props.renameSession(sessionName)
-    setNewSession(false)
+    renameSession(sessionName)
+    setisNewSession(false)
   }
 
   const handleNewSessionSubmit = (e: any) => {
     e.preventDefault()
-    props.newSession(sessionName)
-    setNewSession(false)
+    newSession(sessionName)
+    setisNewSession(false)
   }
 
   return (
@@ -79,7 +82,7 @@ const SessionSelection = (props: any) => {
             </div>
           </form>
         </div>
-      ) : newSession ? (
+      ) : isNewSession ? (
         <div className="new-session">
           <form
             onSubmit={handleNewSessionSubmit}
@@ -118,10 +121,10 @@ const SessionSelection = (props: any) => {
           <label>
             Session
             <select
-              onChange={props.changeSession}
-              value={props.currentSession ? props.currentSession : ''}
+              onChange={changeSession}
+              value={currentSession ? currentSession : ''}
             >
-              {sessions}
+              {availableSessions}
             </select>
           </label>
           <div>
@@ -137,5 +140,3 @@ const SessionSelection = (props: any) => {
     </div>
   )
 }
-
-export default SessionSelection

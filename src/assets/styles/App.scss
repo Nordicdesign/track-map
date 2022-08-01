@@ -1,15 +1,15 @@
-@import "styles/reset";
-@import "styles/iconfont";
-@import "styles/variables";
-@import "styles/spacing";
-@import "styles/typography";
-@import "styles/buttons";
-@import "styles/header";
-@import "styles/track";
-@import "styles/forms";
-@import "styles/layout";
-@import "styles/sessions";
-@import "styles/homepage";
+@import './reset';
+@import './iconfont';
+@import './variables';
+@import './spacing';
+@import './typography';
+@import './buttons';
+@import './header';
+@import './track';
+@import './forms';
+@import './layout';
+@import './sessions';
+@import './homepage';
 
 .listCircuits {
   li {
@@ -34,7 +34,6 @@
     }
   }
 }
-
 
 img {
   max-width: 100%;

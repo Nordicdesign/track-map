@@ -1,31 +1,17 @@
-import React, { useState, useRef } from 'react'
-import { withRouter, Link, useHistory } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import * as ROUTES from '../constants/routes'
 
-import { firebaseConfig } from '../constants/firebase'
-import { SignUpLink } from './Signup'
+import * as ROUTES from '../../../constants/routes'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../../app/users/usersSlice'
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-}
-
-const LoginPage = () => {
-  return (
-    <div className="signup-form">
-      <h1>Log in</h1>
-      <Login />
-      <hr />
-      <SignUpLink />
-    </div>
-  )
-}
-
-const Login = () => {
+export const Login: React.FC = () => {
   // clear any garbage
   sessionStorage.clear()
 
+  const dispatch = useDispatch()
   const history = useHistory()
   const [error, setError] = useState<string | undefined>(undefined)
   const refEmail = useRef<HTMLInputElement | null>(null)
@@ -39,23 +25,19 @@ const Login = () => {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((userCredential) => {
+          const payload = {
+            userID: userCredential.user?.uid,
+            userEmail: userCredential.user?.email,
+          }
+          dispatch(signIn(payload))
           history.push(ROUTES.LANDING)
         })
         .catch((error: any) => {
-          console.error(error)
           setError(error.message)
         })
     }
   }
-
-  // useEffect(() => {
-  //   setValues({ ...values,
-  //     email: refEmail.current?.value,
-  //     password: refPassword.current?.value
-  //   });
-  //   // setValues(initialFieldValues)
-  // }, [values.error]);
 
   return (
     <form autoComplete="off">
@@ -92,12 +74,3 @@ const Login = () => {
     </form>
   )
 }
-
-const LoginLink = () => (
-  <p className="login-link">
-    Already a user? <Link to={ROUTES.SIGN_IN}>Log in</Link>
-  </p>
-)
-
-export default withRouter(LoginPage)
-export { LoginLink }
