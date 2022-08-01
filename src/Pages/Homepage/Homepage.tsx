@@ -1,26 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Landing } from './components/Landing'
 import { HomepageSignedIn } from './components/HomepageSignedIn'
 import { RootState } from '../../app/store'
 import { useSelector } from 'react-redux'
-// import { UserContext } from '../../providers/UserProvider'
 
 export const Homepage = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail)
+  const [loggedInUser, setLoggedInUser] = useState<boolean>(false)
 
-  return (
-    <>
-      {!userEmail ? (
-        <Loading />
-      ) : userEmail === null ? (
-        <Landing />
-      ) : (
-        <HomepageSignedIn />
-      )}
-    </>
-  )
-}
+  useEffect(() => {
+    if (userEmail !== null) {
+      setLoggedInUser(true)
+    } else {
+      setLoggedInUser(false)
+    }
+  }, [userEmail])
 
-const Loading = () => {
-  return <p>loading...</p>
+  return <>{loggedInUser ? <HomepageSignedIn /> : <Landing />}</>
 }

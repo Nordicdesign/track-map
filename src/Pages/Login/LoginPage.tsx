@@ -1,14 +1,8 @@
 import React from 'react'
-import { withRouter, Link } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes'
+import { withRouter } from 'react-router-dom'
 
-// import { firebaseConfig } from '../../constants/firebase'
 import { SignUpLink } from '../Signup/components/SignUpLink'
 import { Login } from './components/Login'
-
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig)
-// }
 
 const LoginPage = () => {
   return (
