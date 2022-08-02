@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import * as ROUTES from '../constants/routes'
+import * as ROUTES from '../../constants/routes'
 
 export const ForgotPassword = () => {
   const refEmail = useRef<HTMLInputElement | null>(null)
