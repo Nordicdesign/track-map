@@ -14,5 +14,3 @@ export const LoginPage = () => {
     </div>
   )
 }
-
-// export default withRouter(LoginPage)

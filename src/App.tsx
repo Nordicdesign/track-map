@@ -7,7 +7,7 @@ import './assets/styles/App.scss'
 import { store } from './app/store'
 import * as ROUTES from './constants/routes'
 
-import { Header } from './components/Header/Header'
+import { Header } from './components/header/Header'
 import { Homepage } from './pages/Homepage/Homepage'
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword'
 import { LoginPage } from './pages/Login/LoginPage'
