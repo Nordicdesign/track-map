@@ -7,12 +7,12 @@ import './assets/styles/App.scss'
 import { store } from './app/store'
 import * as ROUTES from './constants/routes'
 
-import { Header } from './components/header/Header'
-import { Homepage } from './pages/Homepage/Homepage'
-import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword'
-import { LoginPage } from './pages/Login/LoginPage'
-import { SignUpPage } from './pages/Signup/Signup'
-import { Track } from './pages/Track/Track'
+import { Header } from './comps/header/Header'
+import { Homepage } from './fullpages/Homepage/Homepage'
+import { ForgotPassword } from './fullpages/ForgotPassword/ForgotPassword'
+import { LoginPage } from './fullpages/Login/LoginPage'
+import { SignUpPage } from './fullpages/Signup/Signup'
+import { Track } from './fullpages/Track/Track'
 
 const App = () => {
   return (

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { AddNewObservation, AddNewCorner } from '../../components/AddNew'
-import {
-  ObservationList,
-  NoObservations,
-} from '../../components/ObservationList'
-import { CornersList, NoCorners } from '../../components/CornersList'
+import { AddNewObservation, AddNewCorner } from '../../comps/AddNew'
+import { ObservationList, NoObservations } from '../../comps/ObservationList'
+import { CornersList, NoCorners } from '../../comps/CornersList'
 import {
   recordObservation,
   editObservation,
@@ -16,12 +13,12 @@ import {
   renameSession,
   loadData,
   newSession,
-} from '../../utils/data'
-import { SessionSelection } from '../../components/SessionSelection'
+} from '../../app/utils/data'
+import { SessionSelection } from '../../comps/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
 // import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
-import { CornerType, NoteType, SessionType } from '../../utils/types'
+import { CornerType, NoteType, SessionType } from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 
