@@ -1,10 +1,10 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+// import { withRouter } from 'react-router-dom'
 
 import { SignUpLink } from '../Signup/components/SignUpLink'
 import { Login } from './components/Login'
 
-const LoginPage = () => {
+export const LoginPage = () => {
   return (
     <div className="signup-form">
       <h1>Log in</h1>
@@ -15,4 +15,4 @@ const LoginPage = () => {
   )
 }
 
-export default withRouter(LoginPage)
+// export default withRouter(LoginPage)

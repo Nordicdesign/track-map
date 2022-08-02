@@ -19,7 +19,7 @@ export const Landing = () => {
               </Link>
             </p>
             <p>
-              <Link to={ROUTES.SIGN_IN} className="button-link">
+              <Link to={ROUTES.SIGN_IN} className="btn btn-secondary">
                 Log in to your account
               </Link>
             </p>
