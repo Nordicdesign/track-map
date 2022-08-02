@@ -7,6 +7,11 @@ import * as ROUTES from '../../constants/routes'
 import { User } from './components/User'
 import { RootState } from '../../app/store'
 import { logOut } from '../../app/users/usersSlice'
+import { firebaseConfig } from '../../constants/firebase'
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 export const Header: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail)
