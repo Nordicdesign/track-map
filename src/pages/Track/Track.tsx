@@ -16,12 +16,12 @@ import {
   renameSession,
   loadData,
   newSession,
-} from '../../utils/data'
+} from '../../app/utils/data'
 import { SessionSelection } from '../../components/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
 // import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
-import { CornerType, NoteType, SessionType } from '../../utils/types'
+import { CornerType, NoteType, SessionType } from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 
