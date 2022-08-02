@@ -1,0 +1,59 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier", "import"],
+  "env": {
+    "es6": true,
+    "jest": true,
+    "node": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "extends": [
+    "eslint-config-react-app",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".js"],
+        "moduleDirectory": ["node_modules", "packages"]
+      }
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    }
+  },
+  "rules": {
+    "import/no-unresolved": 2,
+    "import/named": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.{ts,tsx}",
+          "**/*.spec.{ts,tsx}",
+          "**/*.story.tsx",
+          "**/__tests__/**",
+          "**/__mocks__/**",
+          "./config/**/*.js"
+        ]
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/consistent-type-assertions": 0,
+    "@typescript-eslint/no-angle-bracket-type-assertion": 0,
+    "@typescript-eslint/ban-ts-ignore": 0
+  }
+}

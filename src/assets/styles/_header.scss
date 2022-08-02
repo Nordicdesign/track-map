@@ -1,0 +1,22 @@
+header {
+  background: #333;
+  padding: 0 $baseline;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  p,
+  h1 {
+    line-height: 33px;
+    margin-bottom: 0;
+    font-size: 1.6rem;
+    color: white;
+    .button-link,
+    a {
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}

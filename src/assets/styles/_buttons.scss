@@ -1,0 +1,78 @@
+button,
+.btn {
+  min-width: 120px;
+  padding: $baseline * 0.5 $baseline;
+  font-size: 1.6rem;
+  margin-bottom: $baseline;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 3px solid #4a90e2;
+  background: #fff;
+  color: #4a90e2;
+  transition: 0.2s ease all;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    background: lighten(#4a90e2, 35);
+  }
+}
+
+button.button-link {
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  width: auto;
+  min-width: auto;
+  padding: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.button-primary,
+input[type='submit'].button-primary {
+  min-width: 120px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: $baseline;
+  padding: $baseline;
+  cursor: pointer;
+  border-radius: 3px;
+  border: none;
+  background: #4a90e2;
+  color: #fff;
+  transition: 0.2s ease all;
+  text-decoration: none;
+
+  &:hover {
+    background: darken(#4a90e2, 10);
+  }
+}
+
+a.button-primary {
+  display: inline-block;
+}
+
+.btn-secondary {
+  border: 2px solid #4a90e2;
+  background: white;
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.button-icon {
+  width: auto;
+  height: auto;
+  border: none;
+  background: none;
+  min-width: 0;
+  margin: 0;
+
+  &:hover {
+    color: black;
+    background: none;
+  }
+}

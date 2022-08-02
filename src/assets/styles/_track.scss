@@ -1,0 +1,149 @@
+.track-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "meta map map"
+    "session session session"
+    "notes notes notes";
+}
+
+.track-meta {
+  grid-area: meta;
+  padding: $baseline;
+}
+
+.track-map {
+  grid-area: map;
+  padding: $baseline;
+
+  img {
+    max-height: 400px;
+  }
+
+  p {
+    text-align: right;
+    font-size: 1.2rem;
+    color: $colour-gray-700;
+    a {
+      color: $colour-gray-700;
+
+    }
+  }
+}
+
+.track-session {
+  grid-area: session;
+  background: #FCFAD6;
+  padding: $baseline $baseline 0;
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #808080;
+  }
+  p {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: bold;
+  }
+}
+
+.track-notes {
+  grid-area: notes;
+  padding: 0 $baseline $baseline;
+  background: #FCFAD6;
+  min-height: 300px;
+  display: flex;
+  flex-direction: row-reverse;
+
+  h3 {
+    font-size: 2.4rem;
+    font-weight: bold;
+  }
+  p {
+    white-space: pre-line;
+  }
+}
+
+.track-observations {
+  width: 50%;
+  margin-left: $baseline*2;
+
+  .track-observations-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .obs-entry {
+    border-bottom: 1px solid #E9E9E9;
+    padding-bottom: $baseline;
+
+    .obs-entry-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: $baseline;
+
+      .icon {
+        font-size: 1.8rem;
+      }
+    }
+
+    .obs-name {
+      color: #ccc;
+      margin-bottom: 0;
+      font-size: 1.2rem;
+    }
+
+    h4 {
+      font-size: 1.3rem;
+      color: #808080;
+      margin-bottom: $baseline * 0.25;
+      margin-top: $baseline * 0.25;
+    }
+  }
+}
+
+.trackMap {
+  h1 {
+    color: $colour-base;
+    color: $colour-base;
+  }
+}
+
+.track-corners {
+  width: 50%;
+  .track-corners-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .corner-entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .corner-notes {
+      margin-right: auto;
+      flex-basis: auto;
+    }
+
+    .corner-actions {
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    .corner-number {
+      font-size: 2rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-style: italic;
+      width: 45px;
+      flex-shrink: 0;
+    }
+  }
+}

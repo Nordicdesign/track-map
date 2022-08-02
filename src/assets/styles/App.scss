@@ -1,0 +1,45 @@
+@import './reset';
+@import './iconfont';
+@import './variables';
+@import './spacing';
+@import './typography';
+@import './buttons';
+@import './header';
+@import './track';
+@import './forms';
+@import './layout';
+@import './sessions';
+@import './homepage';
+
+.listCircuits {
+  li {
+    border: 1px solid $colour-gray-300;
+    border-radius: 2px;
+    margin-bottom: $baseline * 0.5;
+    padding: $baseline * 0.5;
+    transition: 0.2s ease all;
+
+    &:hover {
+      background: #f3f4f5;
+      cursor: pointer;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    a {
+      color: $colour-accent;
+      text-decoration: none;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+  // max-height: 90vh;
+  @media all and (orientation: landscape) and (max-width: 700px) {
+    max-height: 85vh;
+  }
+  // margin-top: 90px;
+}
