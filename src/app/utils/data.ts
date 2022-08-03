@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
-export function loadData(props: { authUser: any; trackID: any; onResult: any }) {
+export function loadData(props: { authUser: string; trackID: string; onResult: any }) {
   const { authUser, trackID, onResult } = props
   firebase
     .database()
@@ -57,9 +57,9 @@ export function saveDataInState(snapshot: firebase.database.DataSnapshot) {
   // if no data exists have an empty array/object, rather than null
   let corners
   let observations = []
-  const sessions = []
+  
   const data = snapshot.val()
-
+  const sessions = []
   for (const session in data) {
     sessions.push({
       id: session,

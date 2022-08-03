@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { AddNewObservation, AddNewCorner } from '../../components/AddNew'
-import {
-  ObservationList,
-  NoObservations,
-} from '../../components/ObservationList'
-import { CornersList, NoCorners } from '../../components/CornersList'
+import { AddNewObservation, AddNewCorner } from './components/AddNew'
+import { ObservationList, NoObservations } from './components/ObservationList'
+import { CornersList, NoCorners } from './components/CornersList'
 import {
   recordObservation,
   editObservation,
@@ -17,7 +14,7 @@ import {
   loadData,
   newSession,
 } from '../../app/utils/data'
-import { SessionSelection } from '../../components/SessionSelection'
+import { SessionSelection } from './components/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
 // import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
@@ -108,31 +105,40 @@ export const Track = () => {
     }
   }
 
-  const changeSession = (e: { target: { value: any } }) => {
+  const changeSession = (newSessionID: string) => {
+    console.log('changing session')
+
     if (!sessions) {
       return
     }
 
-    const newSession = e.target.value
     // the new session to load
-    const newState = sessions.filter((session) => session.id === newSession)
-    const corners = newState.map((session) => session.corners).pop()
-    const observations = newState
+    const newSession = sessions.filter((session) => session.id === newSessionID)
+
+    // check if there's any data on that session
+    const corners = newSession.map((session) => session.corners).pop()
+    console.log(corners)
+
+    const observations = newSession
       .map((session) => {
         return session.observations
       })
       .pop()
 
-    // if(!turns) { // in case there's no data in firebase
+    console.log(observations)
+
+    // if (!turns) {
+    // in case there's no data in firebase
     //   turns = []
     // }
     // load in state
-    setCurrentSession(newSession)
     if (corners !== undefined) {
       setCorners(corners)
+    } else {
+      setCorners(null)
     }
     setObservations(observations)
-    console.log('turns loaded', observations)
+    setCurrentSession(newSessionID)
   }
 
   const setTrackCurrentId = (type: string, id: any) => {
@@ -155,7 +161,7 @@ export const Track = () => {
     // const sessionUser = sessionStorage.getItem('authUser')
     // sessionUser && (loggedInUser = sessionUser)
 
-    if (userID !== 'guest' && userID !== null) {
+    if (userID !== 'guest' && userID !== null && userID !== undefined) {
       // ensure user is stored everywhere
       // sessionStorage.setItem('authUser', loggedInUser)
       // setAuthUser(loggedInUser)
@@ -170,10 +176,18 @@ export const Track = () => {
           corners: any
         }) => {
           console.log('the values:', values)
-          setSessions(values.sessions)
-          setCurrentSession(values.currentSession[0].id)
-          setObservations(values.observations)
-          setCorners(values.corners)
+          const { sessions, currentSession, observations, corners } = values
+          setSessions(sessions)
+          setCurrentSession(currentSession[0].id)
+          setObservations(observations)
+          setCorners(corners)
+          const found = sessions.find(
+            (session) => session.id === currentSession[0].id,
+          )
+          if (typeof found !== 'undefined') {
+            setSessionName(found.name)
+          }
+          setDataIsReady(true)
         },
       })
     }
@@ -205,7 +219,6 @@ export const Track = () => {
     if (typeof found !== 'undefined') {
       setSessionName(found.name)
     }
-    setDataIsReady(true)
   }, [currentSession, sessions])
 
   return !dataIsReady ? (
@@ -214,16 +227,13 @@ export const Track = () => {
     <div className="track-wrapper">
       <div className="track-meta">
         <h1>{tracks[trackName].name}</h1>
-
-        {userID ? (
-          <SessionSelection
-            sessions={sessions}
-            currentSession={currentSession}
-            changeSession={changeSession}
-            renameSession={renameSession}
-            newSession={newSession}
-          />
-        ) : null}
+        <SessionSelection
+          sessions={sessions}
+          currentSession={currentSession}
+          changeSession={changeSession}
+          renameSession={renameSession}
+          newSession={newSession}
+        />
       </div>
 
       <div className="track-map">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 type Props = {
   sessions: any
@@ -9,13 +9,17 @@ type Props = {
 }
 
 export const SessionSelection = (props: Props) => {
+  // const { sessions, currentSession, changeSession, renameSession, newSession } =
   const { sessions, currentSession, changeSession, renameSession, newSession } =
     props
-  console.log(sessions)
-
+  // console.log(sessions)
+  const inputSessionName = useRef<HTMLInputElement | null>(null)
+  const selectSessions = useRef<HTMLSelectElement | null>(
+    currentSession ? currentSession : '',
+  )
   const [changeName, setChangeName] = useState<boolean>(false)
   const [isNewSession, setisNewSession] = useState<boolean>(false)
-  const [sessionName, setSessionName] = useState<string>('')
+  // const [sessionName, setSessionName] = useState<string>('')
 
   const availableSessions = sessions.map((session: any, index: React.Key) => {
     return (
@@ -28,15 +32,6 @@ export const SessionSelection = (props: Props) => {
   const showChangeName = () => setChangeName(true)
   const showNewSession = () => setisNewSession(true)
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setSessionName(value)
-    // setValues({
-    //   ...values,
-    //   [name]: value,
-    // })
-  }
-
   const handleCancelSessions = () => {
     setChangeName(false)
     setisNewSession(false)
@@ -44,14 +39,24 @@ export const SessionSelection = (props: Props) => {
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault()
+    const sessionName = inputSessionName.current?.value
+
+    if (!sessionName) {
+      return
+    }
     renameSession(sessionName)
     setisNewSession(false)
   }
 
   const handleNewSessionSubmit = (e: any) => {
     e.preventDefault()
-    newSession(sessionName)
-    setisNewSession(false)
+    const sessionName = inputSessionName.current?.value
+
+    if (!sessionName) {
+      return
+    }
+    setisNewSession(false) // hide form
+    newSession(sessionName) // load new data
   }
 
   return (
@@ -65,8 +70,7 @@ export const SessionSelection = (props: Props) => {
                 type="text"
                 name="sessionName"
                 id="sessionName"
-                value={sessionName}
-                onChange={handleChange}
+                ref={inputSessionName}
               />
             </label>
             <div>
@@ -95,8 +99,7 @@ export const SessionSelection = (props: Props) => {
                 type="text"
                 name="sessionName"
                 id="sessionName"
-                value={sessionName}
-                onChange={handleChange}
+                ref={inputSessionName}
               />
             </label>
             <div>
@@ -121,8 +124,9 @@ export const SessionSelection = (props: Props) => {
           <label>
             Session
             <select
-              onChange={changeSession}
-              value={currentSession ? currentSession : ''}
+              // onChange={changeSession(selectSessions.current?.value)}
+              onChange={() => changeSession(selectSessions.current?.value)}
+              ref={selectSessions}
             >
               {availableSessions}
             </select>
