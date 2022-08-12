@@ -51,7 +51,6 @@ export const Track = () => {
   const [visibleNotesForm, setVisibleNotesForm] = useState(false)
   const [visibleCornerForm, setVisibleCornerForm] = useState(false)
   const [currentId, setCurrentId] = useState('')
-  const [trackID, setTrackID] = useState(trackName)
 
   const handleAdd = (type: string) => {
     if (type === 'notes') setVisibleNotesForm(true)
@@ -77,9 +76,9 @@ export const Track = () => {
     }
 
     if (currentId === '') {
-      recordObservation(userID, trackID, currentSession, obs)
+      recordObservation(userID, trackName, currentSession, obs)
     } else {
-      editObservation(userID, trackID, currentSession, currentId, obs)
+      editObservation(userID, trackName, currentSession, currentId, obs)
       setCurrentId('')
     }
   }
@@ -87,21 +86,21 @@ export const Track = () => {
   const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
     setVisibleCornerForm(false)
     const obs = { notes }
-    recordCorner(userID, trackID, currentSession, corner, obs)
+    recordCorner(userID, trackName, currentSession, corner, obs)
     setCurrentId('')
   }
 
   // const handleRenameSession = (value: any) => {
-  //   renameSession(userID, trackID, currentSession, value)
+  //   renameSession(userID, trackName, currentSession, value)
   // }
 
   // const handleNewSession = (value: any) => {
-  //   newSession(userID, trackID, value)
+  //   newSession(userID, trackName, value)
   // }
 
   const handleDelete = (type: any, id: string) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
-      deleteEntry(userID, trackID, currentSession, type, id)
+      deleteEntry(userID, trackName, currentSession, type, id)
     }
   }
 
@@ -168,7 +167,7 @@ export const Track = () => {
 
       loadData({
         authUser: userID,
-        trackID: trackID,
+        trackID: trackName,
         onResult: (values: {
           sessions: SessionType[]
           currentSession: SessionType[]
@@ -196,7 +195,7 @@ export const Track = () => {
     return () => {
       // console.log("unmounted");
       // this.setState({...initial_load})
-      detachListener({ authUser: userID, trackID: trackID })
+      detachListener({ authUser: userID, trackID: trackName })
     }
   }, [])
 
@@ -221,19 +220,20 @@ export const Track = () => {
     }
   }, [currentSession, sessions])
 
-  return !dataIsReady ? (
-    <p>Data loading</p>
-  ) : (
+  return (
     <div className="track-wrapper">
       <div className="track-meta">
         <h1>{tracks[trackName].name}</h1>
-        <SessionSelection
-          sessions={sessions}
-          currentSession={currentSession}
-          changeSession={changeSession}
-          renameSession={renameSession}
-          newSession={newSession}
-        />
+
+        {dataIsReady && (
+          <SessionSelection
+            sessions={sessions}
+            currentSession={currentSession}
+            changeSession={changeSession}
+            renameSession={renameSession}
+            newSession={newSession}
+          />
+        )}
       </div>
 
       <div className="track-map">
