@@ -15,7 +15,7 @@ export const SessionSelection = (props: Props) => {
   // console.log(sessions)
   const inputSessionName = useRef<HTMLInputElement | null>(null)
   const selectSessions = useRef<HTMLSelectElement | null>(
-    currentSession ? currentSession : '',
+    currentSession ? currentSession : null,
   )
   const [changeName, setChangeName] = useState<boolean>(false)
   const [isNewSession, setisNewSession] = useState<boolean>(false)
@@ -124,9 +124,9 @@ export const SessionSelection = (props: Props) => {
           <label>
             Session
             <select
-              // onChange={changeSession(selectSessions.current?.value)}
               onChange={() => changeSession(selectSessions.current?.value)}
               ref={selectSessions}
+              defaultValue={currentSession}
             >
               {availableSessions}
             </select>

@@ -1,7 +1,11 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
-export function loadData(props: { authUser: string; trackID: string; onResult: any }) {
+export function loadData(props: {
+  authUser: string
+  trackID: string
+  onResult: any
+}) {
   const { authUser, trackID, onResult } = props
   firebase
     .database()
@@ -24,7 +28,16 @@ export function detachListener(props: { authUser: any; trackID: any }) {
   // console.log("Firebase detached");
 }
 
-export function initiateSession(authUser: string, trackID: string, onResult: (arg0: { corners: any; observations: any; sessions: { id: string; name: any; corners: any; observations: any }[]; currentSession: { id: string; name: any; corners: any; observations: any }[] }) => void) {
+export function initiateSession(
+  authUser: string,
+  trackID: string,
+  onResult: (arg0: {
+    corners: any
+    observations: any
+    sessions: { id: string; name: any; corners: any; observations: any }[]
+    currentSession: { id: string; name: any; corners: any; observations: any }[]
+  }) => void,
+) {
   const newSession = firebase
     .database()
     .ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/')
@@ -57,7 +70,7 @@ export function saveDataInState(snapshot: firebase.database.DataSnapshot) {
   // if no data exists have an empty array/object, rather than null
   let corners
   let observations = []
-  
+
   const data = snapshot.val()
   const sessions = []
   for (const session in data) {
@@ -88,7 +101,12 @@ export function saveDataInState(snapshot: firebase.database.DataSnapshot) {
   }
 }
 
-export function recordObservation(authUser: string | null, trackID: string, session: string | null, data: { notes: any; setupName: any; time: number }) {
+export function recordObservation(
+  authUser: string | null,
+  trackID: string,
+  session: string | null,
+  data: { notes: any; setupName: any; time: number },
+) {
   firebase
     .database()
     .ref(
@@ -107,7 +125,13 @@ export function recordObservation(authUser: string | null, trackID: string, sess
     observations: data,
   }
 }
-export function editObservation(authUser: string, trackID: any, session: any, id: string, data: { notes: any; setupName: any; time: number }) {
+export function editObservation(
+  authUser: string,
+  trackID: string,
+  session: any,
+  id: string,
+  data: { notes: any; setupName: string; time: number },
+) {
   firebase
     .database()
     .ref(
@@ -121,7 +145,13 @@ export function editObservation(authUser: string, trackID: any, session: any, id
   }
 }
 
-export function deleteEntry(authUser: any, trackID: any, session: any, type: any, id: any) {
+export function deleteEntry(
+  authUser: any,
+  trackID: any,
+  session: any,
+  type: any,
+  id: any,
+) {
   firebase
     .database()
     .ref(
@@ -132,7 +162,13 @@ export function deleteEntry(authUser: any, trackID: any, session: any, type: any
     })
 }
 
-export function recordCorner(authUser: any, trackID: any, session: any, corner: any, data: any) {
+export function recordCorner(
+  authUser: any,
+  trackID: any,
+  session: any,
+  corner: any,
+  data: any,
+) {
   firebase
     .database()
     .ref(
@@ -146,7 +182,12 @@ export function recordCorner(authUser: any, trackID: any, session: any, corner: 
   }
 }
 
-export function renameSession(authUser: any, trackID: any, session: any, value: any) {
+export function renameSession(
+  authUser: any,
+  trackID: any,
+  session: any,
+  value: any,
+) {
   firebase
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}`)

@@ -14,3 +14,9 @@ export interface SessionType {
 export interface NoteType {
   note: string
 }
+
+export enum entryType {
+  observations = 'observations',
+  corners = 'corners',
+  notes = 'notes',
+}

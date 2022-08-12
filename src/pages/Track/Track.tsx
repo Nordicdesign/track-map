@@ -18,7 +18,12 @@ import { SessionSelection } from './components/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
 // import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
-import { CornerType, NoteType, SessionType } from '../../app/utils/types'
+import {
+  CornerType,
+  entryType,
+  NoteType,
+  SessionType,
+} from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 
@@ -98,7 +103,7 @@ export const Track = () => {
   //   newSession(userID, trackName, value)
   // }
 
-  const handleDelete = (type: any, id: string) => {
+  const handleDelete = (type: keyof typeof entryType, id: string) => {
     if (window.confirm(`Are you sure to delete this entry`)) {
       deleteEntry(userID, trackName, currentSession, type, id)
     }
@@ -124,8 +129,6 @@ export const Track = () => {
       })
       .pop()
 
-    console.log(observations)
-
     // if (!turns) {
     // in case there's no data in firebase
     //   turns = []
@@ -140,7 +143,7 @@ export const Track = () => {
     setCurrentSession(newSessionID)
   }
 
-  const setTrackCurrentId = (type: string, id: any) => {
+  const setTrackCurrentId = (type: keyof typeof entryType, id: string) => {
     setCurrentId(id)
     if (type === 'notes') setVisibleNotesForm(true)
     else if (type === 'corners') setVisibleCornerForm(true)
@@ -210,6 +213,8 @@ export const Track = () => {
   // }, [userID])
 
   useEffect(() => {
+    console.log('session > ', currentSession)
+
     if (!sessions) {
       return
     }
@@ -218,7 +223,7 @@ export const Track = () => {
     if (typeof found !== 'undefined') {
       setSessionName(found.name)
     }
-  }, [currentSession, sessions])
+  }, [currentSession])
 
   return (
     <div className="track-wrapper">

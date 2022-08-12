@@ -1,13 +1,14 @@
 import React from 'react'
+import { entryType } from '../../../app/utils/types'
 
-interface CornerListProps {
+type Props = {
   name: string
   notes: any //{ notes: string }
-  onDelete: (type: string, name: string) => void
-  setTrackCurrentId: (type: string, name: string) => void
+  onDelete: (type: keyof typeof entryType, name: string) => void
+  setTrackCurrentId: (type: keyof typeof entryType, name: string) => void
 }
 
-export const CornersList = (props: CornerListProps) => {
+export const CornersList = (props: Props) => {
   const { name, notes, onDelete, setTrackCurrentId } = props
 
   return (
