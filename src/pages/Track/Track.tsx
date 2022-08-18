@@ -16,7 +16,7 @@ import {
 } from '../../app/utils/data'
 import { SessionSelection } from './components/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
-// import { NoTrack } from './components/NoTrack'
+import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
 import {
   CornerType,
@@ -72,7 +72,6 @@ export const Track = () => {
       return
     }
 
-    setVisibleNotesForm(false)
     const date = new Date()
     const obs = {
       notes: obj.notes,
@@ -86,6 +85,7 @@ export const Track = () => {
       editObservation(userID, trackName, currentSession, currentId, obs)
       setCurrentId('')
     }
+    setVisibleNotesForm(false)
   }
 
   const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
@@ -151,11 +151,6 @@ export const Track = () => {
 
   // on page mount
   useEffect(() => {
-    // does the track exist?
-    if (!tracks.hasOwnProperty(trackName)) {
-      history.push('/')
-    }
-
     // do we have a user?
     // let loggedInUser
     // user && (loggedInUser = user.user?.userID)
@@ -225,19 +220,25 @@ export const Track = () => {
     }
   }, [currentSession])
 
+  // does the track exist?
+  if (!tracks.hasOwnProperty(trackName)) {
+    return <NoTrack />
+  }
+
   return (
     <div className="track-wrapper">
       <div className="track-meta">
-        <h1>{tracks[trackName].name}</h1>
-
         {dataIsReady && (
-          <SessionSelection
-            sessions={sessions}
-            currentSession={currentSession}
-            changeSession={changeSession}
-            renameSession={renameSession}
-            newSession={newSession}
-          />
+          <>
+            <h1>{tracks[trackName].name}</h1>
+            <SessionSelection
+              sessions={sessions}
+              currentSession={currentSession}
+              changeSession={changeSession}
+              renameSession={renameSession}
+              newSession={newSession}
+            />
+          </>
         )}
       </div>
 

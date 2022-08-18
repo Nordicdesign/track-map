@@ -132,7 +132,7 @@ export function editObservation(
   id: string,
   data: { notes: any; setupName: string; time: number },
 ) {
-  firebase
+  return firebase
     .database()
     .ref(
       `/users/${authUser}/tracks/${trackID}/sessions/${session}/observations/${id}`,
@@ -140,9 +140,9 @@ export function editObservation(
     .set(data, (err) => {
       if (err) console.log(err)
     })
-  return {
-    observations: data,
-  }
+  // return {
+  //   observations: data,
+  // }
 }
 
 export function deleteEntry(
