@@ -96,13 +96,15 @@ export const Track = () => {
     setCurrentId('')
   }
 
-  // const handleRenameSession = (value: any) => {
-  //   renameSession(userID, trackName, currentSession, value)
-  // }
+  const handleRenameSession = (value: string) => {
+    if (!userID) return
+    renameSession(userID, trackName, currentSessionId, value)
+  }
 
-  // const handleNewSession = (value: any) => {
-  //   newSession(userID, trackName, value)
-  // }
+  const handleNewSession = (value: string) => {
+    if (!userID) return
+    newSession(userID, trackName, value)
+  }
 
   const handleDelete = (type: keyof typeof entryType, id: string) => {
     if (!userID || !currentSession) return
@@ -113,8 +115,6 @@ export const Track = () => {
   }
 
   const changeSession = (newSessionID: string) => {
-    console.log('changing session > ', newSessionID)
-
     // the new session to load
     const newSession = sessions?.filter(
       (session) => session.id === newSessionID,
@@ -147,7 +147,6 @@ export const Track = () => {
         authUser: userID,
         trackID: trackName,
         onResult: (sessions: SessionType[]) => {
-          console.log('the values:', sessions)
           setSessions(sessions)
           setDataIsReady(true)
         },
@@ -158,7 +157,6 @@ export const Track = () => {
   }, [])
 
   useEffect(() => {
-    console.log('session > ', currentSessionId)
     let newSession: SessionType
 
     if (!sessions) {
@@ -202,8 +200,8 @@ export const Track = () => {
               sessions={sessions}
               currentSessionId={currentSessionId}
               changeSession={changeSession}
-              renameSession={renameSession}
-              newSession={newSession}
+              renameSession={handleRenameSession}
+              newSession={handleNewSession}
             />
           </>
         )}

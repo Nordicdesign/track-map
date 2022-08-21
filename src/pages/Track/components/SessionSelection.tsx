@@ -5,8 +5,8 @@ type Props = {
   sessions: SessionType[] | null
   currentSessionId: string | null
   changeSession: (newSessionID: string) => void
-  renameSession: any
-  newSession: any
+  renameSession: (sessionName: string) => void
+  newSession: (sessionName: string) => void
 }
 
 export const SessionSelection = (props: Props) => {
@@ -52,7 +52,7 @@ export const SessionSelection = (props: Props) => {
     setisNewSession(false)
   }
 
-  const handleFormSubmit = (e: any) => {
+  const handleChangeNameSubmit = (e: any) => {
     e.preventDefault()
     const sessionName = inputSessionName.current?.value
 
@@ -60,7 +60,7 @@ export const SessionSelection = (props: Props) => {
       return
     }
     renameSession(sessionName)
-    setisNewSession(false)
+    setChangeName(false)
   }
 
   const handleNewSessionSubmit = (e: any) => {
@@ -70,15 +70,19 @@ export const SessionSelection = (props: Props) => {
     if (!sessionName) {
       return
     }
-    setisNewSession(false) // hide form
     newSession(sessionName) // load new data
+    setisNewSession(false) // hide form
   }
 
   return (
     <div>
       {changeName ? (
         <div className="new-session">
-          <form onSubmit={handleFormSubmit} autoComplete="off" method="post">
+          <form
+            onSubmit={handleChangeNameSubmit}
+            autoComplete="off"
+            method="post"
+          >
             <label>
               Rename session
               <input

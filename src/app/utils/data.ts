@@ -17,8 +17,7 @@ export function loadData(props: {
         console.log('there are no sessions!!! 😱')
         initiateSession(authUser, trackID, onResult)
       } else {
-        // the session actually exists
-        onResult(prepareData(snapshot))
+        onResult(prepareSessions(snapshot))
       }
     })
 }
@@ -26,7 +25,6 @@ export function loadData(props: {
 export function detachListener(props: { authUser: any; trackID: any }) {
   const { authUser, trackID } = props
   firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off()
-  // console.log("Firebase detached");
 }
 
 export function initiateSession(
@@ -47,7 +45,7 @@ export function initiateSession(
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
     .on('value', function (snapshot) {
-      onResult(prepareData(snapshot))
+      onResult(prepareSessions(snapshot))
     })
 }
 
@@ -62,11 +60,7 @@ export function newSession(authUser: string, trackID: string, value: any) {
   console.log('session created ✅')
 }
 
-export function prepareData(snapshot: firebase.database.DataSnapshot) {
-  // let corners
-  // let observations = {}
-  // let currentSession: SessionType
-
+export function prepareSessions(snapshot: firebase.database.DataSnapshot) {
   const data = snapshot.val()
   const sessions = []
   for (const session in data) {
@@ -99,7 +93,7 @@ export function recordObservation(
         '/observations/',
     )
     .push(data, (err) => {
-      if (err) console.log(err)
+      if (err) console.error(err)
     })
   return {
     observations: data,
@@ -141,7 +135,7 @@ export function deleteEntry(
       `users/${authUser}/tracks/${trackID}/sessions/${session}/${type}/${id}`,
     )
     .remove((err) => {
-      if (err) console.log(err)
+      if (err) console.error(err)
     })
 }
 
@@ -158,7 +152,7 @@ export function recordCorner(
       `/users/${authUser}/tracks/${trackID}/sessions/${session}/corners/${corner}`,
     )
     .set(data, (err) => {
-      if (err) console.log(err)
+      if (err) console.error(err)
     })
   return {
     corners: data,
@@ -168,18 +162,18 @@ export function recordCorner(
 export function renameSession(
   authUser: string,
   trackID: string,
-  session: string | null,
+  currentSessionId: string | null,
   value: string,
 ) {
   firebase
     .database()
-    .ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}`)
+    .ref(`/users/${authUser}/tracks/${trackID}/sessions/${currentSessionId}`)
     .set(
       {
         name: value,
       },
       (err) => {
-        if (err) console.log(err)
+        if (err) console.error(err)
       },
     )
 }
