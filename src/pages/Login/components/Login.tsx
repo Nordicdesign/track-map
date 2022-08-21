@@ -1,15 +1,16 @@
 import { useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import Cookies from 'js-cookie'
 
 import * as ROUTES from '../../../constants/routes'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../app/users/usersSlice'
+import { checkCredentials } from '../../../app/utils/users'
 
 export const Login: React.FC = () => {
   // clear any garbage
-  sessionStorage.clear()
+  Cookies.remove('uid')
+  Cookies.remove('email')
 
   const dispatch = useDispatch()
   const history = useHistory()
@@ -17,25 +18,45 @@ export const Login: React.FC = () => {
   const refEmail = useRef<HTMLInputElement | null>(null)
   const refPassword = useRef<HTMLInputElement | null>(null)
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value
+
     if (email && password) {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
+      checkCredentials(email, password)
+        .then((response) => {
+          const uid = response?.user?.uid
+          const email = response?.user?.email
           const payload = {
-            userID: userCredential.user?.uid,
-            userEmail: userCredential.user?.email,
+            userID: uid,
+            userEmail: email,
           }
+          uid && Cookies.set('uid', uid, { expires: 7 })
+          email && Cookies.set('email', email, { expires: 7 })
           dispatch(signIn(payload))
           history.push(ROUTES.LANDING)
         })
         .catch((error: any) => {
-          setError(error.message)
+          setError(error?.message)
         })
+      // try {
+      //   const response = await checkCredentials(email, password)
+      //   if (!response) {
+      //     return
+      //   }
+      //   const payload = {
+      //     userID: response?.user?.uid,
+      //     userEmail: response?.user?.email,
+      //   }
+      //   dispatch(signIn(payload))
+      //   history.push(ROUTES.LANDING)
+      // } catch ((error as any)) {
+      //   if (error?.message) {
+      //     setError(error?.message)
+      //   }
+
+      // }
     }
   }
 

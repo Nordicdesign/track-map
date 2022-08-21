@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
@@ -6,8 +6,9 @@ import firebase from 'firebase/app'
 import * as ROUTES from '../../constants/routes'
 import { User } from './components/User'
 import { RootState } from '../../app/store'
-import { logOut } from '../../app/users/usersSlice'
+import { logOut, signIn } from '../../app/users/usersSlice'
 import { firebaseConfig } from '../../constants/firebase'
+import Cookies from 'js-cookie'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -27,10 +28,23 @@ export const Header: React.FC = () => {
         dispatch(logOut())
         history.push('/')
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error(error)
       })
   }
+
+  useEffect(() => {
+    const uid = Cookies.get('uid')
+    const email = Cookies.get('email')
+
+    if (uid !== undefined && email !== undefined) {
+      const payload = {
+        userID: uid,
+        userEmail: email,
+      }
+      dispatch(signIn(payload))
+    }
+  }, [])
 
   return (
     <header>

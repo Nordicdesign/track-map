@@ -1,72 +1,95 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { SessionType } from '../../../app/utils/types'
 
 type Props = {
-  sessions: any
-  currentSession: any
-  changeSession: any
-  renameSession: any
-  newSession: any
+  sessions: SessionType[] | null
+  currentSessionId: string | null
+  changeSession: (newSessionID: string) => void
+  renameSession: (sessionName: string) => void
+  newSession: (sessionName: string) => void
 }
 
 export const SessionSelection = (props: Props) => {
-  const { sessions, currentSession, changeSession, renameSession, newSession } =
-    props
-  console.log(sessions)
+  const {
+    sessions,
+    currentSessionId,
+    changeSession,
+    renameSession,
+    newSession,
+  } = props
 
+  const inputSessionName = useRef<HTMLInputElement>(null)
+  const selectSessions = useRef<HTMLSelectElement>(null)
   const [changeName, setChangeName] = useState<boolean>(false)
   const [isNewSession, setisNewSession] = useState<boolean>(false)
-  const [sessionName, setSessionName] = useState<string>('')
 
-  const availableSessions = sessions.map((session: any, index: React.Key) => {
-    return (
-      <option key={index} value={session.id}>
-        {session.name}
-      </option>
-    )
-  })
+  if (!sessions || !currentSessionId) {
+    return null
+  }
+
+  const handleChangeSession = () => {
+    const selectedSession = selectSessions.current?.value
+    if (selectedSession !== undefined) {
+      changeSession(selectedSession)
+    }
+  }
+
+  const availableSessions = sessions.map(
+    (session: SessionType, index: React.Key) => {
+      return (
+        <option key={index} value={session.id}>
+          {session.name}
+        </option>
+      )
+    },
+  )
 
   const showChangeName = () => setChangeName(true)
   const showNewSession = () => setisNewSession(true)
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setSessionName(value)
-    // setValues({
-    //   ...values,
-    //   [name]: value,
-    // })
-  }
 
   const handleCancelSessions = () => {
     setChangeName(false)
     setisNewSession(false)
   }
 
-  const handleFormSubmit = (e: any) => {
+  const handleChangeNameSubmit = (e: any) => {
     e.preventDefault()
+    const sessionName = inputSessionName.current?.value
+
+    if (!sessionName) {
+      return
+    }
     renameSession(sessionName)
-    setisNewSession(false)
+    setChangeName(false)
   }
 
   const handleNewSessionSubmit = (e: any) => {
     e.preventDefault()
-    newSession(sessionName)
-    setisNewSession(false)
+    const sessionName = inputSessionName.current?.value
+
+    if (!sessionName) {
+      return
+    }
+    newSession(sessionName) // load new data
+    setisNewSession(false) // hide form
   }
 
   return (
     <div>
       {changeName ? (
         <div className="new-session">
-          <form onSubmit={handleFormSubmit} autoComplete="off" method="post">
+          <form
+            onSubmit={handleChangeNameSubmit}
+            autoComplete="off"
+            method="post"
+          >
             <label>
               Rename session
               <input
                 type="text"
                 name="sessionName"
                 id="sessionName"
-                value={sessionName}
-                onChange={handleChange}
+                ref={inputSessionName}
               />
             </label>
             <div>
@@ -95,8 +118,7 @@ export const SessionSelection = (props: Props) => {
                 type="text"
                 name="sessionName"
                 id="sessionName"
-                value={sessionName}
-                onChange={handleChange}
+                ref={inputSessionName}
               />
             </label>
             <div>
@@ -121,8 +143,9 @@ export const SessionSelection = (props: Props) => {
           <label>
             Session
             <select
-              onChange={changeSession}
-              value={currentSession ? currentSession : ''}
+              onChange={handleChangeSession}
+              ref={selectSessions}
+              defaultValue={currentSessionId ? currentSessionId : undefined}
             >
               {availableSessions}
             </select>

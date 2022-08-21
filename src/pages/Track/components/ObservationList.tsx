@@ -1,6 +1,16 @@
 import React from 'react'
+import { entryType } from '../../../app/utils/types'
 
-const ObservationList = (props: any) => {
+type Props = {
+  name: number
+  id: string
+  notes: any
+  setupName: string
+  onDelete: (type: keyof typeof entryType, id: string) => void
+  setTrackCurrentId: any
+}
+
+export const ObservationList = (props: Props) => {
   const { name, id, notes, setupName, onDelete, setTrackCurrentId } = props
   const date = new Date(name)
   const presentableDate: string = date.toLocaleString()
@@ -12,7 +22,7 @@ const ObservationList = (props: any) => {
         <div>
           <button
             className="button-icon"
-            onClick={() => setTrackCurrentId('notes', id)}
+            onClick={() => setTrackCurrentId('observations', id)}
           >
             <div className="icon icon-pencil-square"></div>
           </button>
@@ -38,8 +48,6 @@ const ObservationList = (props: any) => {
   )
 }
 
-const NoObservations = () => {
+export const NoObservations = () => {
   return <p>Add some observations</p>
 }
-
-export { ObservationList, NoObservations }
