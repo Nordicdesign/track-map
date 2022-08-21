@@ -17,12 +17,11 @@ export const SessionSelection = (props: Props) => {
     renameSession,
     newSession,
   } = props
-  // console.log(sessions)
+
   const inputSessionName = useRef<HTMLInputElement>(null)
   const selectSessions = useRef<HTMLSelectElement>(null)
   const [changeName, setChangeName] = useState<boolean>(false)
   const [isNewSession, setisNewSession] = useState<boolean>(false)
-  // const [sessionName, setSessionName] = useState<string>('')
 
   if (!sessions || !currentSessionId) {
     return null
