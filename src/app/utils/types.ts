@@ -8,7 +8,15 @@ export interface SessionType {
   corners: CornerType[] | undefined
   id: string
   name: string
-  observations: object | undefined
+  observations: NotesType | undefined
+}
+
+export type NotesType = {
+  [id: string]: {
+    notes: string
+    setupName: string
+    time: number
+  }
 }
 
 export interface NoteType {
@@ -18,5 +26,4 @@ export interface NoteType {
 export enum entryType {
   observations = 'observations',
   corners = 'corners',
-  notes = 'notes',
 }

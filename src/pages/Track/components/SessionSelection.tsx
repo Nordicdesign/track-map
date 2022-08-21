@@ -1,33 +1,49 @@
 import React, { useRef, useState } from 'react'
+import { SessionType } from '../../../app/utils/types'
 
 type Props = {
-  sessions: any
-  currentSession: any
-  changeSession: any
+  sessions: SessionType[] | null
+  currentSessionId: string | null
+  changeSession: (newSessionID: string) => void
   renameSession: any
   newSession: any
 }
 
 export const SessionSelection = (props: Props) => {
-  // const { sessions, currentSession, changeSession, renameSession, newSession } =
-  const { sessions, currentSession, changeSession, renameSession, newSession } =
-    props
+  const {
+    sessions,
+    currentSessionId,
+    changeSession,
+    renameSession,
+    newSession,
+  } = props
   // console.log(sessions)
-  const inputSessionName = useRef<HTMLInputElement | null>(null)
-  const selectSessions = useRef<HTMLSelectElement | null>(
-    currentSession ? currentSession : null,
-  )
+  const inputSessionName = useRef<HTMLInputElement>(null)
+  const selectSessions = useRef<HTMLSelectElement>(null)
   const [changeName, setChangeName] = useState<boolean>(false)
   const [isNewSession, setisNewSession] = useState<boolean>(false)
   // const [sessionName, setSessionName] = useState<string>('')
 
-  const availableSessions = sessions.map((session: any, index: React.Key) => {
-    return (
-      <option key={index} value={session.id}>
-        {session.name}
-      </option>
-    )
-  })
+  if (!sessions || !currentSessionId) {
+    return null
+  }
+
+  const handleChangeSession = () => {
+    const selectedSession = selectSessions.current?.value
+    if (selectedSession !== undefined) {
+      changeSession(selectedSession)
+    }
+  }
+
+  const availableSessions = sessions.map(
+    (session: SessionType, index: React.Key) => {
+      return (
+        <option key={index} value={session.id}>
+          {session.name}
+        </option>
+      )
+    },
+  )
 
   const showChangeName = () => setChangeName(true)
   const showNewSession = () => setisNewSession(true)
@@ -124,9 +140,9 @@ export const SessionSelection = (props: Props) => {
           <label>
             Session
             <select
-              onChange={() => changeSession(selectSessions.current?.value)}
+              onChange={handleChangeSession}
               ref={selectSessions}
-              defaultValue={currentSession}
+              defaultValue={currentSessionId ? currentSessionId : undefined}
             >
               {availableSessions}
             </select>

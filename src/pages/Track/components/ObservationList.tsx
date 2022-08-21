@@ -2,7 +2,7 @@ import React from 'react'
 import { entryType } from '../../../app/utils/types'
 
 type Props = {
-  name: string
+  name: number
   id: string
   notes: any
   setupName: string
@@ -22,7 +22,7 @@ export const ObservationList = (props: Props) => {
         <div>
           <button
             className="button-icon"
-            onClick={() => setTrackCurrentId('notes', id)}
+            onClick={() => setTrackCurrentId('observations', id)}
           >
             <div className="icon icon-pencil-square"></div>
           </button>

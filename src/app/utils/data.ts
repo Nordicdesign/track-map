@@ -1,10 +1,11 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
+import { entryType, SessionType } from './types'
 
 export function loadData(props: {
   authUser: string
   trackID: string
-  onResult: any
+  onResult: (sessions: SessionType[]) => void
 }) {
   const { authUser, trackID, onResult } = props
   firebase
@@ -12,12 +13,12 @@ export function loadData(props: {
     .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
     .on('value', function (snapshot) {
       // check if there are any sessions yet
-      if (!snapshot.val()) {
+      if (!snapshot.exists()) {
         console.log('there are no sessions!!! 😱')
         initiateSession(authUser, trackID, onResult)
       } else {
         // the session actually exists
-        onResult(saveDataInState(snapshot))
+        onResult(prepareData(snapshot))
       }
     })
 }
@@ -31,12 +32,7 @@ export function detachListener(props: { authUser: any; trackID: any }) {
 export function initiateSession(
   authUser: string,
   trackID: string,
-  onResult: (arg0: {
-    corners: any
-    observations: any
-    sessions: { id: string; name: any; corners: any; observations: any }[]
-    currentSession: { id: string; name: any; corners: any; observations: any }[]
-  }) => void,
+  onResult: (sessions: SessionType[]) => void,
 ) {
   const newSession = firebase
     .database()
@@ -51,11 +47,11 @@ export function initiateSession(
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
     .on('value', function (snapshot) {
-      onResult(saveDataInState(snapshot))
+      onResult(prepareData(snapshot))
     })
 }
 
-export function newSession(authUser: any, trackID: any, value: any) {
+export function newSession(authUser: string, trackID: string, value: any) {
   const newSession = firebase
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions/`)
@@ -66,10 +62,10 @@ export function newSession(authUser: any, trackID: any, value: any) {
   console.log('session created ✅')
 }
 
-export function saveDataInState(snapshot: firebase.database.DataSnapshot) {
-  // if no data exists have an empty array/object, rather than null
-  let corners
-  let observations = []
+export function prepareData(snapshot: firebase.database.DataSnapshot) {
+  // let corners
+  // let observations = {}
+  // let currentSession: SessionType
 
   const data = snapshot.val()
   const sessions = []
@@ -82,30 +78,14 @@ export function saveDataInState(snapshot: firebase.database.DataSnapshot) {
     })
   }
 
-  // // current state
-  const currentSession = sessions.slice(-1)
-  if (typeof currentSession[0].corners !== 'undefined') {
-    corners = currentSession[0].corners
-  }
-
-  if (typeof currentSession[0].observations !== 'undefined') {
-    // keep as an object
-    observations = currentSession[0].observations
-  }
-
-  return {
-    corners,
-    observations,
-    sessions,
-    currentSession,
-  }
+  return sessions
 }
 
 export function recordObservation(
   authUser: string | null,
   trackID: string,
   session: string | null,
-  data: { notes: any; setupName: any; time: number },
+  data: { notes: any; setupName: string; time: number },
 ) {
   firebase
     .database()
@@ -128,29 +108,32 @@ export function recordObservation(
 export function editObservation(
   authUser: string,
   trackID: string,
-  session: any,
+  session: string | null,
   id: string,
   data: { notes: any; setupName: string; time: number },
 ) {
-  return firebase
+  firebase
     .database()
     .ref(
       `/users/${authUser}/tracks/${trackID}/sessions/${session}/observations/${id}`,
     )
     .set(data, (err) => {
-      if (err) console.log(err)
+      if (err) {
+        console.error(err)
+      } else {
+        return {
+          observations: data,
+        }
+      }
     })
-  // return {
-  //   observations: data,
-  // }
 }
 
 export function deleteEntry(
-  authUser: any,
-  trackID: any,
-  session: any,
-  type: any,
-  id: any,
+  authUser: string,
+  trackID: string,
+  session: string | null,
+  type: keyof typeof entryType,
+  id: string,
 ) {
   firebase
     .database()
@@ -163,9 +146,9 @@ export function deleteEntry(
 }
 
 export function recordCorner(
-  authUser: any,
-  trackID: any,
-  session: any,
+  authUser: string,
+  trackID: string,
+  session: string | null,
   corner: any,
   data: any,
 ) {
@@ -183,10 +166,10 @@ export function recordCorner(
 }
 
 export function renameSession(
-  authUser: any,
-  trackID: any,
-  session: any,
-  value: any,
+  authUser: string,
+  trackID: string,
+  session: string | null,
+  value: string,
 ) {
   firebase
     .database()
@@ -200,178 +183,3 @@ export function renameSession(
       },
     )
 }
-
-// import firebase from 'firebase/app'
-// import 'firebase/database'
-
-// class Data {
-//   constructor(data) {
-//     this.data = data
-//   }
-
-//   loadData(props) {
-//     let { authUser, trackID, onResult } = props
-//     let that = this
-//     firebase
-//       .database()
-//       .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
-//       .on('value', function (snapshot) {
-//         // check if there are any sessions yet
-//         if (!snapshot.val()) {
-//           console.log('there are no sessions!!! 😱')
-//           that.initiateSession(authUser, trackID, onResult)
-//         } else {
-//           // the session actually exists
-//           onResult(that.saveDataInState(snapshot))
-//         }
-//       })
-//   }
-
-//   detachListener(props) {
-//     let { authUser, trackID } = props
-//     firebase
-//       .database()
-//       .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
-//       .off()
-//     // console.log("Firebase detached");
-//   }
-
-//   initiateSession(authUser, trackID, onResult) {
-//     let newSession = firebase
-//       .database()
-//       .ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/')
-//       .push()
-//     newSession.set({
-//       name: 'default',
-//     })
-//     console.log('session created ✅')
-
-//     let that = this
-//     firebase
-//       .database()
-//       .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
-//       .on('value', function (snapshot) {
-//         onResult(that.saveDataInState(snapshot))
-//       })
-//   }
-
-//   newSession(authUser, trackID, value) {
-//     let newSession = firebase
-//       .database()
-//       .ref(`/users/${authUser}/tracks/${trackID}/sessions/`)
-//       .push()
-//     newSession.set({
-//       name: value,
-//     })
-//     console.log('session created ✅')
-//   }
-
-//   saveDataInState(snapshot) {
-//     // if no data exists have an empty array/object, rather than null
-//     let corners
-//     let observations = []
-//     let sessions = []
-//     let data = snapshot.val()
-
-//     for (let session in data) {
-//       sessions.push({
-//         id: session,
-//         name: data[session].name,
-//         corners: data[session].corners,
-//         observations: data[session].observations,
-//       })
-//     }
-
-//     // // current state
-//     let currentSession = sessions.slice(-1)
-//     if (typeof currentSession[0].corners !== 'undefined') {
-//       corners = currentSession[0].corners
-//     }
-
-//     if (typeof currentSession[0].observations !== 'undefined') {
-//       // keep as an object
-//       observations = currentSession[0].observations
-//     }
-
-//     return {
-//       corners,
-//       observations,
-//       sessions,
-//       currentSession,
-//     }
-//   }
-
-//   recordObservation(authUser, trackID, session, data) {
-//     firebase
-//       .database()
-//       .ref(
-//         '/users/' +
-//           authUser +
-//           '/tracks/' +
-//           trackID +
-//           '/sessions/' +
-//           session +
-//           '/observations/',
-//       )
-//       .push(data, (err) => {
-//         if (err) console.log(err)
-//       })
-//     return {
-//       observations: data,
-//     }
-//   }
-//   editObservation(authUser, trackID, session, id, data) {
-//     firebase
-//       .database()
-//       .ref(
-//         `/users/${authUser}/tracks/${trackID}/sessions/${session}/observations/${id}`,
-//       )
-//       .set(data, (err) => {
-//         if (err) console.log(err)
-//       })
-//     return {
-//       observations: data,
-//     }
-//   }
-
-//   deleteEntry(authUser, trackID, session, type, id) {
-//     firebase
-//       .database()
-//       .ref(
-//         `users/${authUser}/tracks/${trackID}/sessions/${session}/${type}/${id}`,
-//       )
-//       .remove((err) => {
-//         if (err) console.log(err)
-//       })
-//   }
-
-//   recordCorner(authUser, trackID, session, corner, data) {
-//     firebase
-//       .database()
-//       .ref(
-//         `/users/${authUser}/tracks/${trackID}/sessions/${session}/corners/${corner}`,
-//       )
-//       .set(data, (err) => {
-//         if (err) console.log(err)
-//       })
-//     return {
-//       corners: data,
-//     }
-//   }
-
-//   renameSession(authUser, trackID, session, value) {
-//     firebase
-//       .database()
-//       .ref(`/users/${authUser}/tracks/${trackID}/sessions/${session}`)
-//       .set(
-//         {
-//           name: value,
-//         },
-//         (err) => {
-//           if (err) console.log(err)
-//         },
-//       )
-//   }
-// }
-
-// export default Data
