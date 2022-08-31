@@ -151,6 +151,8 @@ export const Track = () => {
           setDataIsReady(true)
         },
       })
+    } else {
+      setDataIsReady(true)
     }
 
     return () => detachListener({ authUser: userID, trackID: trackName })
