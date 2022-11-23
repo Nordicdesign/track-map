@@ -1,7 +1,4 @@
-import React from 'react'
-// import { withRouter } from 'react-router-dom'
-
-import { SignUpLink } from '../Signup/components/SignUpLink'
+import { SignUpLink } from '../Signup/components/SignUpLink';
 import { Login } from './components/Login'
 
 export const LoginPage = () => {

@@ -1,4 +1,3 @@
-import React from 'react'
 import { entryType } from '../../../app/utils/types'
 
 type Props = {

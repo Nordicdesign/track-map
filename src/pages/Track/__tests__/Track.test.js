@@ -1,4 +1,3 @@
-import React from 'react'
 import Track from '../Track'
 import { MemoryRouter, Routes, Route, Router } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
