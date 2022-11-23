@@ -1,6 +1,5 @@
 // CONFIG
-$fontstack: "Roboto", helvetica, arial, sans-serif;
-
+$fontstack: 'Roboto', helvetica, arial, sans-serif;
 
 // spacing
 $baseline: 16px;
@@ -16,9 +15,26 @@ $screen-large: 1140px;
 
 $border-radius: 3px;
 
-// Colors
-$colour-base: #333;
-$colour-accent: tomato;
-$colour-gray-700: #838383;
-$colour-gray-300: #c9c9c9;
-$colour-gray-100: #f2f3f4;
+// Core ==========================
+$core-color-grey-700: #333;
+$core-color-grey-400: #838383;
+$core-color-grey-300: #c9c9c9;
+$core-color-grey-100: #f2f3f4;
+
+$core-color-blue-700: #6d98ba;
+$core-color-orange-700: tomato;
+
+// Semantic ========================
+// Colour
+$colour-base: $core-color-grey-700;
+$color-primary: $core-color-blue-700;
+$color-accent: $core-color-orange-700;
+
+// Buttons
+$primary-button-bg: $color-primary;
+$primary-inlinelink: $color-accent;
+
+// Text
+$primary-text: $core-color-grey-700;
+$link-active: $color-accent;
+$link-visited: $core-color-grey-400;

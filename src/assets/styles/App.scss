@@ -13,7 +13,7 @@
 
 .listCircuits {
   li {
-    border: 1px solid $colour-gray-300;
+    border: 1px solid $core-color-grey-300;
     border-radius: 2px;
     margin-bottom: $baseline * 0.5;
     padding: $baseline * 0.5;
@@ -29,7 +29,7 @@
     }
 
     a {
-      color: $colour-accent;
+      color: $link-active;
       text-decoration: none;
     }
   }

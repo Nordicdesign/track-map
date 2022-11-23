@@ -39,7 +39,7 @@
       background: #f2f3f4;
       padding: $baseline;
       width: 350px;
-      margin-left: $baseline*3;
+      margin-left: $baseline * 3;
 
       @media screen and (max-width: $screen-medium) {
         margin-left: 0;
@@ -54,16 +54,16 @@
   // flex-direction: row;
   width: 96%;
   max-width: 450px;
-  margin: $baseline*3 auto;
-  border: 1px solid $colour-gray-300;
-  padding: $baseline*2;
+  margin: $baseline * 3 auto;
+  border: 1px solid $core-color-grey-300;
+  padding: $baseline * 2;
 
   div {
-    margin-bottom: $baseline*3;
+    margin-bottom: $baseline * 3;
   }
 
   .login-link {
-    background: $colour-gray-100;
+    background: $core-color-grey-100;
     border-top: 1px solid $colour-base;
     padding: $baseline;
     text-align: center;

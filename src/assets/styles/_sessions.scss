@@ -3,11 +3,10 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: $baseline;
-  margin-top: $baseline * 0.5
+  margin-top: $baseline * 0.5;
 }
 
 .session-creator {
-
   form {
     display: flex;
     flex-direction: row;
@@ -23,7 +22,7 @@
       margin-top: 0;
     }
 
-    input[type="submit"] {
+    input[type='submit'] {
       margin-left: $baseline * 0.5;
       width: auto;
     }
@@ -33,7 +32,6 @@
     line-height: 40px;
   }
 }
-
 
 .session-selection {
   padding-right: $baseline;
@@ -74,13 +72,13 @@
     justify-content: space-between;
     align-items: baseline;
 
-    input[type="submit"] {
+    input[type='submit'] {
       width: auto;
     }
   }
 
   .new-session-p {
     font-size: 1.4rem;
-    color: $colour-gray-700;
+    color: $core-color-grey-400;
   }
 }
