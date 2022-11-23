@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
+import { useState, useEffect } from 'react'
+import * as React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { AddNewObservation, AddNewCorner } from './components/AddNew'

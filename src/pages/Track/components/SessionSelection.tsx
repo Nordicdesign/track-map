@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import * as React from 'react';
+import { useRef, useState } from 'react'
+import * as React from 'react'
 import { SessionType } from '../../../app/utils/types'
 
 type Props = {
@@ -53,7 +53,7 @@ export const SessionSelection = (props: Props) => {
     setisNewSession(false)
   }
 
-  const handleChangeNameSubmit = (e: any) => {
+  const handleChangeNameSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const sessionName = inputSessionName.current?.value
 
@@ -64,7 +64,7 @@ export const SessionSelection = (props: Props) => {
     setChangeName(false)
   }
 
-  const handleNewSessionSubmit = (e: any) => {
+  const handleNewSessionSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const sessionName = inputSessionName.current?.value
 

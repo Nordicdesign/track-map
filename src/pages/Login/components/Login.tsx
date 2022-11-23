@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const refEmail = useRef<HTMLInputElement | null>(null)
   const refPassword = useRef<HTMLInputElement | null>(null)
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value
@@ -37,7 +37,7 @@ export const Login: React.FC = () => {
           dispatch(signIn(payload))
           history.push(ROUTES.LANDING)
         })
-        .catch((error: any) => {
+        .catch((error) => {
           setError(error?.message)
         })
       // try {
@@ -85,7 +85,9 @@ export const Login: React.FC = () => {
           placeholder="Password"
         />
       </label>
-      <button onClick={onSubmit}>Log In</button>
+      <button onClick={onSubmit} type="submit" className="btn">
+        Log In
+      </button>
 
       {error && <p className="error-handling">{error}</p>}
       <p>

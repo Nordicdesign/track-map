@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -9,7 +9,7 @@ export const ForgotPassword = () => {
   const [error, setError] = useState<string | null>(null)
   const [emailSent, setEmailSent] = useState<boolean>(false)
 
-  const onSubmit = (event: any) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     setError(null)
     const email = refEmail.current?.value
@@ -43,7 +43,7 @@ export const ForgotPassword = () => {
               placeholder="Email Address"
             />
           </label>
-          <button type="submit" onClick={onSubmit}>
+          <button type="submit" onClick={onSubmit} className="btn">
             Get a new password
           </button>
           {error && <p className="error-handling">{error}</p>}

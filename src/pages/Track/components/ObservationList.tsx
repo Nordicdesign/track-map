@@ -6,7 +6,7 @@ type Props = {
   notes: any
   setupName: string
   onDelete: (type: keyof typeof entryType, id: string) => void
-  setTrackCurrentId: any
+  setTrackCurrentId: (type: keyof typeof entryType, id: string) => void
 }
 
 export const ObservationList = (props: Props) => {

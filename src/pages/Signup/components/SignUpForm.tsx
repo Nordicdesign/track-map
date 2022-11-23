@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -16,7 +16,7 @@ export const SignUpForm = () => {
   const refPassword = useRef<HTMLInputElement | null>(null)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const onSubmit = (event: any) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value
@@ -28,7 +28,7 @@ export const SignUpForm = () => {
           console.log('user created')
           history.push(ROUTES.LANDING)
         })
-        .catch((error: any) => {
+        .catch((error) => {
           setError(error.message)
         })
     }
@@ -58,7 +58,7 @@ export const SignUpForm = () => {
             placeholder="Password"
           />
         </label>
-        <button onClick={onSubmit} type="submit">
+        <button onClick={onSubmit} type="submit" className="btn">
           Sign Up
         </button>
 
