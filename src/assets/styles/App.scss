@@ -9,31 +9,8 @@
 @import './forms';
 @import './layout';
 @import './sessions';
-@import './homepage';
-
-.listCircuits {
-  li {
-    border: 1px solid $core-color-grey-300;
-    border-radius: 2px;
-    margin-bottom: $baseline * 0.5;
-    padding: $baseline * 0.5;
-    transition: 0.2s ease all;
-
-    &:hover {
-      background: #f3f4f5;
-      cursor: pointer;
-
-      a {
-        text-decoration: underline;
-      }
-    }
-
-    a {
-      color: $link-active;
-      text-decoration: none;
-    }
-  }
-}
+@import './landing';
+@import './pages/homepage.scss';
 
 img {
   max-width: 100%;

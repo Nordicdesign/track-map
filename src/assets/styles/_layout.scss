@@ -4,22 +4,19 @@
   padding: $baseline;
 
   &.homepage {
-    // max-width: 600px;
     margin: $baseline auto;
-    display: flex;
-    flex-direction: row;
-    // justify-content: space-between;
+    // display: grid;
+    // grid-template-columns: 1fr min-content;
 
-    @media screen and (max-width: $screen-medium) {
-      flex-direction: column;
-    }
+    // @media screen and (max-width: $screen-mediumLarge) {
+    //   flex-direction: column;
+    // }
 
     .country-list {
       display: flex;
       flex-wrap: wrap;
 
       div {
-        // width: 300px;
         margin-right: $baseline;
       }
     }
@@ -38,13 +35,6 @@
     aside {
       background: #f2f3f4;
       padding: $baseline;
-      width: 350px;
-      margin-left: $baseline * 3;
-
-      @media screen and (max-width: $screen-medium) {
-        margin-left: 0;
-        width: auto;
-      }
     }
   }
 }

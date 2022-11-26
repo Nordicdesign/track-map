@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import * as React from 'react'
-import { SessionType } from '../../../app/utils/types'
+import { Session } from '../../../app/utils/types'
 
 type Props = {
-  sessions: SessionType[] | null
+  sessions: Session[] | null
   currentSessionId: string | null
   changeSession: (newSessionID: string) => void
   renameSession: (sessionName: string) => void
@@ -36,7 +36,7 @@ export const SessionSelection = (props: Props) => {
   }
 
   const availableSessions = sessions.map(
-    (session: SessionType, index: React.Key) => {
+    (session: Session, index: React.Key) => {
       return (
         <option key={index} value={session.id}>
           {session.name}

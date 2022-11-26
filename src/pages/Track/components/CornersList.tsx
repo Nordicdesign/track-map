@@ -1,10 +1,12 @@
-import { entryType } from '../../../app/utils/types'
+import { Entry } from '../../../app/utils/types'
 
 type Props = {
   name: string
-  notes: any //{ notes: string }
-  onDelete: (type: keyof typeof entryType, name: string) => void
-  setTrackCurrentId: (type: keyof typeof entryType, name: string) => void
+  notes: {
+    notes: string
+  }
+  onDelete: (type: keyof typeof Entry, name: string) => void
+  setTrackCurrentId: (type: keyof typeof Entry, name: string) => void
 }
 
 export const CornersList = (props: Props) => {

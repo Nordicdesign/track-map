@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import * as React from 'react'
+import react, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { AddNewObservation, AddNewCorner } from './components/AddNew'
@@ -20,10 +19,10 @@ import tracksJson from '../../constants/tracks.json'
 import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
 import {
-  CornerType,
-  entryType,
-  NoteType,
-  SessionType,
+  Corners,
+  Entry,
+  Session,
+  TrackMetadataList,
 } from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
@@ -32,11 +31,9 @@ type TrackParams = {
   trackName: string
 }
 
-const tracks: any = tracksJson
+const tracks: TrackMetadataList = tracksJson
 
-export const Track = () => {
-  // for the context API
-  // const userEmail = useSelector((state: RootState) => state.user.userEmail)
+export const Track: React.FC = () => {
   const userID = useSelector((state: RootState) => state.user.userID)
   const { trackName } = useParams<TrackParams>()
   const history = useHistory()
@@ -46,28 +43,31 @@ export const Track = () => {
   }
 
   // initialize the state
-  const [sessions, setSessions] = useState<SessionType[] | null>(null)
+  const [sessions, setSessions] = useState<Session[] | null>(null)
   const [sessionName, setSessionName] = useState<string>()
-  const [currentSession, setCurrentSession] = useState<SessionType | null>(null)
+  const [currentSession, setCurrentSession] = useState<Session | null>(null)
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
-  const [corners, setCorners] = useState<CornerType[] | null>(null)
+  const [corners, setCorners] = useState<Corners | null>(null)
   const [observations, setObservations] = useState<any>(null)
   const [dataIsReady, setDataIsReady] = useState(false)
-  const [visibleNotesForm, setVisibleNotesForm] = useState(false)
+  const [visibleObservationsForm, setVisibleObservationsForm] = useState(false)
   const [visibleCornerForm, setVisibleCornerForm] = useState(false)
   const [currentId, setCurrentId] = useState('')
 
-  const handleAdd = (type: string) => {
-    if (type === 'notes') setVisibleNotesForm(true)
-    else if (type === 'corner') setVisibleCornerForm(true)
+  const handleAdd = (type: Entry) => {
+    if (type === Entry.observations) setVisibleObservationsForm(true)
+    else if (type === Entry.corners) setVisibleCornerForm(true)
   }
 
-  const handleCancel = (type: string) => {
-    if (type === 'notes') setVisibleNotesForm(false)
-    else if (type === 'corner') setVisibleCornerForm(false)
+  const handleCancel = () => {
+    setVisibleObservationsForm(false)
+    setVisibleCornerForm(false)
   }
 
-  const addOrEdit = (obj: { notes: NoteType; setupName: string }) => {
+  const handleObservationChange = (obj: {
+    notes: string
+    setupName: string
+  }) => {
     if (!userID || !currentSession) {
       return
     }
@@ -85,10 +85,10 @@ export const Track = () => {
       editObservation(userID, trackName, currentSessionId, currentId, obs)
       setCurrentId('')
     }
-    setVisibleNotesForm(false)
+    setVisibleObservationsForm(false)
   }
 
-  const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
+  const addOrEditCorner = (corner: Corners, notes: string) => {
     if (!userID || !currentSession) return
 
     setVisibleCornerForm(false)
@@ -107,7 +107,7 @@ export const Track = () => {
     newSession(userID, trackName, value)
   }
 
-  const handleDelete = (type: keyof typeof entryType, id: string) => {
+  const handleDelete = (type: keyof typeof Entry, id: string) => {
     if (!userID || !currentSession) return
 
     if (window.confirm(`Are you sure to delete this entry`)) {
@@ -135,9 +135,9 @@ export const Track = () => {
     setCurrentSessionId(newSessionID)
   }
 
-  const setTrackCurrentId = (type: keyof typeof entryType, id: string) => {
+  const setTrackCurrentId = (type: keyof typeof Entry, id: string) => {
     setCurrentId(id)
-    if (type === 'observations') setVisibleNotesForm(true)
+    if (type === 'observations') setVisibleObservationsForm(true)
     else if (type === 'corners') setVisibleCornerForm(true)
   }
 
@@ -147,7 +147,7 @@ export const Track = () => {
       loadData({
         authUser: userID,
         trackID: trackName,
-        onResult: (sessions: SessionType[]) => {
+        onResult: (sessions: Session[]) => {
           setSessions(sessions)
           setDataIsReady(true)
         },
@@ -156,11 +156,15 @@ export const Track = () => {
       setDataIsReady(true)
     }
 
-    return () => detachListener({ authUser: userID, trackID: trackName })
+    return () => {
+      if (userID !== 'guest' && userID !== null && userID !== undefined) {
+        detachListener({ authUser: userID, trackID: trackName })
+      }
+    }
   }, [])
 
   useEffect(() => {
-    let newSession: SessionType
+    let newSession: Session
 
     if (!sessions) {
       return
@@ -232,15 +236,15 @@ export const Track = () => {
             <div className="track-observations">
               <div className="track-observations-header">
                 <h3>Setup notes</h3>
-                <button onClick={() => handleAdd('observations')}>
+                <button onClick={() => handleAdd(Entry.observations)}>
                   Add new
                 </button>
               </div>
 
-              {visibleNotesForm ? (
+              {visibleObservationsForm ? (
                 <AddNewObservation
                   currentId={currentId}
-                  addOrEdit={addOrEdit}
+                  handleObservationChange={handleObservationChange}
                   observations={observations}
                   handleCancel={handleCancel}
                 />
@@ -270,7 +274,9 @@ export const Track = () => {
             <div className="track-corners">
               <div className="track-corners-header">
                 <h3>Track notes</h3>
-                <button onClick={() => handleAdd('corner')}>Add new</button>
+                <button onClick={() => handleAdd(Entry.corners)}>
+                  Add new
+                </button>
               </div>
 
               {visibleCornerForm ? (

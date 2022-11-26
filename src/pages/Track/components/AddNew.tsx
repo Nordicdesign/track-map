@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 // a lot from http://www.codaffection.com/react/react-firebase-crud/
 
 const AddNewObservation = (props: {
   currentId: any
   observations: any
-  addOrEdit: any
+  handleObservationChange: (ojb: { notes: string; setupName: string }) => void
   handleCancel: any
 }) => {
-  const { currentId, observations, addOrEdit, handleCancel } = props
+  const { currentId, observations, handleObservationChange, handleCancel } =
+    props
 
   const initialFieldValues = {
     notes: '',
@@ -35,9 +36,9 @@ const AddNewObservation = (props: {
     })
   }
 
-  const handleFormSubmit = (e: any) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    addOrEdit(values)
+    handleObservationChange(values)
   }
 
   return (
@@ -122,7 +123,7 @@ const AddNewCorner = (props: {
     })
   }
 
-  const handleFormSubmit = (e: any) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     addOrEditCorner(values.number, values.notes)
   }
@@ -156,7 +157,7 @@ const AddNewCorner = (props: {
               <input
                 type="submit"
                 value={currentId === '' ? 'Add corner' : 'Edit'}
-                className="button-submit"
+                className="btn"
               />
               <button
                 className="button-link"
