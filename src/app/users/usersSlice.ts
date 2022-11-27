@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
 export interface UserState {
   userID: string | null | undefined
@@ -27,5 +28,11 @@ export const userSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { signIn, logOut } = userSlice.actions
+
+// selectors
+export const selectEditingCorner = (state: RootState) =>
+  state.tracks.editingCorner
+export const selectEditingObservation = (state: RootState) =>
+  state.tracks.editingObservation
 
 export default userSlice.reducer

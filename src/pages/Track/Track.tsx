@@ -1,7 +1,6 @@
 import react, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { AddNewObservation, AddNewCorner } from './components/AddNew'
 import { ObservationList, NoObservations } from './components/ObservationList'
 import { CornersList, NoCorners } from './components/CornersList'
 import {
@@ -26,6 +25,10 @@ import {
 } from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
+import { ObservationForm } from './components/ObservationForm'
+import { CornerForm } from './components/CornerForm'
+import { useAppDispatch } from '../../app/hooks'
+import { editCorner, finishEditing } from '../../app/tracks/tracksSlice'
 
 type TrackParams = {
   trackName: string
@@ -53,8 +56,10 @@ export const Track: React.FC = () => {
   const [visibleObservationsForm, setVisibleObservationsForm] = useState(false)
   const [visibleCornerForm, setVisibleCornerForm] = useState(false)
   const [currentId, setCurrentId] = useState('')
+  const dispatch = useAppDispatch()
 
   const handleAdd = (type: Entry) => {
+    dispatch(finishEditing())
     if (type === Entry.observations) setVisibleObservationsForm(true)
     else if (type === Entry.corners) setVisibleCornerForm(true)
   }
@@ -88,13 +93,19 @@ export const Track: React.FC = () => {
     setVisibleObservationsForm(false)
   }
 
-  const addOrEditCorner = (corner: Corners, notes: string) => {
+  const addOrEditCorner = (corner: string, notes: string) => {
     if (!userID || !currentSession) return
 
     setVisibleCornerForm(false)
     const obs = { notes }
     recordCorner(userID, trackName, currentSessionId, corner, obs)
-    setCurrentId('')
+    // setCurrentId('')
+    dispatch(finishEditing())
+  }
+
+  const handleEditCorner = (corner: string, notes: string) => {
+    dispatch(editCorner({ corner, notes }))
+    setVisibleCornerForm(true)
   }
 
   const handleRenameSession = (value: string) => {
@@ -161,7 +172,7 @@ export const Track: React.FC = () => {
         detachListener({ authUser: userID, trackID: trackName })
       }
     }
-  }, [])
+  }, [userID])
 
   useEffect(() => {
     let newSession: Session
@@ -242,7 +253,7 @@ export const Track: React.FC = () => {
               </div>
 
               {visibleObservationsForm ? (
-                <AddNewObservation
+                <ObservationForm
                   currentId={currentId}
                   handleObservationChange={handleObservationChange}
                   observations={observations}
@@ -274,16 +285,16 @@ export const Track: React.FC = () => {
             <div className="track-corners">
               <div className="track-corners-header">
                 <h3>Track notes</h3>
-                <button onClick={() => handleAdd(Entry.corners)}>
-                  Add new
-                </button>
+                {!visibleCornerForm && (
+                  <button onClick={() => handleAdd(Entry.corners)}>
+                    Add new
+                  </button>
+                )}
               </div>
 
               {visibleCornerForm ? (
-                <AddNewCorner
-                  currentId={currentId}
+                <CornerForm
                   addOrEditCorner={addOrEditCorner}
-                  corners={corners}
                   handleCancel={handleCancel}
                 />
               ) : (
@@ -296,7 +307,8 @@ export const Track: React.FC = () => {
                           name={corner[0]}
                           notes={corner[1]}
                           onDelete={handleDelete}
-                          setTrackCurrentId={setTrackCurrentId}
+                          // setTrackCurrentId={setTrackCurrentId}
+                          handleEditCorner={handleEditCorner}
                         />
                       )
                     })

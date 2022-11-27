@@ -55,8 +55,11 @@
   padding: 0 $baseline $baseline;
   background: #fcfad6;
   min-height: 300px;
-  display: flex;
-  flex-direction: row-reverse;
+
+  @media screen and (min-width: 700px) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
 
   h3 {
     font-size: 2.4rem;
@@ -68,8 +71,12 @@
 }
 
 .track-observations {
-  width: 50%;
-  margin-left: $baseline * 2;
+  border-top: 1px solid #ccc;
+  @media screen and (min-width: 700px) {
+    margin-left: $baseline * 2;
+    width: 50%;
+    border: none;
+  }
 
   .track-observations-header {
     display: flex;
@@ -116,7 +123,11 @@
 }
 
 .track-corners {
-  width: 50%;
+  border-top: 1px solid #ccc;
+  @media screen and (min-width: 700px) {
+    width: 50%;
+    border: none;
+  }
   .track-corners-header {
     display: flex;
     justify-content: space-between;
@@ -131,12 +142,25 @@
 
     .corner-notes {
       margin-right: auto;
-      flex-basis: auto;
+      padding-top: $baseline * 0.75;
     }
 
     .corner-actions {
-      width: 56px;
-      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+
+      div {
+        margin-left: $baseline;
+        cursor: pointer;
+
+        &::before {
+          vertical-align: bottom;
+        }
+      }
+
+      .button-icon {
+        height: 44px;
+      }
     }
 
     .corner-number {
@@ -146,6 +170,7 @@
       font-style: italic;
       width: 45px;
       flex-shrink: 0;
+      padding-top: $baseline * 0.5;
     }
   }
 }

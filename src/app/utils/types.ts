@@ -6,11 +6,23 @@ export interface Session {
   observations: Observations | undefined
 }
 
+export type Corner = {
+  corner: string
+  notes: string
+}
+
 export type Corners = {
   [key: string]: {
     notes: string
   }
 }
+
+export type Observation = {
+  notes: string
+  setupName: string
+  time: number
+}
+
 export type Observations = {
   [id: string]: {
     notes: string

@@ -1,4 +1,4 @@
-import { AddNewObservation, AddNewCorner } from '../components/AddNew'
+import { AddNewObservation, AddNewCorner } from '../components/CornerForm'
 import { render, fireEvent } from '@testing-library/react'
 
 const addOrEdit = jest.fn()

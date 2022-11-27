@@ -6,11 +6,12 @@ type Props = {
     notes: string
   }
   onDelete: (type: keyof typeof Entry, name: string) => void
-  setTrackCurrentId: (type: keyof typeof Entry, name: string) => void
+  // setTrackCurrentId: (type: keyof typeof Entry, name: string) => void
+  handleEditCorner: (name: string, notes: string) => void
 }
 
-export const CornersList = (props: Props) => {
-  const { name, notes, onDelete, setTrackCurrentId } = props
+export const CornersList: React.FC<Props> = (props) => {
+  const { name, notes, onDelete, handleEditCorner } = props
 
   return (
     <div className="corner-entry">
@@ -19,15 +20,19 @@ export const CornersList = (props: Props) => {
       <div className="corner-actions">
         <button
           className="button-icon"
-          onClick={() => setTrackCurrentId('corners', name)}
+          onClick={() => handleEditCorner(name, notes.notes)}
         >
-          <div className="icon icon-pencil-square"></div>
+          <div className="icon icon-pencil-square" role="button">
+            edit
+          </div>
         </button>
         <button
           className="button-icon"
           onClick={() => onDelete('corners', name)}
         >
-          <div className="icon icon-trash"></div>
+          <div className="icon icon-trash" role="button">
+            delete
+          </div>
         </button>
       </div>
     </div>
