@@ -1,0 +1,78 @@
+.homepage {
+  // max-width: 600px;
+  margin: $baseline auto;
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-between;
+
+  @media screen and (max-width: $screen-medium) {
+    flex-direction: column;
+  }
+
+  .country-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $screen-medium) {
+      display: block;
+    }
+
+    div {
+      // width: 300px;
+      margin-right: $baseline;
+    }
+  }
+
+  main {
+    ul {
+      width: 100%;
+      min-width: 350px;
+
+      @media screen and (max-width: $screen-medium) {
+        min-width: 0;
+      }
+    }
+  }
+
+  aside {
+    background: #f2f3f4;
+    padding: $baseline;
+    width: 350px;
+    margin-left: $baseline * 3;
+
+    @media screen and (max-width: $screen-medium) {
+      margin-left: 0;
+      width: auto;
+    }
+  }
+}
+
+.listCircuits {
+  li {
+    background: $colour-gray-100;
+    border-radius: 4px;
+    margin-bottom: $baseline * 0.5;
+    transition: 0.2s ease all;
+
+    @media screen and (max-width: $screen-medium) {
+      width: 100%;
+    }
+
+    &:hover {
+      background: $colour-gray-200;
+      cursor: pointer;
+
+      a {
+        color: $colour-accent;
+        text-decoration: underline;
+      }
+    }
+
+    a {
+      display: block;
+      padding: $baseline * 0.75;
+      color: $colour-base;
+      text-decoration: none;
+    }
+  }
+}
