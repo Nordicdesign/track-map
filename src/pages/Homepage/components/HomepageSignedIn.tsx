@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom'
 import * as ROUTES from '../../../constants/routes'
 
-export const HomepageSignedIn: React.FC = () => {
+export const HomepageSignedIn = () => {
   return (
     <div className="wrapper homepage">
       <main>
@@ -97,20 +96,14 @@ export const HomepageSignedIn: React.FC = () => {
         </div>
       </main>
       <aside>
-        <h2>About this tool</h2>
+        <h2>About</h2>
         <p>
           Trackmap helps you capture track notes in a digital way, so you can
           improve your driving faster.
         </p>
 
-        <p>
-          For each turn you can say whether you had oversteer or understeer, and
-          write some thoughts on best way to approach it, braking points, etc.
-        </p>
-        <p>
-          The project is at early beta so expect bare minimum functionality and
-          things to not work at all! Use at your own risk.
-        </p>
+        <p>Annotate your observations and car handling notes for each turn.</p>
+        <p>The project is at early alpha. Use at your own risk.</p>
         <h3>Suggestions?</h3>
         <p>
           If you have suggestions or something is not quite right, please{' '}

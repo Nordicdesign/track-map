@@ -2,51 +2,6 @@
 
 .wrapper {
   padding: $baseline;
-
-  &.homepage {
-    // max-width: 600px;
-    margin: $baseline auto;
-    display: flex;
-    flex-direction: row;
-    // justify-content: space-between;
-
-    @media screen and (max-width: $screen-medium) {
-      flex-direction: column;
-    }
-
-    .country-list {
-      display: flex;
-      flex-wrap: wrap;
-
-      div {
-        // width: 300px;
-        margin-right: $baseline;
-      }
-    }
-
-    main {
-      ul {
-        width: 100%;
-        min-width: 350px;
-
-        @media screen and (max-width: $screen-medium) {
-          min-width: 0;
-        }
-      }
-    }
-
-    aside {
-      background: #f2f3f4;
-      padding: $baseline;
-      width: 350px;
-      margin-left: $baseline*3;
-
-      @media screen and (max-width: $screen-medium) {
-        margin-left: 0;
-        width: auto;
-      }
-    }
-  }
 }
 
 .not-loggged-in {
@@ -54,12 +9,12 @@
   // flex-direction: row;
   width: 96%;
   max-width: 450px;
-  margin: $baseline*3 auto;
+  margin: $baseline * 3 auto;
   border: 1px solid $colour-gray-300;
-  padding: $baseline*2;
+  padding: $baseline * 2;
 
   div {
-    margin-bottom: $baseline*3;
+    margin-bottom: $baseline * 3;
   }
 
   .login-link {

@@ -19,4 +19,14 @@ header {
       cursor: pointer;
     }
   }
+
+  .header-userInfo {
+    @media screen and (max-width: $screen-small) {
+      font-size: 1.2rem;
+
+      button {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }

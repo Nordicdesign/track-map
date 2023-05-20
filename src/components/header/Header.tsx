@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import * as React from 'react';
+import { useEffect } from 'react'
+import * as React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
@@ -52,7 +52,7 @@ export const Header: React.FC = () => {
       <h1 data-testid="header-name">
         <Link to={ROUTES.LANDING}>TrackMap</Link>
       </h1>
-      <p>
+      <p className="header-userInfo">
         {userEmail ? (
           <User userEmail={userEmail} logout={logout} />
         ) : (
