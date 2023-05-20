@@ -1,4 +1,3 @@
-import React from 'react'
 import { LoginLink } from '../Login/components/LoginLink'
 import { SignUpForm } from './components/SignUpForm'
 
