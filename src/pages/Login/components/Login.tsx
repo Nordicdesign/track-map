@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const refEmail = useRef<HTMLInputElement | null>(null)
   const refPassword = useRef<HTMLInputElement | null>(null)
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value

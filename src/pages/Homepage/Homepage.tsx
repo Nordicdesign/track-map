@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { Landing } from './components/Landing'
 import { HomepageSignedIn } from './components/HomepageSignedIn'
 import { RootState } from '../../app/store'
