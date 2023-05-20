@@ -1,16 +1,13 @@
-# Track Map
+# TrackMap
 
-Track Map helps you capture track notes in a digital way, so you can improve your driving faster. For each turn you can say whether you had oversteer or understeer, and write some thoughts on best way to approach it, braking points, etc. The project is at early beta so expect bare minimum functionality and things to not work at all! Use at your own risk.
+Whether you are a track-day weekend warrior or commited simracer, TrackMap helps you capture track notes digitally, so you can improve your driving faster. Select your track and add notes to each turn. Braking points? Notes on the line?
 
-## Getting started
+## Features
 
-If you have trouble with `createRequire is not a function`, try upgrading your node version. E.g. 14.17.3 should work.
-
-## Scripts
-
-`npm start`
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Multiple tracks - Collection of famous tracks from around the world. We cover most of ACC tracks for the simracers out there. If you want a new track added see the notes below or get in touch
+- Sessions - You can separate your notes by session. Maybe it's a different setup that you are trying, a different day, or even a different car on the same track!
+- Corner notes - Add observations corner by corner
+- Setup notes - General feeling of the car, to help you find the best setup
 
 ## Contributing
 
@@ -18,10 +15,10 @@ There're two parts needed to grow this project, one is adding new tracks, the ot
 
 To add new tracks you'll need to:
 
-* Add the track map in svg or png format on the `/public/images` folder
-* Add track information on the `constants/tracks.json`. Each id is used by Firebase to create the relevant database structure so don't use spaces or special characters that may brake it
-* Create a new entry on `constants/routes.js`
-* Link it on the `HomepageSignedIn.js`
+- Add the track map in svg or png format on the `/public/images` folder
+- Add track information on the `constants/tracks.json`. Each id is used by Firebase to create the relevant database structure so don't use spaces or special characters that may brake it
+- Create a new entry on `constants/routes.js`
+- Link it on the `HomepageSignedIn.tsx`
 
 At some point all this should be refactored so there's no need to create individual pages and the information is stored in the database instead. That would make much easier to be able to add new tracks.
 
