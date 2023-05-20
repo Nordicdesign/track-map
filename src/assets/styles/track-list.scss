@@ -1,8 +1,8 @@
 .homepage {
   // max-width: 600px;
   margin: $baseline auto;
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
   // justify-content: space-between;
 
   @media screen and (max-width: $screen-medium) {
@@ -26,7 +26,7 @@
   main {
     ul {
       width: 100%;
-      min-width: 350px;
+      min-width: 320px;
 
       @media screen and (max-width: $screen-medium) {
         min-width: 0;
@@ -35,15 +35,10 @@
   }
 
   aside {
-    background: #f2f3f4;
+    background: $colour-gray-100;
+    margin-top: $baseline * 3;
+    border-top: 2px solid $colour-gray-200;
     padding: $baseline;
-    width: 350px;
-    margin-left: $baseline * 3;
-
-    @media screen and (max-width: $screen-medium) {
-      margin-left: 0;
-      width: auto;
-    }
   }
 }
 
