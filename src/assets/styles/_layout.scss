@@ -1,5 +1,10 @@
 // LAYOUT
 
+#root {
+  min-height: 100vh;
+  background: linear-gradient(#fff, $color-primary-100);
+}
+
 .wrapper {
   padding: $baseline;
 }

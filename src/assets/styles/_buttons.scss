@@ -6,15 +6,24 @@ button,
   margin-bottom: $baseline;
   cursor: pointer;
   border-radius: 3px;
-  border: 3px solid #4a90e2;
-  background: #fff;
-  color: #4a90e2;
+  border: none;
+  background: $color-primary-500;
+  color: #fff;
   transition: 0.2s ease all;
-  font-weight: 500;
+  font-weight: 700;
   text-decoration: none;
 
   &:hover {
-    background: lighten(#4a90e2, 35);
+    background: $color-primary-600;
+  }
+
+  &.btn-secondary {
+    background: $color-primary-100;
+    color: $colour-base;
+
+    &:hover {
+      background-color: $color-neutral-200;
+    }
   }
 }
 
@@ -56,13 +65,6 @@ a.button-primary {
   display: inline-block;
 }
 
-.btn-secondary {
-  border: 2px solid #4a90e2;
-  background: white;
-  color: #4a90e2;
-  text-decoration: none;
-}
-
 .button-icon {
   width: auto;
   height: auto;
@@ -70,6 +72,7 @@ a.button-primary {
   background: none;
   min-width: 0;
   margin: 0;
+  color: $color-primary-500;
 
   &:hover {
     color: black;
