@@ -17,6 +17,9 @@ header {
       color: #fff;
       text-decoration: none;
       cursor: pointer;
+      &:hover {
+        color: $color-neutral-200;
+      }
     }
   }
 

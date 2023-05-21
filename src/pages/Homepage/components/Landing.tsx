@@ -12,9 +12,9 @@ export const Landing = () => {
               improve your driving.
             </p>
             <h2>Improve your on-track performance, fast.</h2>
-            <p>
-              <Link to={ROUTES.SIGN_UP} className="button-primary">
-                Create an account
+            <p className="mb2">
+              <Link to={ROUTES.SIGN_UP} className="btn signup">
+                Sign up free
               </Link>
             </p>
             <p>

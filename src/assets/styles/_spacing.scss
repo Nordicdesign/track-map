@@ -1,10 +1,23 @@
 // VERTICAL
 
-.space-v-top { margin-top: $baseline; }
-.space-v-top--large { margin-top: $baseline*3; }
+.mt1 {
+  margin-top: $baseline;
+}
+.mt2 {
+  margin-top: $baseline * 2;
+}
+.mt3 {
+  margin-top: $baseline * 3;
+}
 
-.space-v-bottom { margin-bottom: $baseline; }
-.space-v-bottom--large { margin-bottom: $baseline*3; }
-
+.mb1 {
+  margin-bottom: $baseline;
+}
+.mb2 {
+  margin-bottom: $baseline * 2;
+}
+.mb3 {
+  margin-bottom: $baseline * 3;
+}
 
 // HORIZONTAL

@@ -1,0 +1,12 @@
+.signup-form {
+  max-width: 400px;
+  width: 96%;
+  margin: $baseline * 4 auto;
+  background: #fff;
+  padding: $baseline * 2;
+  border-radius: 4px;
+  box-shadow: 0.4px 0.4px 1.2px rgba(0, 0, 0, 0.02),
+    0.9px 1px 2.9px rgba(0, 0, 0, 0.028), 1.8px 1.9px 5.4px rgba(0, 0, 0, 0.035),
+    3.1px 3.4px 9.6px rgba(0, 0, 0, 0.042), 5.8px 6.3px 18px rgba(0, 0, 0, 0.05),
+    14px 15px 43px rgba(0, 0, 0, 0.07);
+}

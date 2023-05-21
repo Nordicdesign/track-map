@@ -1,9 +1,5 @@
 .homepage {
-  // max-width: 600px;
   margin: $baseline auto;
-  // display: flex;
-  // flex-direction: row;
-  // justify-content: space-between;
 
   @media screen and (max-width: $screen-medium) {
     flex-direction: column;
@@ -35,16 +31,19 @@
   }
 
   aside {
-    background: $colour-gray-100;
+    background: $color-neutral-100;
     margin-top: $baseline * 3;
-    border-top: 2px solid $colour-gray-200;
+    margin-left: -$baseline;
+    margin-right: -$baseline;
+    margin-bottom: -$baseline;
+    border-top: 2px solid $color-neutral-300;
     padding: $baseline;
   }
 }
 
 .listCircuits {
   li {
-    background: $colour-gray-100;
+    background: $color-primary-100;
     border-radius: 4px;
     margin-bottom: $baseline * 0.5;
     transition: 0.2s ease all;
@@ -54,18 +53,17 @@
     }
 
     &:hover {
-      background: $colour-gray-200;
+      background: $color-primary-200;
       cursor: pointer;
 
       a {
-        color: $colour-accent;
-        text-decoration: underline;
+        color: $color-primary-600;
       }
     }
 
     a {
       display: block;
-      padding: $baseline * 0.75;
+      padding: $baseline $baseline * 0.75 $baseline * 0.75;
       color: $colour-base;
       text-decoration: none;
     }

@@ -3,14 +3,23 @@
 @import './variables';
 @import './spacing';
 @import './typography';
+
+// ELEMENTS
 @import './buttons';
-@import './header';
-@import './track';
 @import './forms';
+
+// LAYOUT
 @import './layout';
-@import './sessions';
-@import './homepage';
-@import './track-list.scss';
+
+// COMPONENTS
+@import './components/header';
+@import './components/sessions';
+
+// PAGES
+@import './pages/homepage';
+@import './pages/signin-signup.scss';
+@import './pages/track-list.scss';
+@import './pages/track';
 
 img {
   max-width: 100%;

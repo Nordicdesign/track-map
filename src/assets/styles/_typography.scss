@@ -1,12 +1,15 @@
 // TYPOGRAPHY
-body, html {
+body,
+html {
   font-family: $fontstack;
   font-size: 62.5%;
-  font-weight: 400;
+  font-weight: 500;
 }
 
-p, li, td {
-  font-size: 1.6rem;
+p,
+li,
+td {
+  font-size: 1.4rem;
   line-height: 1.4;
 }
 
@@ -15,22 +18,22 @@ p {
 }
 
 li {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 h1 {
   font-size: 4.14rem;
-  margin: 0 0 .3em;
+  margin: 0 0 0.3em;
 }
 
 h2 {
   font-size: 3.2rem;
-  margin: 1em 0 .3em;
+  margin: 1em 0 0.3em;
 }
 
 h3 {
   font-size: 2.2rem;
-  margin: 1em 0 .3em;
+  margin: 1em 0 0.3em;
 }
 
 h4 {
@@ -38,10 +41,11 @@ h4 {
 }
 
 a {
-  color: blue;
+  color: $color-primary-400;
   text-decoration: underline;
+  transition: 0.2s ease all;
 
   &:hover {
-    text-decoration: none;
+    color: $color-primary-500;
   }
 }

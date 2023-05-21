@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { signIn } from '../../../app/users/usersSlice'
 import { checkCredentials } from '../../../app/utils/users'
 
-export const Login: React.FC = () => {
+export const Login = () => {
   // clear any garbage
   Cookies.remove('uid')
   Cookies.remove('email')
@@ -40,23 +40,6 @@ export const Login: React.FC = () => {
         .catch((error: any) => {
           setError(error?.message)
         })
-      // try {
-      //   const response = await checkCredentials(email, password)
-      //   if (!response) {
-      //     return
-      //   }
-      //   const payload = {
-      //     userID: response?.user?.uid,
-      //     userEmail: response?.user?.email,
-      //   }
-      //   dispatch(signIn(payload))
-      //   history.push(ROUTES.LANDING)
-      // } catch ((error as any)) {
-      //   if (error?.message) {
-      //     setError(error?.message)
-      //   }
-
-      // }
     }
   }
 
