@@ -14,7 +14,7 @@ export const Landing = () => {
             <h2>Improve your on-track performance, fast.</h2>
             <p className="mb2">
               <Link to={ROUTES.SIGN_UP} className="btn signup">
-                Create an account
+                Sign up free
               </Link>
             </p>
             <p>
