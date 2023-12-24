@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
 
 import './assets/styles/App.scss'
 
-import { store } from './app/store'
 import * as ROUTES from './constants/routes'
 
 import { Header } from './components/header/Header'

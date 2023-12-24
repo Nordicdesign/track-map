@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
+import { useState, useEffect } from 'react'
+import * as React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { AddNewObservation, AddNewCorner } from './components/AddNew'
@@ -189,6 +189,7 @@ export const Track = () => {
   }, [currentSessionId, sessions])
 
   // does the track exist?
+  // eslint-disable-next-line no-prototype-builtins
   if (!tracks.hasOwnProperty(trackName)) {
     return <NoTrack />
   }

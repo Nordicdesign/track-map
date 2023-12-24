@@ -3,6 +3,6 @@ import * as ROUTES from '../../../constants/routes'
 
 export const SignUpLink = () => (
   <p className="login-link">
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign up</Link>
+    Don&apos;t have an account? <Link to={ROUTES.SIGN_UP}>Sign up</Link>
   </p>
 )

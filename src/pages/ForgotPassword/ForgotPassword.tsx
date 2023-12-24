@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -52,8 +52,8 @@ export const ForgotPassword = () => {
         <>
           <p>Done.</p>
           <p>
-            If the email matches one in our database we'll send you an email
-            containing a link to reset it.
+            If the email matches one in our database we&apos;ll send you an
+            email containing a link to reset it.
           </p>
           <p>
             <Link to={ROUTES.LANDING}>Back to the homepage</Link>
