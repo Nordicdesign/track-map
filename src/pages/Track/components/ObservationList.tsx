@@ -22,12 +22,14 @@ export const ObservationList = (props: Props) => {
           <button
             className="button-icon"
             onClick={() => setTrackCurrentId('observations', id)}
+            aria-label="edit"
           >
             <div className="icon icon-pencil-square"></div>
           </button>
           <button
             className="button-icon"
             onClick={() => onDelete('observations', id)}
+            aria-label="delete"
           >
             <div className="icon icon-trash"></div>
           </button>

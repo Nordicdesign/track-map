@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import * as React from 'react';
+import { useRef, useState } from 'react'
+import * as React from 'react'
 import { SessionType } from '../../../app/utils/types'
 
 type Props = {
@@ -152,10 +152,18 @@ export const SessionSelection = (props: Props) => {
             </select>
           </label>
           <div>
-            <button className="button-icon" onClick={showChangeName}>
+            <button
+              className="button-icon"
+              onClick={showChangeName}
+              aria-label="edit"
+            >
               <div className="icon icon-pencil-square"></div>
             </button>
-            <button className="button-icon" onClick={showNewSession}>
+            <button
+              className="button-icon"
+              onClick={showNewSession}
+              aria-label="add new session"
+            >
               <div className="icon icon-plus-circle"></div>
             </button>
           </div>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import * as React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
 
@@ -19,6 +19,10 @@ export const Header: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail)
   const dispatch = useDispatch()
   const history = useHistory()
+
+  const match = useRouteMatch('/tracks/:track')
+  console.log(match)
+  const isTrackPage = match?.isExact
 
   const logout = () => {
     firebase
@@ -49,9 +53,17 @@ export const Header: React.FC = () => {
 
   return (
     <header>
-      <h1 data-testid="header-name">
-        <Link to={ROUTES.LANDING}>TrackMap</Link>
-      </h1>
+      <div>
+        <h1 data-testid="header-name">
+          <Link to={ROUTES.LANDING}>TrackMap</Link>
+        </h1>
+        {isTrackPage ? (
+          <p>
+            <Link to={ROUTES.LANDING}>&lt; Back to track list</Link>
+          </p>
+        ) : null}
+      </div>
+
       <p className="header-userInfo">
         {userEmail ? (
           <User userEmail={userEmail} logout={logout} />

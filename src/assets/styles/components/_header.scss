@@ -6,6 +6,14 @@ header {
   flex-direction: row;
   justify-content: space-between;
 
+  div {
+    display: flex;
+
+    p {
+      margin-left: $baseline * 3;
+    }
+  }
+
   p,
   h1 {
     line-height: 33px;
