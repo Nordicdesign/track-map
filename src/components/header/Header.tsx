@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import * as React from 'react'
 import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
@@ -15,7 +14,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-export const Header: React.FC = () => {
+export const Header = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail)
   const dispatch = useDispatch()
   const history = useHistory()

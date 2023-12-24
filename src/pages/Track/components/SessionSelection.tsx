@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react'
-import * as React from 'react'
+import { Key, useRef, useState } from 'react'
 import { SessionType } from '../../../app/utils/types'
 
 type Props = {
@@ -35,15 +34,13 @@ export const SessionSelection = (props: Props) => {
     }
   }
 
-  const availableSessions = sessions.map(
-    (session: SessionType, index: React.Key) => {
-      return (
-        <option key={index} value={session.id}>
-          {session.name}
-        </option>
-      )
-    },
-  )
+  const availableSessions = sessions.map((session: SessionType, index: Key) => {
+    return (
+      <option key={index} value={session.id}>
+        {session.name}
+      </option>
+    )
+  })
 
   const showChangeName = () => setChangeName(true)
   const showNewSession = () => setisNewSession(true)
