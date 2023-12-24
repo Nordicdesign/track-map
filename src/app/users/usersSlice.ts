@@ -19,7 +19,7 @@ export const userSlice = createSlice({
       state.userID = action.payload.userID
       state.userEmail = action.payload.userEmail
     },
-    logOut: (state: UserState) => {
+    logOut: () => {
       return initialState
     },
   },

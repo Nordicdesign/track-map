@@ -73,7 +73,7 @@ export const Landing = () => {
           >
             fill in this form
           </a>{' '}
-          and we'll try to fix it as soon as humanly possible.
+          and we&apos;ll try to fix it as soon as humanly possible.
         </p>
         <p>
           * TrackMap is just a placeholder, not the real name of this thing, if

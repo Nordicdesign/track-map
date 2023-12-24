@@ -24,7 +24,7 @@ export const SignUpForm = () => {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then((authUser) => {
+        .then(() => {
           console.log('user created')
           history.push(ROUTES.LANDING)
         })
@@ -65,8 +65,8 @@ export const SignUpForm = () => {
         {error && <p className="error-handling">{error}</p>}
       </form>
       <p>
-        This tool is highly experimental and provided as-is. Don't be surprised
-        if there are errors or data loss!
+        This tool is highly experimental and provided as-is. Don&apos;t be
+        surprised if there are errors or data loss!
       </p>
     </>
   )
