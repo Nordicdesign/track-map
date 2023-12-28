@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import * as React from 'react'
+import { useState, useEffect, Key } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { AddNewObservation, AddNewCorner } from './components/AddNew'
@@ -284,7 +283,7 @@ export const Track = () => {
               ) : (
                 <div>
                   {corners ? (
-                    Object.entries(corners).map((corner, key: React.Key) => {
+                    Object.entries(corners).map((corner, key: Key) => {
                       return (
                         <CornersList
                           key={key}

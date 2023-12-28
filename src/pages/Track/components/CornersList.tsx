@@ -18,12 +18,14 @@ export const CornersList = (props: Props) => {
         <button
           className="button-icon"
           onClick={() => setTrackCurrentId('corners', name)}
+          aria-label="edit"
         >
           <div className="icon icon-pencil-square"></div>
         </button>
         <button
           className="button-icon"
           onClick={() => onDelete('corners', name)}
+          aria-label="delete"
         >
           <div className="icon icon-trash"></div>
         </button>

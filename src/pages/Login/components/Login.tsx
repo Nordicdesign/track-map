@@ -53,7 +53,6 @@ export const Login = () => {
           ref={refEmail}
           // value={values.email}
           type="text"
-          placeholder="Email Address"
         />
       </label>
 
@@ -65,7 +64,6 @@ export const Login = () => {
           ref={refPassword}
           // value={values.password}
           type="password"
-          placeholder="Password"
         />
       </label>
       <button onClick={onSubmit}>Log In</button>

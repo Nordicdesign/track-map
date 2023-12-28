@@ -39,24 +39,12 @@ export const SignUpForm = () => {
       <form>
         <label>
           Email address
-          <input
-            name="email"
-            ref={refEmail}
-            // value={values.email}
-            type="text"
-            placeholder="Email Address"
-          />
+          <input name="email" ref={refEmail} type="text" />
         </label>
 
         <label>
           Choose a password
-          <input
-            name="passwordOne"
-            ref={refPassword}
-            // value={values.passwordOne}
-            type="password"
-            placeholder="Password"
-          />
+          <input name="passwordOne" ref={refPassword} type="password" />
         </label>
         <button onClick={onSubmit} type="submit">
           Sign Up
