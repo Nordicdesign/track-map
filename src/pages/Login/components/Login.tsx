@@ -63,7 +63,6 @@ export const Login = () => {
           name="password"
           id="password"
           ref={refPassword}
-          // value={values.password}
           type="password"
         />
       </label>
