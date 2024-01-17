@@ -3,10 +3,10 @@ import { entryType } from '../../../app/utils/types'
 type Props = {
   name: number
   id: string
-  notes: any
+  notes: string
   setupName: string
   onDelete: (type: keyof typeof entryType, id: string) => void
-  setTrackCurrentId: any
+  setTrackCurrentId: (type: keyof typeof entryType, id: string) => void
 }
 
 export const ObservationList = (props: Props) => {
