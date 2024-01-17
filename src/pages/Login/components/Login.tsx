@@ -6,6 +6,7 @@ import * as ROUTES from '../../../constants/routes'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../app/users/usersSlice'
 import { checkCredentials } from '../../../app/utils/users'
+import { FirebaseError } from '../../../types/firebase'
 
 export const Login = () => {
   // clear any garbage
@@ -18,7 +19,7 @@ export const Login = () => {
   const refEmail = useRef<HTMLInputElement | null>(null)
   const refPassword = useRef<HTMLInputElement | null>(null)
 
-  const onSubmit = async (e: { preventDefault: () => void }) => {
+  const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value
@@ -37,7 +38,7 @@ export const Login = () => {
           dispatch(signIn(payload))
           history.push(ROUTES.LANDING)
         })
-        .catch((error: any) => {
+        .catch((error: FirebaseError) => {
           setError(error?.message)
         })
     }

@@ -5,6 +5,7 @@ import 'firebase/auth'
 
 import * as ROUTES from '../../../constants/routes'
 import { firebaseConfig } from '../../../constants/firebase'
+import { FirebaseError } from '../../../types/firebase'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -16,7 +17,7 @@ export const SignUpForm = () => {
   const refPassword = useRef<HTMLInputElement | null>(null)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const onSubmit = (event: any) => {
+  const onSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const email = refEmail.current?.value
     const password = refPassword.current?.value
@@ -25,10 +26,9 @@ export const SignUpForm = () => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          console.log('user created')
           history.push(ROUTES.LANDING)
         })
-        .catch((error: any) => {
+        .catch((error: FirebaseError) => {
           setError(error.message)
         })
     }
