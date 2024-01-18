@@ -44,12 +44,15 @@ button.button-link {
 }
 
 .button-primary,
-input[type='submit'].button-primary {
+input[type='submit'].button-primary,
+input[type='submit'].button-submit {
   min-width: 120px;
+  width: auto;
+  height: auto;
   font-size: 1.6rem;
   font-weight: 500;
   margin-bottom: $baseline;
-  padding: $baseline;
+  padding: $baseline * 0.5 $baseline;
   cursor: pointer;
   border-radius: 3px;
   border: none;

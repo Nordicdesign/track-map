@@ -34,8 +34,6 @@ type TrackParams = {
 const tracks: any = tracksJson
 
 export const Track = () => {
-  // for the context API
-  // const userEmail = useSelector((state: RootState) => state.user.userEmail)
   const userID = useSelector((state: RootState) => state.user.userID)
   const { trackName } = useParams<TrackParams>()
   const history = useHistory()
@@ -151,12 +149,10 @@ export const Track = () => {
           setDataIsReady(true)
         },
       })
-    } else {
-      setDataIsReady(true)
     }
 
     return () => detachListener({ authUser: userID, trackID: trackName })
-  }, [])
+  }, [trackName, userID])
 
   useEffect(() => {
     let newSession: SessionType
