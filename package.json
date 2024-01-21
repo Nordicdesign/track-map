@@ -1,6 +1,6 @@
 {
   "name": "trackmap-react",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "author": "Alex Lillo",
   "private": true,
   "type": "module",
@@ -9,7 +9,8 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "lint": "npx eslint src"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -23,25 +24,26 @@
     "react-router-dom": "5.1.2",
     "remove": "^0.1.5",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
+    "vite": "^5.0.11",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.2.2"
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.5",
-    "@types/react": "^18.2.45",
+    "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@types/react-router-dom": "^5.1.8",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
-    "@vitest/coverage-v8": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vitest/coverage-v8": "^1.2.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
-    "jsdom": "^23.0.1",
-    "prettier": "^3.0.3",
-    "sass": "^1.69.5",
-    "vitest": "^1.1.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^23.2.0",
+    "prettier": "^3.2.4",
+    "sass": "^1.69.7",
+    "vitest": "^1.2.0"
   },
   "browserslist": [
     ">0.2%",
