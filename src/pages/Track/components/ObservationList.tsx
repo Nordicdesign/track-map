@@ -1,12 +1,12 @@
-import { entryType } from '../../../app/utils/types'
+import { TypeOfEntry } from '../../../app/utils/types'
 
 type Props = {
   name: number
   id: string
   notes: string
   setupName: string
-  onDelete: (type: keyof typeof entryType, id: string) => void
-  setTrackCurrentId: (type: keyof typeof entryType, id: string) => void
+  onDelete: (type: keyof typeof TypeOfEntry, id: string) => void
+  setTrackCurrentId: (type: keyof typeof TypeOfEntry, id: string) => void
 }
 
 export const ObservationList = (props: Props) => {

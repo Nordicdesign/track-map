@@ -1,5 +1,5 @@
 import { Key, useRef, useState } from 'react'
-import { SessionType } from '../../../app/utils/types'
+import { SessionType } from '../../../../app/utils/types'
 
 type Props = {
   sessions: SessionType[] | null

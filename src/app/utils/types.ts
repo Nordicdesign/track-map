@@ -1,17 +1,16 @@
-export interface CornerType {
+export interface Corner {
   [key: string]: {
     notes: string
   }
 }
-export interface SessionType {
-  // [index: string]: object
-  corners: CornerType[] | undefined
+export interface Session {
+  corners: Corner[] | undefined
   id: string
   name: string
-  observations: NotesType | undefined
+  observations: Setup | undefined
 }
 
-export type NotesType = {
+export type Setup = {
   [id: string]: {
     notes: string
     setupName: string
@@ -19,11 +18,11 @@ export type NotesType = {
   }
 }
 
-export interface NoteType {
+export interface Note {
   note: string
 }
 
-export enum entryType {
+export enum TypeOfEntry {
   observations = 'observations',
   corners = 'corners',
 }

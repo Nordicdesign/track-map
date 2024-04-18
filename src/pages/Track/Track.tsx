@@ -1,9 +1,10 @@
-import { useState, useEffect, Key } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { AddNewObservation, AddNewCorner } from './components/AddNew'
+import { AddNewCorner } from './components/corners/AddNewCorner'
+import { AddNewSetupNote } from './components/AddNewSetupNote'
 import { ObservationList, NoObservations } from './components/ObservationList'
-import { CornersList, NoCorners } from './components/CornersList'
+import { NoCorners } from './components/corners/NoCorner'
 import {
   recordObservation,
   editObservation,
@@ -14,18 +15,14 @@ import {
   loadData,
   newSession,
 } from '../../app/utils/data'
-import { SessionSelection } from './components/SessionSelection'
+import { SessionSelection } from './components/sessions/SessionSelection'
 import tracksJson from '../../constants/tracks.json'
 import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
-import {
-  CornerType,
-  entryType,
-  NoteType,
-  SessionType,
-} from '../../app/utils/types'
+import { Corner, TypeOfEntry, Note, Session } from '../../app/utils/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
+import { CornerList } from './components/corners/CornerList'
 
 type TrackParams = {
   trackName: string
@@ -43,28 +40,26 @@ export const Track = () => {
   }
 
   // initialize the state
-  const [sessions, setSessions] = useState<SessionType[] | null>(null)
+  const [sessions, setSessions] = useState<Session[] | null>(null)
   const [sessionName, setSessionName] = useState<string>()
-  const [currentSession, setCurrentSession] = useState<SessionType | null>(null)
+  const [currentSession, setCurrentSession] = useState<Session | null>(null)
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
-  const [corners, setCorners] = useState<CornerType[] | null>(null)
+  const [corners, setCorners] = useState<Corner[] | null>(null)
   const [observations, setObservations] = useState<any>(null)
   const [dataIsReady, setDataIsReady] = useState(false)
   const [visibleNotesForm, setVisibleNotesForm] = useState(false)
   const [visibleCornerForm, setVisibleCornerForm] = useState(false)
   const [currentId, setCurrentId] = useState('')
 
-  const handleAdd = (type: string) => {
-    if (type === 'notes') setVisibleNotesForm(true)
-    else if (type === 'corner') setVisibleCornerForm(true)
+  const handleAdd = (type: TypeOfEntry) => {
+    if (type === TypeOfEntry.observations) setVisibleNotesForm(true)
+    else if (type === TypeOfEntry.corners) setVisibleCornerForm(true)
   }
 
-  const handleCancel = (type: string) => {
-    if (type === 'notes') setVisibleNotesForm(false)
-    else if (type === 'corner') setVisibleCornerForm(false)
-  }
+  const handleCancelCorner = () => setVisibleCornerForm(false)
+  const handleCancelSetupNote = () => setVisibleNotesForm(false)
 
-  const addOrEdit = (obj: { notes: NoteType; setupName: string }) => {
+  const addOrEdit = (obj: { notes: Note; setupName: string }) => {
     if (!userID || !currentSession) {
       return
     }
@@ -85,7 +80,7 @@ export const Track = () => {
     setVisibleNotesForm(false)
   }
 
-  const addOrEditCorner = (corner: CornerType, notes: NoteType) => {
+  const addOrEditCorner = (corner: Corner, notes: Note) => {
     if (!userID || !currentSession) return
 
     setVisibleCornerForm(false)
@@ -104,7 +99,7 @@ export const Track = () => {
     newSession(userID, trackName, value)
   }
 
-  const handleDelete = (type: keyof typeof entryType, id: string) => {
+  const handleDelete = (type: keyof typeof TypeOfEntry, id: string) => {
     if (!userID || !currentSession) return
 
     if (window.confirm(`Are you sure to delete this entry`)) {
@@ -132,19 +127,18 @@ export const Track = () => {
     setCurrentSessionId(newSessionID)
   }
 
-  const setTrackCurrentId = (type: keyof typeof entryType, id: string) => {
+  const setTrackCurrentId = (type: keyof typeof TypeOfEntry, id: string) => {
     setCurrentId(id)
     if (type === 'observations') setVisibleNotesForm(true)
     else if (type === 'corners') setVisibleCornerForm(true)
   }
 
-  // on page mount
   useEffect(() => {
     if (userID !== 'guest' && userID !== null && userID !== undefined) {
       loadData({
         authUser: userID,
         trackID: trackName,
-        onResult: (sessions: SessionType[]) => {
+        onResult: (sessions: Session[]) => {
           setSessions(sessions)
           setDataIsReady(true)
         },
@@ -155,7 +149,7 @@ export const Track = () => {
   }, [trackName, userID])
 
   useEffect(() => {
-    let newSession: SessionType
+    let newSession: Session
 
     if (!sessions) {
       return
@@ -211,7 +205,9 @@ export const Track = () => {
         {tracks[trackName].imgAuthor && (
           <p>
             Image by{' '}
-            <a href={tracks[trackName].imgCC}>{tracks[trackName].imgAuthor}</a>
+            <a href={tracks[trackName].imgCC} target="_blank" rel="noreferrer">
+              {tracks[trackName].imgAuthor}
+            </a>
           </p>
         )}
       </div>
@@ -228,17 +224,17 @@ export const Track = () => {
             <div className="track-observations">
               <div className="track-observations-header">
                 <h3>Setup notes</h3>
-                <button onClick={() => handleAdd('observations')}>
+                <button onClick={() => handleAdd(TypeOfEntry.observations)}>
                   Add new
                 </button>
               </div>
 
               {visibleNotesForm ? (
-                <AddNewObservation
+                <AddNewSetupNote
                   currentId={currentId}
                   addOrEdit={addOrEdit}
                   observations={observations}
-                  handleCancel={handleCancel}
+                  handleCancel={handleCancelSetupNote}
                 />
               ) : (
                 <div>
@@ -266,7 +262,9 @@ export const Track = () => {
             <div className="track-corners">
               <div className="track-corners-header">
                 <h3>Track notes</h3>
-                <button onClick={() => handleAdd('corner')}>Add new</button>
+                <button onClick={() => handleAdd(TypeOfEntry.corners)}>
+                  Add new
+                </button>
               </div>
 
               {visibleCornerForm ? (
@@ -274,22 +272,16 @@ export const Track = () => {
                   currentId={currentId}
                   addOrEditCorner={addOrEditCorner}
                   corners={corners}
-                  handleCancel={handleCancel}
+                  handleCancel={handleCancelCorner}
                 />
               ) : (
                 <div>
                   {corners ? (
-                    Object.entries(corners).map((corner, key: Key) => {
-                      return (
-                        <CornersList
-                          key={key}
-                          name={corner[0]}
-                          notes={corner[1]}
-                          onDelete={handleDelete}
-                          setTrackCurrentId={setTrackCurrentId}
-                        />
-                      )
-                    })
+                    <CornerList
+                      corners={corners}
+                      setTrackCurrentId={setTrackCurrentId}
+                      handleDelete={handleDelete}
+                    />
                   ) : (
                     <NoCorners />
                   )}
