@@ -20,7 +20,6 @@ export const Header = () => {
   const history = useHistory()
 
   const match = useRouteMatch('/tracks/:track')
-  console.log(match)
   const isTrackPage = match?.isExact
 
   const logout = () => {
@@ -28,7 +27,7 @@ export const Header = () => {
       .auth()
       .signOut()
       .then(() => {
-        console.log('logged out!')
+        // console.log('logged out!')
         dispatch(logOut())
         history.push('/')
       })
@@ -48,6 +47,7 @@ export const Header = () => {
       }
       dispatch(signIn(payload))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -1,13 +1,13 @@
-export const LANDING = '/';
-export const SIGN_UP = '/signup';
-export const SIGN_IN = '/login';
-export const HOME = '/home';
-export const ACCOUNT = '/account';
-export const ADMIN = '/admin';
-export const PASSWORD_FORGET = '/forgot-password';
+export const LANDING = '/'
+export const SIGN_UP = '/signup'
+export const SIGN_IN = '/login'
+export const HOME = '/home'
+export const ACCOUNT = '/account'
+export const ADMIN = '/admin'
+export const PASSWORD_FORGET = '/forgot-password'
 
 // tracks
-export const SPA = 'tracks/spa';
+export const SPA = 'tracks/spa'
 export const LEMANS = 'tracks/lemans'
 export const SHANGHAI = 'tracks/shanghai'
 export const WATKINS = 'tracks/watkins-glen'
@@ -27,3 +27,4 @@ export const VALLELUNGA = 'tracks/vallelunga'
 export const ROADATLANTA = 'tracks/road-atlanta'
 export const MOSPORT = 'tracks/mosport'
 export const SUZUKA = 'tracks/suzuka'
+export const BAHRAIN = 'tracks/bahrain'

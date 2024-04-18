@@ -78,6 +78,9 @@ export const HomepageSignedIn = () => {
             <h2>Asia</h2>
             <ul className="listCircuits">
               <li>
+                <Link to={ROUTES.BAHRAIN}>Bahrain</Link>
+              </li>
+              <li>
                 <Link to={ROUTES.SHANGHAI}>Shanghai</Link>
               </li>
               <li>

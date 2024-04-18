@@ -14,7 +14,7 @@ export function loadData(props: {
     .on('value', function (snapshot) {
       // check if there are any sessions yet
       if (!snapshot.exists()) {
-        console.log('there are no sessions!!! 😱')
+        // console.log('there are no sessions!!! 😱')
         initiateSession(authUser, trackID, onResult)
       } else {
         onResult(prepareSessions(snapshot))
@@ -39,7 +39,7 @@ export function initiateSession(
   newSession.set({
     name: 'default',
   })
-  console.log('session created ✅')
+  // console.log('session created ✅')
 
   firebase
     .database()
@@ -57,7 +57,7 @@ export function newSession(authUser: string, trackID: string, value: any) {
   newSession.set({
     name: value,
   })
-  console.log('session created ✅')
+  // console.log('session created ✅')
 }
 
 export function prepareSessions(snapshot: firebase.database.DataSnapshot) {
