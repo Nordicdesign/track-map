@@ -43,7 +43,7 @@
 
 .listCircuits {
   li {
-    background: $color-primary-100;
+    border: 1px solid $color-primary-400;
     border-radius: 4px;
     margin-bottom: $baseline * 0.5;
     transition: 0.2s ease all;
@@ -53,7 +53,7 @@
     }
 
     &:hover {
-      background: $color-primary-200;
+      background: $color-primary-100;
       cursor: pointer;
 
       a {
