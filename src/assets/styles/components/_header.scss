@@ -31,6 +31,12 @@ header {
     }
   }
 
+  p.back-track-list {
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+  }
+
   .header-userInfo {
     @media screen and (max-width: $screen-small) {
       font-size: 1.2rem;

@@ -3,11 +3,10 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: $baseline;
-  margin-top: $baseline * 0.5
+  margin-top: $baseline * 0.5;
 }
 
 .session-creator {
-
   form {
     display: flex;
     flex-direction: row;
@@ -23,7 +22,7 @@
       margin-top: 0;
     }
 
-    input[type="submit"] {
+    input[type='submit'] {
       margin-left: $baseline * 0.5;
       width: auto;
     }
@@ -34,7 +33,6 @@
   }
 }
 
-
 .session-selection {
   padding-right: $baseline;
   border-right: 1px solid tomato;
@@ -42,6 +40,12 @@
   font-size: 1.6rem;
   display: flex;
   align-items: baseline;
+
+  @media screen and (max-width: 900px) {
+    border: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
 
   select {
     display: block;
@@ -74,7 +78,7 @@
     justify-content: space-between;
     align-items: baseline;
 
-    input[type="submit"] {
+    input[type='submit'] {
       width: auto;
     }
   }

@@ -57,7 +57,7 @@ export const Header = () => {
           <Link to={Routes.LANDING}>TrackMap</Link>
         </h1>
         {isTrackPage ? (
-          <p>
+          <p className="back-track-list">
             <Link to={Routes.LANDING}>&lt; Back to track list</Link>
           </p>
         ) : null}
