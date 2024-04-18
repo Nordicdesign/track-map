@@ -81,6 +81,9 @@ export const HomepageSignedIn = () => {
                 <Link to={ROUTES.BAHRAIN}>Bahrain</Link>
               </li>
               <li>
+                <Link to={ROUTES.FUJI}>Fuji Speedway</Link>
+              </li>
+              <li>
                 <Link to={ROUTES.SHANGHAI}>Shanghai</Link>
               </li>
               <li>
