@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import * as ROUTES from '../../../constants/routes'
 import { firebaseConfig } from '../../../constants/firebase'
 import { FirebaseError } from '../../../types/firebase'
+import { Routes } from '../../../constants/routes'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -26,7 +26,7 @@ export const SignUpForm = () => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          history.push(ROUTES.LANDING)
+          history.push(Routes.LANDING)
         })
         .catch((error: FirebaseError) => {
           setError(error.message)

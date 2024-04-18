@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../../constants/routes'
+import { Routes } from '../../../constants/routes'
 
 export const Landing = () => {
   return (
@@ -13,12 +13,12 @@ export const Landing = () => {
             </p>
             <h2>Improve your on-track performance, fast.</h2>
             <p className="mb2">
-              <Link to={ROUTES.SIGN_UP} className="btn signup">
+              <Link to={Routes.SIGN_UP} className="btn signup">
                 Sign up free
               </Link>
             </p>
             <p>
-              <Link to={ROUTES.SIGN_IN} className="btn btn-secondary">
+              <Link to={Routes.SIGN_IN} className="btn btn-secondary">
                 Log in to your account
               </Link>
             </p>

@@ -3,12 +3,12 @@ import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from 'firebase/app'
 
-import * as ROUTES from '../../constants/routes'
 import { User } from './components/User'
 import { RootState } from '../../app/store'
 import { logOut, signIn } from '../../app/users/usersSlice'
 import { firebaseConfig } from '../../constants/firebase'
 import Cookies from 'js-cookie'
+import { Routes } from '../../constants/routes'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -54,11 +54,11 @@ export const Header = () => {
     <header>
       <div>
         <h1 data-testid="header-name">
-          <Link to={ROUTES.LANDING}>TrackMap</Link>
+          <Link to={Routes.LANDING}>TrackMap</Link>
         </h1>
         {isTrackPage ? (
           <p>
-            <Link to={ROUTES.LANDING}>&lt; Back to track list</Link>
+            <Link to={Routes.LANDING}>&lt; Back to track list</Link>
           </p>
         ) : null}
       </div>
@@ -67,7 +67,7 @@ export const Header = () => {
         {userEmail ? (
           <User userEmail={userEmail} logout={logout} />
         ) : (
-          <Link data-testid="header-login" to={ROUTES.SIGN_IN}>
+          <Link data-testid="header-login" to={Routes.SIGN_IN}>
             Log in
           </Link>
         )}

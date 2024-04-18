@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../../constants/routes'
+import { Routes } from '../../../constants/routes'
 
 export const Guest: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const Guest: React.FC = () => {
       </p>
       <p>
         <button>
-          <Link to={ROUTES.SIGN_UP}>Sign up</Link>
+          <Link to={Routes.SIGN_UP}>Sign up</Link>
         </button>
       </p>
       <p>

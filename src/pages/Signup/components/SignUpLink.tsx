@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../../constants/routes'
+import { Routes } from '../../../constants/routes'
 
 export const SignUpLink = () => (
   <p className="login-link">
-    Don&apos;t have an account? <Link to={ROUTES.SIGN_UP}>Sign up</Link>
+    Don&apos;t have an account? <Link to={Routes.SIGN_UP}>Sign up</Link>
   </p>
 )

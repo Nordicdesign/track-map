@@ -2,11 +2,11 @@ import { useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import * as ROUTES from '../../../constants/routes'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../app/users/usersSlice'
 import { checkCredentials } from '../../../app/utils/users'
 import { FirebaseError } from '../../../types/firebase'
+import { Routes } from '../../../constants/routes'
 
 export const Login = () => {
   // clear any garbage
@@ -36,7 +36,7 @@ export const Login = () => {
           uid && Cookies.set('uid', uid, { expires: 7 })
           email && Cookies.set('email', email, { expires: 7 })
           dispatch(signIn(payload))
-          history.push(ROUTES.LANDING)
+          history.push(Routes.LANDING)
         })
         .catch((error: FirebaseError) => {
           setError(error?.message)
@@ -71,7 +71,7 @@ export const Login = () => {
       {error && <p className="error-handling">{error}</p>}
       <p>
         Forgot your password?{' '}
-        <Link to={ROUTES.PASSWORD_FORGET}>Get a new one</Link>
+        <Link to={Routes.PASSWORD_FORGET}>Get a new one</Link>
       </p>
     </form>
   )

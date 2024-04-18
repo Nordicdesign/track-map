@@ -1,25 +1,23 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import './assets/styles/App.scss'
-
-import * as ROUTES from './constants/routes'
-
 import { Header } from './components/header/Header'
 import { Homepage } from './pages/Homepage/Homepage'
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword'
 import { LoginPage } from './pages/Login/LoginPage'
 import { SignUpPage } from './pages/Signup/Signup'
 import { Track } from './pages/Track/Track'
+import { Routes } from './constants/routes'
+import './assets/styles/App.scss'
 
 const App = () => {
   return (
     <Router>
       <Header />
       <div className="App">
-        <Route exact path={ROUTES.LANDING} component={Homepage} />
-        <Route path={ROUTES.PASSWORD_FORGET} component={ForgotPassword} />
-        <Route path={ROUTES.SIGN_IN} component={LoginPage} />
-        <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+        <Route exact path={Routes.LANDING} component={Homepage} />
+        <Route path={Routes.PASSWORD_FORGET} component={ForgotPassword} />
+        <Route path={Routes.SIGN_IN} component={LoginPage} />
+        <Route path={Routes.SIGN_UP} component={SignUpPage} />
         <Route path="/tracks/:trackName" component={Track} />
       </div>
     </Router>
