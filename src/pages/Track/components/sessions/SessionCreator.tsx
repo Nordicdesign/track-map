@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/database'
 
@@ -6,7 +6,6 @@ import 'firebase/database'
 
 export const SessionCreator = (props: any) => {
   const { trackID, authUser } = props
-  console.log(props)
 
   const [inputText, setInputText] = useState<string>('')
   const [sent, setSent] = useState<boolean>(false)

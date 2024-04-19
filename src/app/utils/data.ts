@@ -1,11 +1,11 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
-import { entryType, SessionType } from './types'
+import { TypeOfEntry, Session } from './types'
 
 export function loadData(props: {
   authUser: string
   trackID: string
-  onResult: (sessions: SessionType[]) => void
+  onResult: (sessions: Session[]) => void
 }) {
   const { authUser, trackID, onResult } = props
   firebase
@@ -30,7 +30,7 @@ export function detachListener(props: { authUser: any; trackID: any }) {
 export function initiateSession(
   authUser: string,
   trackID: string,
-  onResult: (sessions: SessionType[]) => void,
+  onResult: (sessions: Session[]) => void,
 ) {
   const newSession = firebase
     .database()
@@ -126,7 +126,7 @@ export function deleteEntry(
   authUser: string,
   trackID: string,
   session: string | null,
-  type: keyof typeof entryType,
+  type: keyof typeof TypeOfEntry,
   id: string,
 ) {
   firebase
