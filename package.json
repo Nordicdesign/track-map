@@ -24,7 +24,7 @@
     "react-router-dom": "5.1.2",
     "remove": "^0.1.5",
     "typescript": "^5.4.5",
-    "vite": "^5.2.9",
+    "vite": "^5.2.10",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
