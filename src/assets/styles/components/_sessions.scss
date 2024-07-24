@@ -47,6 +47,11 @@
     margin-right: 0;
   }
 
+  & label > div {
+    display: flex;
+    flex-direction: row;
+  }
+
   select {
     display: block;
     border-radius: 2px;
@@ -58,8 +63,12 @@
   }
 
   label {
-    margin-right: auto;
-    width: 70%;
+    width: 100%;
+
+    button {
+      min-width: auto;
+      margin-left: 8px;
+    }
   }
 
   .button-icon {

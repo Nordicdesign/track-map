@@ -1,4 +1,4 @@
-import { Key, useRef, useState } from 'react'
+import { Key, SyntheticEvent, useRef, useState } from 'react'
 import { Session } from '../../../../app/utils/types'
 
 type Props = {
@@ -50,7 +50,7 @@ export const SessionSelection = (props: Props) => {
     setisNewSession(false)
   }
 
-  const handleChangeNameSubmit = (e: any) => {
+  const handleChangeNameSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     const sessionName = inputSessionName.current?.value
 
@@ -61,7 +61,7 @@ export const SessionSelection = (props: Props) => {
     setChangeName(false)
   }
 
-  const handleNewSessionSubmit = (e: any) => {
+  const handleNewSessionSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     const sessionName = inputSessionName.current?.value
 
@@ -133,29 +133,30 @@ export const SessionSelection = (props: Props) => {
           </form>
           <p className="new-session-p">
             Sessions help you keep your notes organised by cars, or maybe
-            different weekends.{' '}
+            different weekends.
           </p>
         </div>
       ) : (
         <div className="session-selection">
-          <label>
+          <label htmlFor="session">
             Session
-            <select
-              onChange={handleChangeSession}
-              ref={selectSessions}
-              defaultValue={currentSessionId ? currentSessionId : undefined}
-            >
-              {availableSessions}
-            </select>
+            <div>
+              <select
+                id="session"
+                name="session"
+                onChange={handleChangeSession}
+                ref={selectSessions}
+                defaultValue={currentSessionId ? currentSessionId : undefined}
+              >
+                {availableSessions}
+              </select>
+              <button onClick={showChangeName} aria-label="edit">
+                edit
+                <div className="icon inline icon-pencil-square"></div>
+              </button>
+            </div>
           </label>
           <div>
-            <button
-              className="button-icon"
-              onClick={showChangeName}
-              aria-label="edit"
-            >
-              <div className="icon icon-pencil-square"></div>
-            </button>
             <button
               className="button-icon"
               onClick={showNewSession}

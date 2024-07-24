@@ -3,7 +3,8 @@
 @font-face {
   font-family: 'trackmap';
   src: url('../fonts/trackmap.eot');
-  src: url('../fonts/trackmap.eot?#iefix') format('embedded-opentype'),
+  src:
+    url('../fonts/trackmap.eot?#iefix') format('embedded-opentype'),
     url('../fonts/trackmap.woff') format('woff'),
     url('../fonts/trackmap.ttf') format('truetype'),
     url('../fonts/trackmap.svg#trackmap') format('svg');
@@ -46,4 +47,8 @@
 }
 .icon-plus-circle:before {
   content: '\63';
+}
+
+.icon.inline {
+  display: inline;
 }
