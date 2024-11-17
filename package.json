@@ -52,7 +52,9 @@
     "not op_mini all"
   ],
   "overrides": {
-    "braces": "^3.0.3"
+    "braces": "^3.0.3",
+    "rollup": "^4.27.2",
+    "webpack": "^5.96.1"
   },
   "engines": {
     "node": ">=20.11"
