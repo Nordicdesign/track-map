@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 
 import { User } from './components/User'
 import { RootState } from '../../app/store'

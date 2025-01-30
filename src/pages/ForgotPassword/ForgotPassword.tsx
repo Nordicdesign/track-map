@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import 'firebase/auth'
 import { Routes } from '../../constants/routes'
 

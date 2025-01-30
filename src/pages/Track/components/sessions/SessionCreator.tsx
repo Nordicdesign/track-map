@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import 'firebase/database'
 
 // import { loadData } from '../utils/data'
