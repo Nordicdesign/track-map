@@ -1,7 +1,9 @@
-.homepage {
-  margin: $baseline auto;
+@use "../variables";
 
-  @media screen and (max-width: $screen-medium) {
+.homepage {
+  margin: variables.$baseline auto;
+
+  @media screen and (max-width: variables.$screen-medium) {
     flex-direction: column;
   }
 
@@ -9,13 +11,13 @@
     display: flex;
     flex-wrap: wrap;
 
-    @media screen and (max-width: $screen-medium) {
+    @media screen and (max-width: variables.$screen-medium) {
       display: block;
     }
 
     div {
       // width: 300px;
-      margin-right: $baseline;
+      margin-right: variables.$baseline;
     }
   }
 
@@ -24,47 +26,47 @@
       width: 100%;
       min-width: 320px;
 
-      @media screen and (max-width: $screen-medium) {
+      @media screen and (max-width: variables.$screen-medium) {
         min-width: 0;
       }
     }
   }
 
   aside {
-    background: $color-neutral-100;
-    margin-top: $baseline * 3;
-    margin-left: -$baseline;
-    margin-right: -$baseline;
-    margin-bottom: -$baseline;
-    border-top: 2px solid $color-neutral-300;
-    padding: $baseline;
+    background: variables.$color-neutral-100;
+    margin-top: variables.$baseline * 3;
+    margin-left: -(variables.$baseline);
+    margin-right: -(variables.$baseline);
+    margin-bottom: -(variables.$baseline);
+    border-top: 2px solid variables.$color-neutral-300;
+    padding: variables.$baseline;
   }
 }
 
 .listCircuits {
   li {
-    border: 1px solid $color-primary-400;
+    border: 1px solid variables.$color-primary-400;
     border-radius: 4px;
-    margin-bottom: $baseline * 0.5;
+    margin-bottom: variables.$baseline * 0.5;
     transition: 0.2s ease all;
 
-    @media screen and (max-width: $screen-medium) {
+    @media screen and (max-width: variables.$screen-medium) {
       width: 100%;
     }
 
     &:hover {
-      background: $color-primary-100;
+      background: variables.$color-primary-100;
       cursor: pointer;
 
       a {
-        color: $color-primary-600;
+        color: variables.$color-primary-600;
       }
     }
 
     a {
       display: block;
-      padding: $baseline $baseline * 0.75 $baseline * 0.75;
-      color: $colour-base;
+      padding: variables.$baseline variables.$baseline * 0.75 variables.$baseline * 0.75;
+      color: variables.$colour-base;
       text-decoration: none;
     }
   }

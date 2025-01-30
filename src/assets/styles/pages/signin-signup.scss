@@ -1,9 +1,11 @@
+@use "../variables";
+
 .signup-form {
   max-width: 480px;
   width: 96%;
-  margin: $baseline * 4 auto;
+  margin: variables.$baseline * 4 auto;
   background: #fff;
-  padding: $baseline * 2;
+  padding: variables.$baseline * 2;
   border-radius: 4px;
   box-shadow:
     0.4px 0.4px 1.2px rgba(0, 0, 0, 0.02),

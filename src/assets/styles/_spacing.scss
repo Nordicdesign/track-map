@@ -1,23 +1,25 @@
+@use "variables";
+
 // VERTICAL
 
 .mt1 {
-  margin-top: $baseline;
+  margin-top: variables.$baseline;
 }
 .mt2 {
-  margin-top: $baseline * 2;
+  margin-top: variables.$baseline * 2;
 }
 .mt3 {
-  margin-top: $baseline * 3;
+  margin-top: variables.$baseline * 3;
 }
 
 .mb1 {
-  margin-bottom: $baseline;
+  margin-bottom: variables.$baseline;
 }
 .mb2 {
-  margin-bottom: $baseline * 2;
+  margin-bottom: variables.$baseline * 2;
 }
 .mb3 {
-  margin-bottom: $baseline * 3;
+  margin-bottom: variables.$baseline * 3;
 }
 
 // HORIZONTAL

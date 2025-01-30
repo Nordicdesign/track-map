@@ -1,8 +1,10 @@
+@use "../variables";
+
 .wrapper.landing {
   padding: 0;
 
   .btn.signup {
-    padding: $baseline $baseline * 2;
+    padding: variables.$baseline variables.$baseline * 2;
   }
 }
 .home-hero {
@@ -17,7 +19,7 @@
   p:first-of-type {
     background: rgba(255, 255, 255, 1);
     box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.5);
-    padding: $baseline * 0.5;
+    padding: variables.$baseline * 0.5;
     display: inline-block;
     font-size: 1.7rem;
   }
@@ -26,7 +28,7 @@
     color: white;
     font-weight: bold;
     font-size: 5rem;
-    margin: $baseline * 2 0;
+    margin: variables.$baseline * 2 0;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.8);
   }
 }
@@ -34,7 +36,7 @@
 .home-what {
   width: 96%;
   max-width: 800px;
-  margin: $baseline * 3 auto;
+  margin: variables.$baseline * 3 auto;
 
   h3 {
     font-size: 4rem;
@@ -45,12 +47,12 @@
   h4 {
     font-weight: bold;
     font-size: 3rem;
-    margin: $baseline * 3 0 $baseline;
+    margin: variables.$baseline * 3 0 variables.$baseline;
   }
 }
 
 .home-footer {
   background: #fff;
-  padding: $baseline * 2;
+  padding: variables.$baseline * 2;
   text-align: center;
 }

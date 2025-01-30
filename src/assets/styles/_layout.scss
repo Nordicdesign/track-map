@@ -1,12 +1,14 @@
+@use "variables";
+
 // LAYOUT
 
 #root {
   min-height: 100vh;
-  background: linear-gradient(#fff, $color-primary-100);
+  background: linear-gradient(#fff, variables.$color-primary-100);
 }
 
 .wrapper {
-  padding: $baseline;
+  padding: variables.$baseline;
 }
 
 .not-loggged-in {
@@ -14,18 +16,18 @@
   // flex-direction: row;
   width: 96%;
   max-width: 450px;
-  margin: $baseline * 3 auto;
-  border: 1px solid $colour-gray-300;
-  padding: $baseline * 2;
+  margin: variables.$baseline * 3 auto;
+  border: 1px solid variables.$colour-gray-300;
+  padding: variables.$baseline * 2;
 
   div {
-    margin-bottom: $baseline * 3;
+    margin-bottom: variables.$baseline * 3;
   }
 
   .login-link {
-    background: $colour-gray-100;
-    border-top: 1px solid $colour-base;
-    padding: $baseline;
+    background: variables.$colour-gray-100;
+    border-top: 1px solid variables.$colour-base;
+    padding: variables.$baseline;
     text-align: center;
   }
 
