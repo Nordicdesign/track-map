@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app'
-import 'firebase/auth'
+import 'firebase/compat/auth'
 
 interface CheckCredentials {
   (

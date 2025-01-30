@@ -1,4 +1,5 @@
 import { Key } from 'react'
+
 import { Corner, TypeOfEntry } from '../../../../app/utils/types'
 import { CornerItem } from './CornerItem'
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import { AddNewCorner } from './components/corners/AddNewCorner'
 import { AddNewSetupNote } from './components/AddNewSetupNote'
@@ -20,7 +21,6 @@ import tracksJson from '../../constants/tracks.json'
 import { NoTrack } from './components/NoTrack'
 import { Guest } from './components/Guest'
 import { Corner, TypeOfEntry, Note, Session } from '../../app/utils/types'
-import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 import { CornerList } from './components/corners/CornerList'
 

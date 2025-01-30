@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase/compat/app'
-import 'firebase/auth'
+import 'firebase/compat/auth'
+
 import { Routes } from '../../constants/routes'
 
 export const ForgotPassword = () => {

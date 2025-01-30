@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
+
 import { Routes } from '../../../constants/routes'
 
-export const Guest: React.FC = () => {
+export const Guest = () => {
   return (
     <div className="guest">
       <h2>Sign up free</h2>

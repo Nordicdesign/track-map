@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import { Landing } from './components/Landing'
 import { HomepageSignedIn } from './components/HomepageSignedIn'
 import { RootState } from '../../app/store'
-import { useSelector } from 'react-redux'
 
 export const Homepage = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail)

@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
-
 import { useDispatch } from 'react-redux'
+
 import { signIn } from '../../../app/users/usersSlice'
 import { checkCredentials } from '../../../app/utils/users'
 import { FirebaseError } from '../../../types/firebase'
@@ -33,8 +33,12 @@ export const Login = () => {
             userID: uid,
             userEmail: email,
           }
-          uid && Cookies.set('uid', uid, { expires: 7 })
-          email && Cookies.set('email', email, { expires: 7 })
+          if (uid) {
+            Cookies.set('uid', uid, { expires: 7 })
+          }
+          if (email) {
+            Cookies.set('email', email, { expires: 7 })
+          }
           dispatch(signIn(payload))
           history.push(Routes.LANDING)
         })

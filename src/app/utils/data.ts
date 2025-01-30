@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app'
-import 'firebase/database'
+import 'firebase/compat/database'
 import { TypeOfEntry, Session } from './types'
 
 export function loadData(props: {
