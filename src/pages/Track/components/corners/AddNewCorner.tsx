@@ -1,46 +1,46 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 // a lot from http://www.codaffection.com/react/react-firebase-crud/
 type Props = {
-  currentId: any
-  corners: any
-  addOrEditCorner: any
-  handleCancel: () => void
-}
+  currentId: any;
+  corners: any;
+  addOrEditCorner: any;
+  handleCancel: () => void;
+};
 
 export const AddNewCorner = (props: Props) => {
-  const { currentId, corners, addOrEditCorner, handleCancel } = props
+  const { currentId, corners, addOrEditCorner, handleCancel } = props;
 
   const initialFieldValues = {
-    notes: '',
-    number: '',
-  }
+    notes: "",
+    number: "",
+  };
 
-  const [values, setValues] = useState(initialFieldValues)
+  const [values, setValues] = useState(initialFieldValues);
 
   useEffect(() => {
-    if (currentId === '') {
-      setValues({ ...initialFieldValues })
+    if (currentId === "") {
+      setValues({ ...initialFieldValues });
     } else {
       setValues({
         ...corners[currentId],
         number: currentId,
-      })
+      });
     }
-  }, [currentId, corners])
+  }, [currentId, corners]);
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleFormSubmit = (e: any) => {
-    e.preventDefault()
-    addOrEditCorner(values.number, values.notes)
-  }
+    e.preventDefault();
+    addOrEditCorner(values.number, values.notes);
+  };
 
   return (
     <div className="new-corner">
@@ -70,7 +70,7 @@ export const AddNewCorner = (props: Props) => {
             <li className="form-actions">
               <input
                 type="submit"
-                value={currentId === '' ? 'Add corner' : 'Edit'}
+                value={currentId === "" ? "Add corner" : "Edit"}
                 className="button-submit"
               />
               <button className="button-link" onClick={handleCancel}>
@@ -81,5 +81,5 @@ export const AddNewCorner = (props: Props) => {
         </fieldset>
       </form>
     </div>
-  )
-}
+  );
+};

@@ -1,14 +1,14 @@
-import { Key, SyntheticEvent, useRef, useState } from 'react'
+import { Key, SyntheticEvent, useRef, useState } from "react";
 
-import { Session } from '../../../../app/utils/types'
+import { Session } from "../../../../app/utils/types";
 
 type Props = {
-  sessions: Session[] | null
-  currentSessionId: string | null
-  changeSession: (newSessionID: string) => void
-  renameSession: (sessionName: string) => void
-  newSession: (sessionName: string) => void
-}
+  sessions: Session[] | null;
+  currentSessionId: string | null;
+  changeSession: (newSessionID: string) => void;
+  renameSession: (sessionName: string) => void;
+  newSession: (sessionName: string) => void;
+};
 
 export const SessionSelection = (props: Props) => {
   const {
@@ -17,61 +17,61 @@ export const SessionSelection = (props: Props) => {
     changeSession,
     renameSession,
     newSession,
-  } = props
+  } = props;
 
-  const inputSessionName = useRef<HTMLInputElement>(null)
-  const selectSessions = useRef<HTMLSelectElement>(null)
-  const [changeName, setChangeName] = useState<boolean>(false)
-  const [isNewSession, setisNewSession] = useState<boolean>(false)
+  const inputSessionName = useRef<HTMLInputElement>(null);
+  const selectSessions = useRef<HTMLSelectElement>(null);
+  const [changeName, setChangeName] = useState<boolean>(false);
+  const [isNewSession, setisNewSession] = useState<boolean>(false);
 
   if (!sessions || !currentSessionId) {
-    return null
+    return null;
   }
 
   const handleChangeSession = () => {
-    const selectedSession = selectSessions.current?.value
+    const selectedSession = selectSessions.current?.value;
     if (selectedSession !== undefined) {
-      changeSession(selectedSession)
+      changeSession(selectedSession);
     }
-  }
+  };
 
   const availableSessions = sessions.map((session: Session, index: Key) => {
     return (
       <option key={index} value={session.id}>
         {session.name}
       </option>
-    )
-  })
+    );
+  });
 
-  const showChangeName = () => setChangeName(true)
-  const showNewSession = () => setisNewSession(true)
+  const showChangeName = () => setChangeName(true);
+  const showNewSession = () => setisNewSession(true);
 
   const handleCancelSessions = () => {
-    setChangeName(false)
-    setisNewSession(false)
-  }
+    setChangeName(false);
+    setisNewSession(false);
+  };
 
   const handleChangeNameSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
-    const sessionName = inputSessionName.current?.value
+    e.preventDefault();
+    const sessionName = inputSessionName.current?.value;
 
     if (!sessionName) {
-      return
+      return;
     }
-    renameSession(sessionName)
-    setChangeName(false)
-  }
+    renameSession(sessionName);
+    setChangeName(false);
+  };
 
   const handleNewSessionSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
-    const sessionName = inputSessionName.current?.value
+    e.preventDefault();
+    const sessionName = inputSessionName.current?.value;
 
     if (!sessionName) {
-      return
+      return;
     }
-    newSession(sessionName) // load new data
-    setisNewSession(false) // hide form
-  }
+    newSession(sessionName); // load new data
+    setisNewSession(false); // hide form
+  };
 
   return (
     <div>
@@ -169,5 +169,5 @@ export const SessionSelection = (props: Props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

@@ -1,46 +1,46 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 // a lot from http://www.codaffection.com/react/react-firebase-crud/
 
 type Props = {
-  currentId: any
-  observations: any
-  addOrEdit: any
-  handleCancel: () => void
-}
+  currentId: any;
+  observations: any;
+  addOrEdit: any;
+  handleCancel: () => void;
+};
 
 export const AddNewSetupNote = (props: Props) => {
-  const { currentId, observations, addOrEdit, handleCancel } = props
+  const { currentId, observations, addOrEdit, handleCancel } = props;
 
   const initialFieldValues = {
-    notes: '',
-    setupName: '',
-  }
+    notes: "",
+    setupName: "",
+  };
 
-  const [values, setValues] = useState(initialFieldValues)
+  const [values, setValues] = useState(initialFieldValues);
 
   useEffect(() => {
-    if (currentId === '') {
-      setValues({ ...initialFieldValues })
+    if (currentId === "") {
+      setValues({ ...initialFieldValues });
     } else {
       setValues({
         ...observations[currentId],
-      })
+      });
     }
-  }, [currentId, observations])
+  }, [currentId, observations]);
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleFormSubmit = (e: any) => {
-    e.preventDefault()
-    addOrEdit(values)
-  }
+    e.preventDefault();
+    addOrEdit(values);
+  };
 
   return (
     <div className="new-observation">
@@ -72,7 +72,7 @@ export const AddNewSetupNote = (props: Props) => {
             <li className="form-actions">
               <input
                 type="submit"
-                value={currentId === '' ? 'Add' : 'Edit'}
+                value={currentId === "" ? "Add" : "Edit"}
                 className="button-submit"
               />
               <button
@@ -87,5 +87,5 @@ export const AddNewSetupNote = (props: Props) => {
         </fieldset>
       </form>
     </div>
-  )
-}
+  );
+};

@@ -1,1 +1,1 @@
-export const NoCorners = () => <p>Add some corner data</p>
+export const NoCorners = () => <p>Add some corner data</p>;

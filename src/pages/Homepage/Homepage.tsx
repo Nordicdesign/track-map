@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Landing } from './components/Landing'
-import { HomepageSignedIn } from './components/HomepageSignedIn'
-import { RootState } from '../../app/store'
+import { Landing } from "./components/Landing";
+import { HomepageSignedIn } from "./components/HomepageSignedIn";
+import { RootState } from "../../app/store";
 
 export const Homepage = () => {
-  const userEmail = useSelector((state: RootState) => state.user.userEmail)
-  const [loggedInUser, setLoggedInUser] = useState<boolean>(false)
+  const userEmail = useSelector((state: RootState) => state.user.userEmail);
+  const [loggedInUser, setLoggedInUser] = useState<boolean>(false);
 
   useEffect(() => {
     if (userEmail !== null) {
-      setLoggedInUser(true)
+      setLoggedInUser(true);
     } else {
-      setLoggedInUser(false)
+      setLoggedInUser(false);
     }
-  }, [userEmail])
+  }, [userEmail]);
 
-  return <>{loggedInUser ? <HomepageSignedIn /> : <Landing />}</>
-}
+  return <>{loggedInUser ? <HomepageSignedIn /> : <Landing />}</>;
+};

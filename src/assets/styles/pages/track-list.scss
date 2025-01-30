@@ -65,7 +65,8 @@
 
     a {
       display: block;
-      padding: variables.$baseline variables.$baseline * 0.75 variables.$baseline * 0.75;
+      padding: variables.$baseline variables.$baseline * 0.75
+        variables.$baseline * 0.75;
       color: variables.$colour-base;
       text-decoration: none;
     }

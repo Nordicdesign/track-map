@@ -4,9 +4,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    'meta map map'
-    'session session session'
-    'notes notes notes';
+    "meta map map"
+    "session session session"
+    "notes notes notes";
   @media screen and (max-width: 900px) {
     display: block;
   }

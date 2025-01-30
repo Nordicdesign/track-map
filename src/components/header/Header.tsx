@@ -1,26 +1,26 @@
-import { useEffect } from 'react'
-import { Link, useHistory, useRouteMatch } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import firebase from 'firebase/compat/app'
+import { useEffect } from "react";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import firebase from "firebase/compat/app";
 
-import { User } from './components/User'
-import { RootState } from '../../app/store'
-import { logOut, signIn } from '../../app/users/usersSlice'
-import { firebaseConfig } from '../../constants/firebase'
-import Cookies from 'js-cookie'
-import { Routes } from '../../constants/routes'
+import { User } from "./components/User";
+import { RootState } from "../../app/store";
+import { logOut, signIn } from "../../app/users/usersSlice";
+import { firebaseConfig } from "../../constants/firebase";
+import Cookies from "js-cookie";
+import { Routes } from "../../constants/routes";
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(firebaseConfig);
 }
 
 export const Header = () => {
-  const userEmail = useSelector((state: RootState) => state.user.userEmail)
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const userEmail = useSelector((state: RootState) => state.user.userEmail);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const match = useRouteMatch('/tracks/:track')
-  const isTrackPage = match?.isExact
+  const match = useRouteMatch("/tracks/:track");
+  const isTrackPage = match?.isExact;
 
   const logout = () => {
     firebase
@@ -28,27 +28,27 @@ export const Header = () => {
       .signOut()
       .then(() => {
         // console.log('logged out!')
-        dispatch(logOut())
-        history.push('/')
+        dispatch(logOut());
+        history.push("/");
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
-    const uid = Cookies.get('uid')
-    const email = Cookies.get('email')
+    const uid = Cookies.get("uid");
+    const email = Cookies.get("email");
 
     if (uid !== undefined && email !== undefined) {
       const payload = {
         userID: uid,
         userEmail: email,
-      }
-      dispatch(signIn(payload))
+      };
+      dispatch(signIn(payload));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <header>
@@ -73,5 +73,5 @@ export const Header = () => {
         )}
       </p>
     </header>
-  )
-}
+  );
+};

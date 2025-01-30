@@ -1,25 +1,25 @@
-@use 'reset';
-@use 'iconfont';
-@use 'variables';
-@use 'spacing';
-@use 'typography';
+@use "reset";
+@use "iconfont";
+@use "variables";
+@use "spacing";
+@use "typography";
 
 // ELEMENTS
-@use 'buttons';
-@use 'forms';
+@use "buttons";
+@use "forms";
 
 // LAYOUT
-@use 'layout';
+@use "layout";
 
 // COMPONENTS
-@use 'components/header';
-@use 'components/sessions';
+@use "components/header";
+@use "components/sessions";
 
 // PAGES
-@use 'pages/homepage';
-@use 'pages/signin-signup.scss';
-@use 'pages/track-list.scss';
-@use 'pages/track';
+@use "pages/homepage";
+@use "pages/signin-signup.scss";
+@use "pages/track-list.scss";
+@use "pages/track";
 
 img {
   max-width: 100%;

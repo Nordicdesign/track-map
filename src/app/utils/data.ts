@@ -1,30 +1,33 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/database'
-import { TypeOfEntry, Session } from './types'
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import { TypeOfEntry, Session } from "./types";
 
 export function loadData(props: {
-  authUser: string
-  trackID: string
-  onResult: (sessions: Session[]) => void
+  authUser: string;
+  trackID: string;
+  onResult: (sessions: Session[]) => void;
 }) {
-  const { authUser, trackID, onResult } = props
+  const { authUser, trackID, onResult } = props;
   firebase
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
-    .on('value', function (snapshot) {
+    .on("value", function (snapshot) {
       // check if there are any sessions yet
       if (!snapshot.exists()) {
         // console.log('there are no sessions!!! 😱')
-        initiateSession(authUser, trackID, onResult)
+        initiateSession(authUser, trackID, onResult);
       } else {
-        onResult(prepareSessions(snapshot))
+        onResult(prepareSessions(snapshot));
       }
-    })
+    });
 }
 
 export function detachListener(props: { authUser: any; trackID: any }) {
-  const { authUser, trackID } = props
-  firebase.database().ref(`/users/${authUser}/tracks/${trackID}/sessions`).off()
+  const { authUser, trackID } = props;
+  firebase
+    .database()
+    .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
+    .off();
 }
 
 export function initiateSession(
@@ -34,45 +37,45 @@ export function initiateSession(
 ) {
   const newSession = firebase
     .database()
-    .ref('/users/' + authUser + '/tracks/' + trackID + '/sessions/')
-    .push()
+    .ref("/users/" + authUser + "/tracks/" + trackID + "/sessions/")
+    .push();
   newSession.set({
-    name: 'default',
-  })
+    name: "default",
+  });
   // console.log('session created ✅')
 
   firebase
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions`)
-    .on('value', function (snapshot) {
-      onResult(prepareSessions(snapshot))
-    })
+    .on("value", function (snapshot) {
+      onResult(prepareSessions(snapshot));
+    });
 }
 
 export function newSession(authUser: string, trackID: string, value: any) {
   const newSession = firebase
     .database()
     .ref(`/users/${authUser}/tracks/${trackID}/sessions/`)
-    .push()
+    .push();
   newSession.set({
     name: value,
-  })
+  });
   // console.log('session created ✅')
 }
 
 export function prepareSessions(snapshot: firebase.database.DataSnapshot) {
-  const data = snapshot.val()
-  const sessions = []
+  const data = snapshot.val();
+  const sessions = [];
   for (const session in data) {
     sessions.push({
       id: session,
       name: data[session].name,
       corners: data[session].corners,
       observations: data[session].observations,
-    })
+    });
   }
 
-  return sessions
+  return sessions;
 }
 
 export function recordObservation(
@@ -84,20 +87,20 @@ export function recordObservation(
   firebase
     .database()
     .ref(
-      '/users/' +
+      "/users/" +
         authUser +
-        '/tracks/' +
+        "/tracks/" +
         trackID +
-        '/sessions/' +
+        "/sessions/" +
         session +
-        '/observations/',
+        "/observations/",
     )
     .push(data, (err) => {
-      if (err) console.error(err)
-    })
+      if (err) console.error(err);
+    });
   return {
     observations: data,
-  }
+  };
 }
 export function editObservation(
   authUser: string,
@@ -113,13 +116,13 @@ export function editObservation(
     )
     .set(data, (err) => {
       if (err) {
-        console.error(err)
+        console.error(err);
       } else {
         return {
           observations: data,
-        }
+        };
       }
-    })
+    });
 }
 
 export function deleteEntry(
@@ -135,8 +138,8 @@ export function deleteEntry(
       `users/${authUser}/tracks/${trackID}/sessions/${session}/${type}/${id}`,
     )
     .remove((err) => {
-      if (err) console.error(err)
-    })
+      if (err) console.error(err);
+    });
 }
 
 export function recordCorner(
@@ -152,11 +155,11 @@ export function recordCorner(
       `/users/${authUser}/tracks/${trackID}/sessions/${session}/corners/${corner}`,
     )
     .set(data, (err) => {
-      if (err) console.error(err)
-    })
+      if (err) console.error(err);
+    });
   return {
     corners: data,
-  }
+  };
 }
 
 export function renameSession(
@@ -173,7 +176,7 @@ export function renameSession(
         name: value,
       },
       (err) => {
-        if (err) console.error(err)
+        if (err) console.error(err);
       },
-    )
+    );
 }

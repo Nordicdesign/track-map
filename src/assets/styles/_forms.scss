@@ -6,10 +6,10 @@ label {
   margin-bottom: variables.$baseline * 2;
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
-input[type='submit'] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 40px;
@@ -39,7 +39,7 @@ input[type='submit'] {
     border-radius: 2px;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     background: #f7f7f7;
     border-radius: 2px;
   }

@@ -1,5 +1,5 @@
-import { LoginLink } from '../Login/components/LoginLink'
-import { SignUpForm } from './components/SignUpForm'
+import { LoginLink } from "../Login/components/LoginLink";
+import { SignUpForm } from "./components/SignUpForm";
 
 export const SignUpPage = () => (
   <div className="signup-form">
@@ -8,4 +8,4 @@ export const SignUpPage = () => (
     <hr />
     <LoginLink />
   </div>
-)
+);

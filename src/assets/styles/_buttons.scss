@@ -1,5 +1,5 @@
-@use 'sass:color';
-@use 'variables';
+@use "sass:color";
+@use "variables";
 
 button,
 .btn,
@@ -47,8 +47,8 @@ button.button-link {
 }
 
 .button-primary,
-input[type='submit'].button-primary,
-input[type='submit'].button-submit {
+input[type="submit"].button-primary,
+input[type="submit"].button-submit {
   min-width: 120px;
   width: auto;
   height: auto;
