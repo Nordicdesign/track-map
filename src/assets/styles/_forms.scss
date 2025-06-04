@@ -1,43 +1,45 @@
+@use "variables";
+
 label {
   display: block;
   font-size: 1.6rem;
-  margin-bottom: $baseline * 2;
+  margin-bottom: variables.$baseline * 2;
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
-input[type='submit'] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 40px;
   width: 250px;
-  padding-left: $baseline * 0.5;
-  margin-top: $baseline * 0.5;
+  padding-left: variables.$baseline * 0.5;
+  margin-top: variables.$baseline * 0.5;
   display: block;
   font-size: 1.6rem;
 }
 
 .error-handling {
-  margin-top: $baseline;
+  margin-top: variables.$baseline;
   color: tomato;
 }
 
 .new-observation,
 .new-corner {
   label {
-    margin-bottom: $baseline * 0.25;
+    margin-bottom: variables.$baseline * 0.25;
   }
   textarea {
     width: 100%;
-    font-family: $fontstack;
+    font-family: variables.$fontstack;
     font-size: 1.4rem;
-    padding: $baseline * 0.25;
+    padding: variables.$baseline * 0.25;
     background: #f7f7f7;
     border-radius: 2px;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     background: #f7f7f7;
     border-radius: 2px;
   }
@@ -48,7 +50,7 @@ input[type='submit'] {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #e9e9e9;
-    padding-bottom: $baseline;
-    margin-bottom: $baseline * 2;
+    padding-bottom: variables.$baseline;
+    margin-bottom: variables.$baseline * 2;
   }
 }

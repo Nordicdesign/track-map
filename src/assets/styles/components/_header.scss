@@ -1,6 +1,8 @@
+@use "../variables";
+
 header {
   background: #333;
-  padding: 0 $baseline;
+  padding: 0 variables.$baseline;
 
   display: flex;
   flex-direction: row;
@@ -10,7 +12,7 @@ header {
     display: flex;
 
     p {
-      margin-left: $baseline * 3;
+      margin-left: variables.$baseline * 3;
     }
   }
 
@@ -26,7 +28,7 @@ header {
       text-decoration: none;
       cursor: pointer;
       &:hover {
-        color: $color-neutral-200;
+        color: variables.$color-neutral-200;
       }
     }
   }
@@ -38,7 +40,7 @@ header {
   }
 
   .header-userInfo {
-    @media screen and (max-width: $screen-small) {
+    @media screen and (max-width: variables.$screen-small) {
       font-size: 1.2rem;
 
       button {

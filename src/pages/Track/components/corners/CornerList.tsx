@@ -1,14 +1,15 @@
-import { Key } from 'react'
-import { Corner, TypeOfEntry } from '../../../../app/utils/types'
-import { CornerItem } from './CornerItem'
+import { Key } from "react";
+
+import { Corner, TypeOfEntry } from "../../../../app/utils/types";
+import { CornerItem } from "./CornerItem";
 
 type Props = {
-  corners: Corner[]
-  handleDelete: (type: keyof typeof TypeOfEntry, id: string) => void
-  setTrackCurrentId: (type: keyof typeof TypeOfEntry, id: string) => void
-}
+  corners: Corner[];
+  handleDelete: (type: keyof typeof TypeOfEntry, id: string) => void;
+  setTrackCurrentId: (type: keyof typeof TypeOfEntry, id: string) => void;
+};
 export const CornerList = (props: Props) => {
-  const { corners, handleDelete, setTrackCurrentId } = props
+  const { corners, handleDelete, setTrackCurrentId } = props;
 
   return (
     <div>
@@ -21,8 +22,8 @@ export const CornerList = (props: Props) => {
             onDelete={handleDelete}
             setTrackCurrentId={setTrackCurrentId}
           />
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};

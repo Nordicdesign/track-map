@@ -1,38 +1,38 @@
-import { useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
-import { firebaseConfig } from '../../../constants/firebase'
-import { FirebaseError } from '../../../types/firebase'
-import { Routes } from '../../../constants/routes'
+import { firebaseConfig } from "../../../constants/firebase";
+import { FirebaseError } from "../../../types/firebase";
+import { Routes } from "../../../constants/routes";
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(firebaseConfig);
 }
 
 export const SignUpForm = () => {
-  const history = useHistory()
-  const refEmail = useRef<HTMLInputElement | null>(null)
-  const refPassword = useRef<HTMLInputElement | null>(null)
-  const [error, setError] = useState<string | undefined>(undefined)
+  const history = useHistory();
+  const refEmail = useRef<HTMLInputElement | null>(null);
+  const refPassword = useRef<HTMLInputElement | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const onSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    const email = refEmail.current?.value
-    const password = refPassword.current?.value
+    event.preventDefault();
+    const email = refEmail.current?.value;
+    const password = refPassword.current?.value;
     if (email && password) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          history.push(Routes.LANDING)
+          history.push(Routes.LANDING);
         })
         .catch((error: FirebaseError) => {
-          setError(error.message)
-        })
+          setError(error.message);
+        });
     }
-  }
+  };
 
   return (
     <>
@@ -57,5 +57,5 @@ export const SignUpForm = () => {
         surprised if there are errors or data loss!
       </p>
     </>
-  )
-}
+  );
+};

@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom'
-import { Routes } from '../../../constants/routes'
+import { Link } from "react-router-dom";
 
-export const Guest: React.FC = () => {
+import { Routes } from "../../../constants/routes";
+
+export const Guest = () => {
   return (
     <div className="guest">
       <h2>Sign up free</h2>
       <p>
-        Start taking notes and improve your driving everytime you get on track.{' '}
+        Start taking notes and improve your driving everytime you get on track.{" "}
       </p>
       <p>
         <button>
@@ -17,5 +18,5 @@ export const Guest: React.FC = () => {
         Already a user? <Link to="/login">Log in</Link>.
       </p>
     </div>
-  )
-}
+  );
+};

@@ -1,9 +1,11 @@
+@use "../variables";
+
 .signup-form {
   max-width: 480px;
   width: 96%;
-  margin: $baseline * 4 auto;
+  margin: variables.$baseline * 4 auto;
   background: #fff;
-  padding: $baseline * 2;
+  padding: variables.$baseline * 2;
   border-radius: 4px;
   box-shadow:
     0.4px 0.4px 1.2px rgba(0, 0, 0, 0.02),
@@ -13,8 +15,8 @@
     5.8px 6.3px 18px rgba(0, 0, 0, 0.05),
     14px 15px 43px rgba(0, 0, 0, 0.07);
 
-  input[type='text'],
-  input[type='password'] {
+  input[type="text"],
+  input[type="password"] {
     width: 100%;
   }
 }

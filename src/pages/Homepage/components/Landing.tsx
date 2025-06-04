@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
-import { Routes } from '../../../constants/routes'
+import { Link } from "react-router-dom";
+
+import { Routes } from "../../../constants/routes";
 
 export const Landing = () => {
   return (
@@ -65,14 +66,14 @@ export const Landing = () => {
           data.
         </p>
         <p>
-          If you have suggestions or something is not quite right, please{' '}
+          If you have suggestions or something is not quite right, please{" "}
           <a
             href="https://opb3adxlfse.typeform.com/to/sdJJgeJf"
             rel="noreferrer"
             target="_blank"
           >
             fill in this form
-          </a>{' '}
+          </a>{" "}
           and we&apos;ll try to fix it as soon as humanly possible.
         </p>
         <p>
@@ -81,5 +82,5 @@ export const Landing = () => {
         </p>
       </footer>
     </>
-  )
-}
+  );
+};

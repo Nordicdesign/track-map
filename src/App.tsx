@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { Header } from './components/header/Header'
-import { Homepage } from './pages/Homepage/Homepage'
-import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword'
-import { LoginPage } from './pages/Login/LoginPage'
-import { SignUpPage } from './pages/Signup/Signup'
-import { Track } from './pages/Track/Track'
-import { Routes } from './constants/routes'
-import './assets/styles/App.scss'
+import { Header } from "./components/header/Header";
+import { Homepage } from "./pages/Homepage/Homepage";
+import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
+import { LoginPage } from "./pages/Login/LoginPage";
+import { SignUpPage } from "./pages/Signup/Signup";
+import { Track } from "./pages/Track/Track";
+import { Routes } from "./constants/routes";
+import "./assets/styles/App.scss";
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/tracks/:trackName" component={Track} />
       </div>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

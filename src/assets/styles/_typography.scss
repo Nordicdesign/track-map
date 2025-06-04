@@ -1,7 +1,9 @@
+@use "variables";
+
 // TYPOGRAPHY
 body,
 html {
-  font-family: $fontstack;
+  font-family: variables.$fontstack;
   font-size: 62.5%;
   font-weight: 500;
   color: #111;
@@ -43,11 +45,11 @@ h4 {
 }
 
 a {
-  color: $color-primary-400;
+  color: variables.$color-primary-400;
   text-decoration: underline;
   transition: 0.2s ease all;
 
   &:hover {
-    color: $color-primary-500;
+    color: variables.$color-primary-500;
   }
 }

@@ -1,18 +1,18 @@
-import { TypeOfEntry } from '../../../app/utils/types'
+import { TypeOfEntry } from "../../../app/utils/types";
 
 type Props = {
-  name: number
-  id: string
-  notes: string
-  setupName: string
-  onDelete: (type: keyof typeof TypeOfEntry, id: string) => void
-  setTrackCurrentId: (type: keyof typeof TypeOfEntry, id: string) => void
-}
+  name: number;
+  id: string;
+  notes: string;
+  setupName: string;
+  onDelete: (type: keyof typeof TypeOfEntry, id: string) => void;
+  setTrackCurrentId: (type: keyof typeof TypeOfEntry, id: string) => void;
+};
 
 export const ObservationList = (props: Props) => {
-  const { name, id, notes, setupName, onDelete, setTrackCurrentId } = props
-  const date = new Date(name)
-  const presentableDate: string = date.toLocaleString()
+  const { name, id, notes, setupName, onDelete, setTrackCurrentId } = props;
+  const date = new Date(name);
+  const presentableDate: string = date.toLocaleString();
 
   return (
     <div className="obs-entry">
@@ -21,14 +21,14 @@ export const ObservationList = (props: Props) => {
         <div>
           <button
             className="button-icon"
-            onClick={() => setTrackCurrentId('observations', id)}
+            onClick={() => setTrackCurrentId("observations", id)}
             aria-label="edit"
           >
             <div className="icon icon-pencil-square"></div>
           </button>
           <button
             className="button-icon"
-            onClick={() => onDelete('observations', id)}
+            onClick={() => onDelete("observations", id)}
             aria-label="delete"
           >
             <div className="icon icon-trash"></div>
@@ -37,8 +37,8 @@ export const ObservationList = (props: Props) => {
       </div>
 
       <p>{notes}</p>
-      {setupName === '' ? (
-        ' '
+      {setupName === "" ? (
+        " "
       ) : (
         <>
           <h4>Setup name</h4>
@@ -46,9 +46,9 @@ export const ObservationList = (props: Props) => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
 export const NoObservations = () => {
-  return <p>Add some observations</p>
-}
+  return <p>Add some observations</p>;
+};

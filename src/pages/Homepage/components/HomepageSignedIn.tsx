@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
-import { Routes } from '../../../constants/routes'
+import { Link } from "react-router-dom";
+
+import { Routes } from "../../../constants/routes";
 
 export const HomepageSignedIn = () => {
   return (
@@ -112,17 +113,17 @@ export const HomepageSignedIn = () => {
         <p>The project is at early alpha. Use at your own risk.</p>
         <h3>Suggestions?</h3>
         <p>
-          If you have suggestions or something is not quite right, please{' '}
+          If you have suggestions or something is not quite right, please{" "}
           <a
             href="https://opb3adxlfse.typeform.com/to/sdJJgeJf"
             rel="noreferrer"
             target="_blank"
           >
             fill in this form
-          </a>{' '}
+          </a>{" "}
           and we&apos;ll try to fix it as soon as humanly possible.
         </p>
       </aside>
     </div>
-  )
-}
+  );
+};

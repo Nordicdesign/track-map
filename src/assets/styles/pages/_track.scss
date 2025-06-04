@@ -1,10 +1,12 @@
+@use "../variables";
+
 .track-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    'meta map map'
-    'session session session'
-    'notes notes notes';
+    "meta map map"
+    "session session session"
+    "notes notes notes";
   @media screen and (max-width: 900px) {
     display: block;
   }
@@ -12,12 +14,12 @@
 
 .track-meta {
   grid-area: meta;
-  padding: $baseline;
+  padding: variables.$baseline;
 }
 
 .track-map {
   grid-area: map;
-  padding: $baseline;
+  padding: variables.$baseline;
   // background-color: $color-accent-200;
 
   img {
@@ -27,9 +29,9 @@
   p {
     text-align: right;
     font-size: 1.2rem;
-    color: $colour-gray-700;
+    color: variables.$colour-gray-700;
     a {
-      color: $colour-gray-700;
+      color: variables.$colour-gray-700;
     }
   }
 }
@@ -37,7 +39,7 @@
 .track-session {
   grid-area: session;
   background: #fcfad6;
-  padding: $baseline $baseline 0;
+  padding: variables.$baseline variables.$baseline 0;
 
   h2 {
     font-size: 1.4rem;
@@ -53,13 +55,13 @@
 
 .track-notes {
   grid-area: notes;
-  padding: 0 $baseline $baseline;
+  padding: 0 variables.$baseline variables.$baseline;
   background: #fcfad6;
   min-height: 300px;
   display: flex;
   flex-direction: row-reverse;
 
-  @media screen and (max-width: $screen-medium) {
+  @media screen and (max-width: variables.$screen-medium) {
     flex-direction: column;
   }
 
@@ -74,9 +76,9 @@
 
 .track-observations {
   width: 50%;
-  margin-left: $baseline * 2;
+  margin-left: variables.$baseline * 2;
 
-  @media screen and (max-width: $screen-medium) {
+  @media screen and (max-width: variables.$screen-medium) {
     width: 100%;
     margin-left: 0;
   }
@@ -89,14 +91,14 @@
   }
 
   .obs-entry {
-    border-bottom: 1px solid $color-neutral-300;
-    padding-bottom: $baseline;
+    border-bottom: 1px solid variables.$color-neutral-300;
+    padding-bottom: variables.$baseline;
 
     .obs-entry-header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      margin-top: $baseline;
+      margin-top: variables.$baseline;
 
       .icon {
         font-size: 1.8rem;
@@ -104,8 +106,8 @@
     }
 
     .obs-name {
-      color: $color-neutral-600;
-      margin-bottom: $baseline * 0.5;
+      color: variables.$color-neutral-600;
+      margin-bottom: variables.$baseline * 0.5;
       font-size: 1.2rem;
       align-self: flex-end;
     }
@@ -113,23 +115,23 @@
     h4 {
       font-size: 1.3rem;
       color: #808080;
-      margin-bottom: $baseline * 0.25;
-      margin-top: $baseline * 0.25;
+      margin-bottom: variables.$baseline * 0.25;
+      margin-top: variables.$baseline * 0.25;
     }
   }
 }
 
 .trackMap {
   h1 {
-    color: $colour-base;
-    color: $colour-base;
+    color: variables.$colour-base;
+    color: variables.$colour-base;
   }
 }
 
 .track-corners {
   width: 50%;
 
-  @media screen and (max-width: $screen-medium) {
+  @media screen and (max-width: variables.$screen-medium) {
     width: 100%;
   }
 

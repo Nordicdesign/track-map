@@ -1,9 +1,11 @@
+@use "../variables";
+
 .sessions {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: $baseline;
-  margin-top: $baseline * 0.5;
+  margin-bottom: variables.$baseline;
+  margin-top: variables.$baseline * 0.5;
 }
 
 .session-creator {
@@ -14,7 +16,7 @@
 
     label {
       margin-bottom: 0;
-      margin-right: $baseline * 0.5;
+      margin-right: variables.$baseline * 0.5;
       line-height: 40px;
     }
 
@@ -22,8 +24,8 @@
       margin-top: 0;
     }
 
-    input[type='submit'] {
-      margin-left: $baseline * 0.5;
+    input[type="submit"] {
+      margin-left: variables.$baseline * 0.5;
       width: auto;
     }
   }
@@ -34,9 +36,9 @@
 }
 
 .session-selection {
-  padding-right: $baseline;
+  padding-right: variables.$baseline;
   border-right: 1px solid tomato;
-  margin-right: $baseline;
+  margin-right: variables.$baseline;
   font-size: 1.6rem;
   display: flex;
   align-items: baseline;
@@ -55,7 +57,7 @@
   select {
     display: block;
     border-radius: 2px;
-    margin-top: $baseline * 0.25;
+    margin-top: variables.$baseline * 0.25;
     border: 1px solid #ccc;
     height: 40px;
     font-size: 1.6rem;
@@ -78,7 +80,7 @@
 
 .new-session {
   label {
-    margin-bottom: $baseline * 0.5;
+    margin-bottom: variables.$baseline * 0.5;
   }
 
   div {
@@ -87,13 +89,13 @@
     justify-content: space-between;
     align-items: baseline;
 
-    input[type='submit'] {
+    input[type="submit"] {
       width: auto;
     }
   }
 
   .new-session-p {
     font-size: 1.4rem;
-    color: $colour-gray-700;
+    color: variables.$colour-gray-700;
   }
 }

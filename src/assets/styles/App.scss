@@ -1,25 +1,25 @@
-@import './reset';
-@import './iconfont';
-@import './variables';
-@import './spacing';
-@import './typography';
+@use "reset";
+@use "iconfont";
+@use "variables";
+@use "spacing";
+@use "typography";
 
 // ELEMENTS
-@import './buttons';
-@import './forms';
+@use "buttons";
+@use "forms";
 
 // LAYOUT
-@import './layout';
+@use "layout";
 
 // COMPONENTS
-@import './components/header';
-@import './components/sessions';
+@use "components/header";
+@use "components/sessions";
 
 // PAGES
-@import './pages/homepage';
-@import './pages/signin-signup.scss';
-@import './pages/track-list.scss';
-@import './pages/track';
+@use "pages/homepage";
+@use "pages/signin-signup.scss";
+@use "pages/track-list.scss";
+@use "pages/track";
 
 img {
   max-width: 100%;

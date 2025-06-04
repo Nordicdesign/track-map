@@ -1,33 +1,34 @@
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import { Routes } from '../../constants/routes'
+import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
+import { Routes } from "../../constants/routes";
 
 export const ForgotPassword = () => {
-  const refEmail = useRef<HTMLInputElement | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [emailSent, setEmailSent] = useState<boolean>(false)
+  const refEmail = useRef<HTMLInputElement | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState<boolean>(false);
 
   const onSubmit = (event: any) => {
-    event.preventDefault()
-    setError(null)
-    const email = refEmail.current?.value
+    event.preventDefault();
+    setError(null);
+    const email = refEmail.current?.value;
     if (!email) {
-      setError('Please enter a valid email address')
-      return
+      setError("Please enter a valid email address");
+      return;
     }
 
     firebase
       .auth()
       .sendPasswordResetEmail(email)
       .then(() => {
-        setEmailSent(true)
+        setEmailSent(true);
       })
       .catch((error) => {
-        setError(error.message)
-      })
-  }
+        setError(error.message);
+      });
+  };
 
   return (
     <div className="wrapper">
@@ -61,5 +62,5 @@ export const ForgotPassword = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { SignUpLink } from '../Signup/components/SignUpLink'
-import { Login } from './components/Login'
+import { SignUpLink } from "../Signup/components/SignUpLink";
+import { Login } from "./components/Login";
 
 export const LoginPage = () => {
   return (
@@ -9,5 +9,5 @@ export const LoginPage = () => {
       <hr />
       <SignUpLink />
     </div>
-  )
-}
+  );
+};
