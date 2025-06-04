@@ -24,14 +24,14 @@
     "react-router-dom": "5.3.4",
     "remove": "^0.1.5",
     "typescript": "^5.5.4",
-    "vite": "^5.4.14",
+    "vite": "^5.4.19",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
@@ -41,7 +41,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^25.0.1",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "sass": "^1.83.4",
     "vitest": "^3.0.4"
   },
@@ -53,8 +53,8 @@
   ],
   "overrides": {
     "braces": "^3.0.3",
-    "rollup": "^4.32.1",
-    "webpack": "^5.97.1",
+    "rollup": "^4.41.1",
+    "webpack": "^5.99.9",
     "cross-spawn": "^7.0.6"
   },
   "engines": {
