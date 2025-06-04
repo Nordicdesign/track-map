@@ -11,10 +11,10 @@ import {
   editObservation,
   recordCorner,
   deleteEntry,
-  detachListener,
   renameSession,
-  loadData,
   newSession,
+  initiateSession,
+  prepareSessions,
 } from "../../app/utils/data";
 import { SessionSelection } from "./components/sessions/SessionSelection";
 import tracksJson from "../../constants/tracks.json";
@@ -23,6 +23,8 @@ import { Guest } from "./components/Guest";
 import { Corner, TypeOfEntry, Note, Session } from "../../app/utils/types";
 import { RootState } from "../../app/store";
 import { CornerList } from "./components/corners/CornerList";
+import { useTrack } from "../../app/hooks/useTrack";
+import { onValue } from "firebase/database";
 
 type TrackParams = {
   trackName: string;
@@ -33,13 +35,13 @@ const tracks: any = tracksJson;
 export const Track = () => {
   const userID = useSelector((state: RootState) => state.user.userID);
   const { trackName } = useParams<TrackParams>();
+  const { getSessionsReference } = useTrack();
   const history = useHistory();
 
   if (!trackName) {
     history.push("/");
   }
 
-  // initialize the state
   const [sessions, setSessions] = useState<Session[] | null>(null);
   const [sessionName, setSessionName] = useState<string>();
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
@@ -134,26 +136,37 @@ export const Track = () => {
   };
 
   useEffect(() => {
-    if (userID !== "guest" && userID !== null && userID !== undefined) {
-      loadData({
+    if (userID === "guest" || userID === null || userID === undefined) return;
+
+    const subscribe = () => {
+      const reference = getSessionsReference({
         authUser: userID,
         trackID: trackName,
-        onResult: (sessions: Session[]) => {
+      });
+
+      return onValue(reference, (snapshot) => {
+        const data = snapshot.val();
+
+        if (data) {
+          const sessions = prepareSessions(data);
           setSessions(sessions);
           setDataIsReady(true);
-        },
+          return;
+        } else {
+          initiateSession(userID, trackName);
+        }
       });
-    }
+    };
+    const sub = subscribe();
 
-    return () => detachListener({ authUser: userID, trackID: trackName });
+    return () => sub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trackName, userID]);
 
   useEffect(() => {
-    let newSession: Session;
+    if (!sessions) return;
 
-    if (!sessions) {
-      return;
-    }
+    let newSession: Session;
 
     if (currentSessionId === null) {
       newSession = sessions.slice(-1)[0];

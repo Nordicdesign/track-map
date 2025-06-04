@@ -2,36 +2,31 @@ import { useEffect } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "firebase/compat/app";
+import Cookies from "js-cookie";
 
 import { User } from "./components/User";
 import { RootState } from "../../app/store";
 import { logOut, signIn } from "../../app/users/usersSlice";
-import { firebaseConfig } from "../../constants/firebase";
-import Cookies from "js-cookie";
 import { Routes } from "../../constants/routes";
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 
 export const Header = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail);
   const dispatch = useDispatch();
   const history = useHistory();
+  const auth = firebase.auth();
 
   const match = useRouteMatch("/tracks/:track");
   const isTrackPage = match?.isExact;
 
   const logout = () => {
-    firebase
-      .auth()
+    auth
       .signOut()
       .then(() => {
-        // console.log('logged out!')
         dispatch(logOut());
         history.push("/");
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error(error);
       });
   };
