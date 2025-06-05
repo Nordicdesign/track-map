@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../../constants/routes";
+import { ScreenRoutes } from "../../../constants/routes";
 
 export const Landing = () => {
   return (
@@ -14,12 +14,12 @@ export const Landing = () => {
             </p>
             <h2>Improve your on-track performance, fast.</h2>
             <p className="mb2">
-              <Link to={Routes.SIGN_UP} className="btn signup">
+              <Link to={ScreenRoutes.SIGN_UP} className="btn signup">
                 Sign up free
               </Link>
             </p>
             <p>
-              <Link to={Routes.SIGN_IN} className="btn btn-secondary">
+              <Link to={ScreenRoutes.SIGN_IN} className="btn btn-secondary">
                 Log in to your account
               </Link>
             </p>

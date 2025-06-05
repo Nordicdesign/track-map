@@ -1,18 +1,18 @@
 import { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
 import { firebaseConfig } from "../../../constants/firebase";
 import { FirebaseError } from "../../../types/firebase";
-import { Routes } from "../../../constants/routes";
+import { ScreenRoutes } from "../../../constants/routes";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
 export const SignUpForm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const refEmail = useRef<HTMLInputElement | null>(null);
   const refPassword = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -26,7 +26,7 @@ export const SignUpForm = () => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          history.push(Routes.LANDING);
+          navigate(ScreenRoutes.LANDING);
         })
         .catch((error: FirebaseError) => {
           setError(error.message);

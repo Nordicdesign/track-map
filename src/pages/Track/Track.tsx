@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { onValue } from "firebase/database";
 
 import { AddNewCorner } from "./components/corners/AddNewCorner";
 import { AddNewSetupNote } from "./components/AddNewSetupNote";
@@ -24,7 +25,7 @@ import { Corner, TypeOfEntry, Note, Session } from "../../app/utils/types";
 import { RootState } from "../../app/store";
 import { CornerList } from "./components/corners/CornerList";
 import { useTrack } from "../../app/hooks/useTrack";
-import { onValue } from "firebase/database";
+import { ScreenRoutes } from "../../constants/routes";
 
 type TrackParams = {
   trackName: string;
@@ -36,11 +37,7 @@ export const Track = () => {
   const userID = useSelector((state: RootState) => state.user.userID);
   const { trackName } = useParams<TrackParams>();
   const { getSessionsReference } = useTrack();
-  const history = useHistory();
-
-  if (!trackName) {
-    history.push("/");
-  }
+  const navigate = useNavigate();
 
   const [sessions, setSessions] = useState<Session[] | null>(null);
   const [sessionName, setSessionName] = useState<string>();
@@ -52,6 +49,11 @@ export const Track = () => {
   const [visibleNotesForm, setVisibleNotesForm] = useState(false);
   const [visibleCornerForm, setVisibleCornerForm] = useState(false);
   const [currentId, setCurrentId] = useState("");
+
+  if (!trackName) {
+    navigate(ScreenRoutes.LANDING);
+    return;
+  }
 
   const handleAdd = (type: TypeOfEntry) => {
     if (type === TypeOfEntry.observations) setVisibleNotesForm(true);
@@ -135,6 +137,7 @@ export const Track = () => {
     else if (type === "corners") setVisibleCornerForm(true);
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (userID === "guest" || userID === null || userID === undefined) return;
 
@@ -163,6 +166,7 @@ export const Track = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trackName, userID]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!sessions) return;
 

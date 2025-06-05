@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 
 import { signIn } from "../../../app/users/usersSlice";
 import { checkCredentials } from "../../../app/utils/users";
 import { FirebaseError } from "../../../types/firebase";
-import { Routes } from "../../../constants/routes";
+import { ScreenRoutes } from "../../../constants/routes";
 
 export const Login = () => {
   // clear any garbage
@@ -14,7 +14,7 @@ export const Login = () => {
   Cookies.remove("email");
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | undefined>(undefined);
   const refEmail = useRef<HTMLInputElement | null>(null);
   const refPassword = useRef<HTMLInputElement | null>(null);
@@ -40,7 +40,7 @@ export const Login = () => {
             Cookies.set("email", email, { expires: 7 });
           }
           dispatch(signIn(payload));
-          history.push(Routes.LANDING);
+          navigate(ScreenRoutes.LANDING);
         })
         .catch((error: FirebaseError) => {
           setError(error?.message);
@@ -75,7 +75,7 @@ export const Login = () => {
       {error && <p className="error-handling">{error}</p>}
       <p>
         Forgot your password?{" "}
-        <Link to={Routes.PASSWORD_FORGET}>Get a new one</Link>
+        <Link to={ScreenRoutes.PASSWORD_FORGET}>Get a new one</Link>
       </p>
     </form>
   );

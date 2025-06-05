@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
-import { Routes } from "../../constants/routes";
+import { ScreenRoutes } from "../../constants/routes";
 
 export const ForgotPassword = () => {
   const refEmail = useRef<HTMLInputElement | null>(null);
@@ -57,7 +57,7 @@ export const ForgotPassword = () => {
             email containing a link to reset it.
           </p>
           <p>
-            <Link to={Routes.LANDING}>Back to the homepage</Link>
+            <Link to={ScreenRoutes.LANDING}>Back to the homepage</Link>
           </p>
         </>
       )}

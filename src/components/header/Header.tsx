@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "firebase/compat/app";
 import Cookies from "js-cookie";
@@ -7,23 +7,23 @@ import Cookies from "js-cookie";
 import { User } from "./components/User";
 import { RootState } from "../../app/store";
 import { logOut, signIn } from "../../app/users/usersSlice";
-import { Routes } from "../../constants/routes";
+import { ScreenRoutes } from "../../constants/routes";
 
 export const Header = () => {
   const userEmail = useSelector((state: RootState) => state.user.userEmail);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const auth = firebase.auth();
 
-  const match = useRouteMatch("/tracks/:track");
-  const isTrackPage = match?.isExact;
+  const match = useMatch("/tracks/:track");
+  const isTrackPage = match ? true : false;
 
   const logout = () => {
     auth
       .signOut()
       .then(() => {
         dispatch(logOut());
-        history.push("/");
+        navigate(ScreenRoutes.LANDING);
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -49,11 +49,11 @@ export const Header = () => {
     <header>
       <div>
         <h1 data-testid="header-name">
-          <Link to={Routes.LANDING}>TrackMap</Link>
+          <Link to={ScreenRoutes.LANDING}>TrackMap</Link>
         </h1>
         {isTrackPage ? (
           <p className="back-track-list">
-            <Link to={Routes.LANDING}>&lt; Back to track list</Link>
+            <Link to={ScreenRoutes.LANDING}>&lt; Back to track list</Link>
           </p>
         ) : null}
       </div>
@@ -62,7 +62,7 @@ export const Header = () => {
         {userEmail ? (
           <User userEmail={userEmail} logout={logout} />
         ) : (
-          <Link data-testid="header-login" to={Routes.SIGN_IN}>
+          <Link data-testid="header-login" to={ScreenRoutes.SIGN_IN}>
             Log in
           </Link>
         )}

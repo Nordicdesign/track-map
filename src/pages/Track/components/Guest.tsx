@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../../constants/routes";
+import { ScreenRoutes } from "../../../constants/routes";
 
 export const Guest = () => {
   return (
     <div className="guest">
       <h2>Sign up free</h2>
       <p>
-        Start taking notes and improve your driving everytime you get on track.{" "}
+        Start taking notes and improve your driving everytime you get on
+        track.{" "}
       </p>
       <p>
         <button>
-          <Link to={Routes.SIGN_UP}>Sign up</Link>
+          <Link to={ScreenRoutes.SIGN_UP}>Sign up</Link>
         </button>
       </p>
       <p>

@@ -1,4 +1,4 @@
-export enum Routes {
+export enum ScreenRoutes {
   LANDING = "/",
   SIGN_UP = "/signup",
   SIGN_IN = "/login",

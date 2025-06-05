@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../../constants/routes";
+import { ScreenRoutes } from "../../../constants/routes";
 
 export const HomepageSignedIn = () => {
   return (
@@ -12,27 +12,27 @@ export const HomepageSignedIn = () => {
             <h2>North America</h2>
             <ul className="listCircuits">
               <li>
-                <Link to={Routes.MOSPORT}>
+                <Link to={ScreenRoutes.MOSPORT}>
                   Canadian Tire Motorsport Park - Mosport
                 </Link>
               </li>
               <li>
-                <Link to={Routes.DAYTONA}>Daytona - Road course</Link>
+                <Link to={ScreenRoutes.DAYTONA}>Daytona - Road course</Link>
               </li>
               <li>
-                <Link to={Routes.LAGUNA}>Laguna Seca</Link>
+                <Link to={ScreenRoutes.LAGUNA}>Laguna Seca</Link>
               </li>
               <li>
-                <Link to={Routes.ROADAMERICA}>Road America</Link>
+                <Link to={ScreenRoutes.ROADAMERICA}>Road America</Link>
               </li>
               <li>
-                <Link to={Routes.ROADATLANTA}>Road Atlanta</Link>
+                <Link to={ScreenRoutes.ROADATLANTA}>Road Atlanta</Link>
               </li>
               <li>
-                <Link to={Routes.SEBRING}>Sebring</Link>
+                <Link to={ScreenRoutes.SEBRING}>Sebring</Link>
               </li>
               <li>
-                <Link to={Routes.WATKINS}>Watkins Glen</Link>
+                <Link to={ScreenRoutes.WATKINS}>Watkins Glen</Link>
               </li>
             </ul>
           </div>
@@ -41,36 +41,38 @@ export const HomepageSignedIn = () => {
             <h2>Europe</h2>
             <ul className="listCircuits">
               <li>
-                <Link to={Routes.BARCELONA}>
+                <Link to={ScreenRoutes.BARCELONA}>
                   Circuit de Catalunya (Barcelona)
                 </Link>
               </li>
               <li>
-                <Link to={Routes.LEMANS}>Le Mans - Circuit de la Sarthe</Link>
+                <Link to={ScreenRoutes.LEMANS}>
+                  Le Mans - Circuit de la Sarthe
+                </Link>
               </li>
               <li>
-                <Link to={Routes.MAGIONE}>Magione</Link>
+                <Link to={ScreenRoutes.MAGIONE}>Magione</Link>
               </li>
               <li>
-                <Link to={Routes.MUGELLO}>Mugello</Link>
+                <Link to={ScreenRoutes.MUGELLO}>Mugello</Link>
               </li>
               <li>
-                <Link to={Routes.NURBURGRING}>Nurburgring</Link>
+                <Link to={ScreenRoutes.NURBURGRING}>Nurburgring</Link>
               </li>
               <li>
-                <Link to={Routes.SILVERSTONE}>Silverstone</Link>
+                <Link to={ScreenRoutes.SILVERSTONE}>Silverstone</Link>
               </li>
               <li>
-                <Link to={Routes.SPA}>Spa-Franchorchamps</Link>
+                <Link to={ScreenRoutes.SPA}>Spa-Franchorchamps</Link>
               </li>
               <li>
-                <Link to={Routes.VALLELUNGA}>Vallelunga</Link>
+                <Link to={ScreenRoutes.VALLELUNGA}>Vallelunga</Link>
               </li>
               <li>
-                <Link to={Routes.ZANDVOORT}>Zandvoort</Link>
+                <Link to={ScreenRoutes.ZANDVOORT}>Zandvoort</Link>
               </li>
               <li>
-                <Link to={Routes.ZOLDER}>Zolder</Link>
+                <Link to={ScreenRoutes.ZOLDER}>Zolder</Link>
               </li>
             </ul>
           </div>
@@ -79,16 +81,16 @@ export const HomepageSignedIn = () => {
             <h2>Asia</h2>
             <ul className="listCircuits">
               <li>
-                <Link to={Routes.BAHRAIN}>Bahrain</Link>
+                <Link to={ScreenRoutes.BAHRAIN}>Bahrain</Link>
               </li>
               <li>
-                <Link to={Routes.FUJI}>Fuji Speedway</Link>
+                <Link to={ScreenRoutes.FUJI}>Fuji Speedway</Link>
               </li>
               <li>
-                <Link to={Routes.SHANGHAI}>Shanghai</Link>
+                <Link to={ScreenRoutes.SHANGHAI}>Shanghai</Link>
               </li>
               <li>
-                <Link to={Routes.SUZUKA}>Suzuka</Link>
+                <Link to={ScreenRoutes.SUZUKA}>Suzuka</Link>
               </li>
             </ul>
           </div>
@@ -96,7 +98,9 @@ export const HomepageSignedIn = () => {
             <h2>Australia</h2>
             <ul className="listCircuits">
               <li>
-                <Link to={Routes.BATHURST}>Mount Panorama - Bathurst</Link>
+                <Link to={ScreenRoutes.BATHURST}>
+                  Mount Panorama - Bathurst
+                </Link>
               </li>
             </ul>
           </div>
