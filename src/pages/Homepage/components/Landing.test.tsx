@@ -2,7 +2,7 @@ import { expect } from "vitest";
 import { screen } from "@testing-library/react";
 
 import { Landing } from "./Landing";
-import { $T } from "../../../setupTests";
+import { $T } from "@src/setupTests";
 
 describe("landing", () => {
   it("renders the component", () => {
