@@ -12,7 +12,7 @@ afterEach(() => {
   cleanup();
 });
 
-export const $T = (ui: ReactNode, { route = "/" } = {}) => {
+export const $T = (ui: ReactNode) => {
   // window.history.pushState({}, 'Test page', route)
 
   return {
