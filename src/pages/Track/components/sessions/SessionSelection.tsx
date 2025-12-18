@@ -1,6 +1,6 @@
 import { Key, SyntheticEvent, useRef, useState } from "react";
 
-import { Session } from "../../../../app/utils/types";
+import { Session } from "@/app/utils/types";
 
 type Props = {
   sessions: Session[] | null;

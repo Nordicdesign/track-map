@@ -1,4 +1,4 @@
-import { TypeOfEntry } from "../../../../app/utils/types";
+import { TypeOfEntry } from "@/app/utils/types";
 
 type Props = {
   name: string;

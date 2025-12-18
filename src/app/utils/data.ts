@@ -54,7 +54,6 @@ export function recordObservation(
         "/observations/",
     )
     .push(data, (err) => {
-      // eslint-disable-next-line no-console
       if (err) console.error(err);
     });
   return {
